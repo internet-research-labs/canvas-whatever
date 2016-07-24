@@ -15,17 +15,18 @@ Lap.prototype.randomEdge = function () {
 Lap.prototype.draw = function (ctx) {
   ctx.beginPath();
   ctx.strokeStyle = 'white';
-  ctx.lineWidth = "2";
+  ctx.lineWidth = "1";
   ctx.arc(this.x, this.y, this.rad, 0, 2*Math.PI);
   ctx.stroke();
 }
 
-function App2() {
+function App2(id) {
+  this.id = id;
 }
 
 App2.prototype.addOverlap = function () {
   if (!this.overlaps) {
-    this.overlaps = [new Lap(30, 30, 30)];
+    this.overlaps = [new Lap(150, 150, 30)];
     return;
   }
 
@@ -36,7 +37,6 @@ App2.prototype.addOverlap = function () {
 };
 
 App2.prototype.setup = function () {
-  this.id = 'ok-2';
   this.el = document.getElementById(this.id);
   this.width = this.el.width;
   this.height = this.el.height;
@@ -64,15 +64,20 @@ App2.prototype.clear = function () {
   ctx.fillRect(0, 0, this.width, this.height);
 };
 
+function makeAndRender(id) {
+  var a = new App2(id);
+  a.setup();
+  a.update();
+  a.draw();
+}
+
 ~function () {
-  var app = new App2();
-
-  console.log('APP: setup');
-  app.setup();
-
-  console.log('APP: update');
-  app.update();
-
-  console.log('APP: draw');
-  app.draw();
+  makeAndRender('circles-1');
+  makeAndRender('circles-2');
+  makeAndRender('circles-3');
+  makeAndRender('circles-4');
+  makeAndRender('circles-5');
+  makeAndRender('circles-6');
+  makeAndRender('circles-7');
+  makeAndRender('circles-8');
 }();
