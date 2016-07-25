@@ -83,14 +83,16 @@ function makeAndRender(id) {
     'circles-8',
   ];
 
-  ids.forEach(function (val) {
-    makeAndRender(val);
-  });
+  function refresh() {
+    ids.forEach(function (val) {
+      makeAndRender(val);
+    });
+  }
 
+  var i = 0;
   ~function loop () {
-    var rand = Math.floor(Math.random() * ids.length);
-    var id = ids[rand];
-    makeAndRender(id);
-    setTimeout(loop, 1000);
+    refresh();
+    i++;
+    setTimeout(loop, 1000 * Math.pow(1.7, i));
   }();
 }();
