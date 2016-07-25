@@ -72,12 +72,25 @@ function makeAndRender(id) {
 }
 
 ~function () {
-  makeAndRender('circles-1');
-  makeAndRender('circles-2');
-  makeAndRender('circles-3');
-  makeAndRender('circles-4');
-  makeAndRender('circles-5');
-  makeAndRender('circles-6');
-  makeAndRender('circles-7');
-  makeAndRender('circles-8');
+  var ids = [
+    'circles-1',
+    'circles-2',
+    'circles-3',
+    'circles-4',
+    'circles-5',
+    'circles-6',
+    'circles-7',
+    'circles-8',
+  ];
+
+  ids.forEach(function (val) {
+    makeAndRender(val);
+  });
+
+  ~function loop () {
+    var rand = Math.floor(Math.random() * ids.length);
+    var id = ids[rand];
+    makeAndRender(id);
+    setTimeout(loop, 1000);
+  }();
 }();
