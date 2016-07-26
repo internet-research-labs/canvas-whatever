@@ -88,6 +88,7 @@ App3.prototype.clear = function () {
   var ids = [
     'triangles-1',
     'triangles-2',
+    'triangles-3',
   ];
 
   function whatever() {
@@ -97,4 +98,14 @@ App3.prototype.clear = function () {
   }
 
   whatever();
+
+  function rand(list) {
+    var i = Math.floor(Math.random() * list.length);
+    return list[i];
+  }
+
+  ~function loop() {
+    makeAndRender2(rand(ids));
+    setTimeout(loop, 2000);
+  }();
 }();
