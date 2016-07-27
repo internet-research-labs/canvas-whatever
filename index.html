@@ -13,12 +13,18 @@
       #whatever {
         display: inline-block;
       }
+      canvas.lines {
+        width: 300px;
+        height: 300px;
+      }
     </style>
   </head>
   <body>
     <div>
-      <canvas width=300 height=300 id="triangles-1"></canvas>
+      <canvas width=900 height=900 id="lines-1" class="lines"></canvas>
       <canvas width=300 height=300 id="circles-1"></canvas>
+      <canvas width=900 height=900 id="lines-2" class="lines"></canvas>
+      <canvas width=300 height=300 id="triangles-1"></canvas>
       <canvas width=300 height=300 id="triangles-2"></canvas>
       <canvas width=300 height=300 id="circles-2"></canvas>
       <canvas width=300 height=300 id="circles-3"></canvas>
@@ -29,10 +35,13 @@
       <canvas width=300 height=300 id="ok"></canvas>
       <canvas width=300 height=300 id="circles-7"></canvas>
       <canvas width=300 height=300 id="circles-8"></canvas>
+      <canvas width=300 height=300 id="lines-3"></canvas>
+      <canvas width=300 height=300 id="lines-4"></canvas>
       <div id="whatever">Whatever</div>
     </div>
     <script src="index.js"></script>
     <script src="overlaps.js"></script>
     <script src="triangles.js"></script>
+    <script src="lines.js"></script>
   </body>
 </html>
