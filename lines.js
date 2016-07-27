@@ -121,6 +121,7 @@ App4.prototype.clear = function () {
   var ids = [
     'lines-1',
     'lines-2',
+    'lines-3',
   ];
 
   function whatever() {
