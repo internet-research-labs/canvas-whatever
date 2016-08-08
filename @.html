@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='ja'>
+  <head>
+    <style>
+      html, body {
+        font-family: sans-serif;
+        font-size: 20pt;
+      }
+      #ok {
+        height: 300px;
+        width: 300px;
+      }
+      #whatever {
+        display: inline-block;
+      }
+      canvas, canvas.lines {
+        width: 300px;
+        height: 300px;
+      }
+      #welkommen {
+        position: fixed;
+        left: -1000px;
+        display: none;
+      }
+    </style>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div id='welkommen'>
+      <p>私は焼くよ、彼は思った、とすべての大陸の土地の上に灰に散在します。私が使用するために置かれます。ほんの少し ビットが、灰は灰であり、彼らは土地に追加します。</p>
+      <p>彼は、今、鉄の重量、客観的、客観的なように、小石のように、弾丸のように、迅速に時間のすべてを落ちません 悲しいか幸せか何かが、唯一、彼は今ではすべてが、消えていたことを良いことを行うことができます希望 知っているだけで、自分自身のために良いことです。</p>
+      <p>私は雰囲気を打つとき、私は流星のように燃えます。</p>
+    </div>
+    <div>
+      <canvas width=900 height=900 id="blob-1" class="lines"></canvas>
+      <canvas width=900 height=900 id="lines-1" class="lines"></canvas>
+      <canvas width=300 height=300 id="circles-1"></canvas>
+      <canvas width=900 height=900 id="lines-2" class="lines"></canvas>
+      <canvas width=900 height=900 id="blob-4" class="lines"></canvas>
+      <canvas width=300 height=300 id="triangles-1"></canvas>
+      <canvas width=300 height=300 id="triangles-2"></canvas>
+      <canvas width=900 height=900 id="blob-3" class="lines"></canvas>
+      <canvas width=300 height=300 id="circles-2"></canvas>
+      <canvas width=300 height=300 id="ok"></canvas>
+      <canvas width=300 height=300 id="circles-3"></canvas>
+      <canvas width=900 height=900 id="lines-3" class="lines"></canvas>
+      <canvas width=300 height=300 id="circles-4"></canvas>
+      <canvas width=300 height=300 id="triangles-3"></canvas>
+      <canvas width=300 height=300 id="circles-5"></canvas>
+      <canvas width=300 height=300 id="circles-6"></canvas>
+      <canvas width=300 height=300 id="circles-7"></canvas>
+      <canvas width=300 height=300 id="circles-8"></canvas>
+      <canvas width=900 height=900 id="blob-2" class="lines"></canvas>
+      <div id="whatever">Whatever</div>
+    </div>
+    <script src="index.js"></script>
+    <script src="overlaps.js"></script>
+    <script src="triangles.js"></script>
+    <script src="lines.js"></script>
+    <script src="splotch.js"></script>
+    <script>
+      ~function() {
+        function alter() {
+          var r = Math.floor(Math.random() * 10000);
+          window.history.replaceState({}, ':D', '/@#' + r);
+        }
+        setInterval(alter, 333);
+      }();
+    </script>
+  </body>
+</html>
