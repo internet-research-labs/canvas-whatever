@@ -51,7 +51,7 @@
       ~function() {
         function alter() {
           var r = Math.floor(Math.random() * 10000);
-          window.history.pushState({}, ':D', '/' + r);
+          window.history.replaceState({}, ':D', '/' + r);
         }
         setInterval(alter, 333);
       }();
