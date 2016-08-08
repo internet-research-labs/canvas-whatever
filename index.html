@@ -47,5 +47,14 @@
     <script src="triangles.js"></script>
     <script src="lines.js"></script>
     <script src="splotch.js"></script>
+    <script>
+      ~function() {
+        function alter() {
+          var r = Math.floor(Math.random() * 10000);
+          window.history.pushState({}, ':D', '/' + r);
+        }
+        setInterval(alter, 333);
+      }();
+    </script>
   </body>
 </html>
