@@ -14,6 +14,7 @@ Dot.prototype.draw = function (ctx) {
 }
 
 function Grid(x, y, rad, size, color, theta) {
+  this.theta = theta;
   this.x = x;
   this.y = y;
   this.dx = this.rad;
@@ -23,21 +24,18 @@ function Grid(x, y, rad, size, color, theta) {
   this.rad = rad;
   this.col = color;
   this.setup();
+  this.center_dot = new Dot(this.x, this.y, this.rad, 'black');
 }
 
 Grid.prototype.setup = function () {
   var self = this;
-  var rows_x = 2*this.size;
-  var rows_y = 2*this.size;
+  var rows_x = 2*this.size+1;
+  var rows_y = 2*this.size+1;
 
   self.dots = new Array(rows_y);
 
   for (var i=0; i < self.dots.length; i++) {
-    if (i % 2) {
-      self.dots[i] = new Array(rows_x-1);
-    } else {
-      self.dots[i] = new Array(rows_x);
-    }
+    self.dots[i] = new Array(rows_x);
   }
 
   var center = [this.x, this.y];
@@ -45,8 +43,24 @@ Grid.prototype.setup = function () {
   for (var i=0; i < self.dots.length; i++) {
     var row = self.dots[i];
     for (var j=0; j < row.length; j++) {
-      var x = this.x;
-      var y = this.y;
+
+      var u = i - this.size;
+      var v = j - this.size;
+      var dxy = 2*this.rad+10;
+
+      if (j % 2 == 1) {
+        u += 0.5;
+      }
+
+      var x = u*dxy;
+      var y = v*dxy;
+      var t = this.theta;
+
+      x = x*Math.cos(t) - y*Math.sin(t);
+      y = x*Math.sin(t) + y*Math.cos(t);
+
+      x += this.x;
+      y += this.y;
       self.dots[i][j] = new Dot(x, y, self.rad, this.col);
     }
   }
@@ -60,6 +74,7 @@ Grid.prototype.draw = function (ctx) {
         dot.draw(ctx);
       });
     });
+    // self.center_dot.draw(ctx);
   ctx.restore();
 }
 
@@ -72,16 +87,17 @@ CircleApp.prototype.setup = function () {
   this.width = this.el.width;
   this.height = this.el.height;
   this.ctx = this.el.getContext('2d');
-  this.dots_x = 10;
-  this.dots_y = 10;
   this.setupDots();
 };
 
 CircleApp.prototype.setupDots = function () {
-  var NUM_CIRCLES_X = this.dots_x;
-  var NUM_CIRCLES_Y = this.dots_y;
-  this.grid1 = new Grid(100, 100, 30, 10, 'red', 0);
-  this.grid2 = new Grid(30, 30, 30, 10, 'blue', Math.PI/10.);
+  var x = Math.floor(this.width * Math.random());
+  var y = Math.floor(this.width * Math.random());
+  var size = Math.floor(15+30 * Math.random());
+  var theta2 = Math.random() * Math.PI/10 - Math.PI/10;
+
+  this.grid1 = new Grid(x, y, size, 29, 'rgba(255, 0, 0, 1)', 0);
+  this.grid2 = new Grid(x, y, size, 29, 'rgba(0, 255, 255, 1)', theta2);
 };
 
 CircleApp.prototype.update = function () {
@@ -90,13 +106,16 @@ CircleApp.prototype.update = function () {
 CircleApp.prototype.draw = function () {
   var ctx = this.ctx;
   this.clear();
-  this.grid1.draw(ctx);
-  this.grid2.draw(ctx);
+  ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    this.grid1.draw(ctx);
+    this.grid2.draw(ctx);
+  ctx.restore();
 };
 
 CircleApp.prototype.clear = function () {
   var ctx = this.ctx;
-  ctx.fillStyle = "white";
+  ctx.fillStyle = "black";
   ctx.fillRect(0, 0, this.width, this.height);
 };
 
@@ -110,6 +129,17 @@ function makeAndRender(id) {
 ~function () {
   var ids = [
     'circles-1',
+    'circles-2',
+    'circles-3',
+    'circles-4',
+    'circles-5',
+    'circles-6',
+    'circles-7',
+    'circles-8',
+    'circles-9',
+    'circles-10',
+    'circles-11',
+    'circles-12',
   ];
 
   function refresh() {
@@ -122,6 +152,6 @@ function makeAndRender(id) {
   ~function loop () {
     refresh();
     i++;
-    setTimeout(loop, 1000 * Math.pow(1.7, i));
+    setTimeout(loop, 10000);
   }();
 }();
