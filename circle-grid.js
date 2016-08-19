@@ -13,6 +13,56 @@ Dot.prototype.draw = function (ctx) {
   ctx.fill();
 }
 
+function Grid(x, y, rad, size, color, theta) {
+  this.x = x;
+  this.y = y;
+  this.dx = this.rad;
+  this.dy = this.rad;
+  this.dots = [];
+  this.size = size;
+  this.rad = rad;
+  this.col = color;
+  this.setup();
+}
+
+Grid.prototype.setup = function () {
+  var self = this;
+  var rows_x = 2*this.size;
+  var rows_y = 2*this.size;
+
+  self.dots = new Array(rows_y);
+
+  for (var i=0; i < self.dots.length; i++) {
+    if (i % 2) {
+      self.dots[i] = new Array(rows_x-1);
+    } else {
+      self.dots[i] = new Array(rows_x);
+    }
+  }
+
+  var center = [this.x, this.y];
+
+  for (var i=0; i < self.dots.length; i++) {
+    var row = self.dots[i];
+    for (var j=0; j < row.length; j++) {
+      var x = this.x;
+      var y = this.y;
+      self.dots[i][j] = new Dot(x, y, self.rad, this.col);
+    }
+  }
+}
+
+Grid.prototype.draw = function (ctx) {
+  var self = this;
+  ctx.save();
+    self.dots.forEach(function (row, i) {
+      row.forEach(function (dot, j) {
+        dot.draw(ctx);
+      });
+    });
+  ctx.restore();
+}
+
 function CircleApp(id) {
   this.id = id;
 }
@@ -30,22 +80,8 @@ CircleApp.prototype.setup = function () {
 CircleApp.prototype.setupDots = function () {
   var NUM_CIRCLES_X = this.dots_x;
   var NUM_CIRCLES_Y = this.dots_y;
-
-  this.circles = new Array(NUM_CIRCLES_Y);
-
-  for (var i=0; i < this.circles.length; i++) {
-    this.circles[i] = new Array(NUM_CIRCLES_X);
-  }
-
-  for (var i=0; i < this.circles.length; i++) {
-    var row = this.circles[i];
-    for (var j=0; j < row.length; j++) {
-      var x = i * 90;
-      var y = j * 90;
-      var rad = 30;
-      this.circles[i][j] = new Dot(x, y, rad, 'red');
-    }
-  }
+  this.grid1 = new Grid(100, 100, 30, 10, 'red', 0);
+  this.grid2 = new Grid(30, 30, 30, 10, 'blue', Math.PI/10.);
 };
 
 CircleApp.prototype.update = function () {
@@ -54,11 +90,8 @@ CircleApp.prototype.update = function () {
 CircleApp.prototype.draw = function () {
   var ctx = this.ctx;
   this.clear();
-  for (var i=0; i<this.dots_x; i++) {
-    for (var j=0; j<this.dots_y; j++) {
-      this.circles[i][j].draw(ctx);
-    }
-  }
+  this.grid1.draw(ctx);
+  this.grid2.draw(ctx);
 };
 
 CircleApp.prototype.clear = function () {
