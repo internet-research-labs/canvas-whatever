@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #container {
+        width: 400px;
+        margin: 0 auto;
+        padding: 0;
+      }
+      .circles {
+        display: inline-block;
+        width: 400px;
+        margin: 0;
+        padding: 3px;
+      }
+      #welkommen {
+        position: fixed;
+        left: -1000px;
+        top: -100px;
+        display: none;
+      }
+    </style>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div id='welkommen'>
+      <p>私は焼くよ、彼は思った、とすべての大陸の土地の上に灰に散在します。私が使用するために置かれます。ほんの少し ビットが、灰は灰であり、彼らは土地に追加します。</p>
+      <p>彼は、今、鉄の重量、客観的、客観的なように、小石のように、弾丸のように、迅速に時間のすべてを落ちません 悲しいか幸せか何かが、唯一、彼は今ではすべてが、消えていたことを良いことを行うことができます希望 知っているだけで、自分自身のために良いことです。</p>
+      <p>私は雰囲気を打つとき、私は流星のように燃えます。</p>
+    </div>
+    <br>
+      <canvas width=800 height=800 class="circles" id="circles-1"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-2"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-3"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-4"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-5"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-6"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-7"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-8"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-9"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-10"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-11"></canvas>
+      <canvas width=800 height=800 class="circles" id="circles-12"></canvas>
+    <script src="circle-grid.js"></script>
+    <script>
+      window.addEventListener('scroll', function(e) {
+        var r = Math.floor(Math.random() * 10000);
+        window.history.replaceState({}, ':D', '/@#' + r);
+      });
+    </script>
+  </body>
+</html>
