@@ -119,14 +119,14 @@ CircleApp.prototype.clear = function () {
   ctx.fillRect(0, 0, this.width, this.height);
 };
 
-function makeAndRender(id) {
-  var a = new CircleApp(id);
-  a.setup();
-  a.update();
-  a.draw();
-}
-
 ~function () {
+  function makeAndRender(id) {
+    var a = new CircleApp(id);
+    a.setup();
+    a.update();
+    a.draw();
+  }
+
   var ids = [
     'circle-grid-1',
     'circle-grid-2',
