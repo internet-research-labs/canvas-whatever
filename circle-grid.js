@@ -24,7 +24,7 @@ function Grid(x, y, rad, size, color, theta) {
   this.rad = rad;
   this.col = color;
   this.setup();
-  this.center_dot = new Dot(this.x, this.y, this.rad, 'black');
+  // this.center_dot = new Dot(this.x, this.y, this.rad, 'white');
 }
 
 Grid.prototype.setup = function () {
@@ -94,10 +94,10 @@ CircleApp.prototype.setupDots = function () {
   var x = Math.floor(this.width * Math.random());
   var y = Math.floor(this.width * Math.random());
   var size = Math.floor(15+30 * Math.random());
-  var theta2 = Math.random() * Math.PI/10 - Math.PI/10;
+  var theta2 = Math.random() * Math.PI/20 - Math.PI/20;
 
   this.grid1 = new Grid(x, y, size, 29, 'rgba(255, 0, 0, 1)', 0);
-  this.grid2 = new Grid(x, y, size, 29, 'rgba(0, 255, 255, 1)', theta2);
+  this.grid2 = new Grid(x, y, size, 29, 'rgba(0, 200, 255, 1)', theta2);
 };
 
 CircleApp.prototype.update = function () {
@@ -107,7 +107,7 @@ CircleApp.prototype.draw = function () {
   var ctx = this.ctx;
   this.clear();
   ctx.save();
-    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalCompositeOperation = 'darken';
     this.grid1.draw(ctx);
     this.grid2.draw(ctx);
   ctx.restore();
@@ -115,7 +115,7 @@ CircleApp.prototype.draw = function () {
 
 CircleApp.prototype.clear = function () {
   var ctx = this.ctx;
-  ctx.fillStyle = "black";
+  ctx.fillStyle = "white";
   ctx.fillRect(0, 0, this.width, this.height);
 };
 
@@ -128,18 +128,10 @@ function makeAndRender(id) {
 
 ~function () {
   var ids = [
-    'circles-1',
-    'circles-2',
-    'circles-3',
-    'circles-4',
-    'circles-5',
-    'circles-6',
-    'circles-7',
-    'circles-8',
-    'circles-9',
-    'circles-10',
-    'circles-11',
-    'circles-12',
+    'circle-grid-1',
+    'circle-grid-2',
+    'circle-grid-3',
+    'circle-grid-4',
   ];
 
   function refresh() {
