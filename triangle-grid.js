@@ -25,6 +25,8 @@ Tri.prototype.draw = function (ctx) {
   ctx.save();
     ctx.beginPath();
     ctx.fillStyle = this.color;
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = 0.90;
 
     ctx.moveTo(
       Math.round(this.x + this.rad * Math.cos(t)),
@@ -41,6 +43,7 @@ Tri.prototype.draw = function (ctx) {
     }
 
     ctx.closePath();
+    ctx.stroke();
     ctx.fill();
 
     var d = 1.73/2. * this.rad;
@@ -89,7 +92,10 @@ TriGrid.prototype.get = function (i, j) {
     y -= this.dy;
   }
 
-  return {'x': x, 'y': y};
+  return {
+    'x': Math.round(x),
+    'y': Math.round(y),
+  };
 };
 
 TriGrid.prototype.setup = function () {
