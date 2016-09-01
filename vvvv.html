@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='ja'>
+  <head>
+    <style>
+      html, body {
+        font-family: sans-serif;
+        font-size: 20pt;
+      }
+      #whatever {
+        display: inline-block;
+      }
+      canvas, canvas.lines {
+      }
+      #welkommen {
+        position: fixed;
+        left: -1000px;
+        display: none;
+      }
+    </style>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <!-- ak -->
+    <div id='welkommen'>
+      <p>私は焼くよ、彼は思った、とすべての大陸の土地の上に灰に散在します。私が使用するために置かれます。ほんの少し ビットが、灰は灰であり、彼らは土地に追加します。</p>
+      <p>彼は、今、鉄の重量、客観的、客観的なように、小石のように、弾丸のように、迅速に時間のすべてを落ちません 悲しいか幸せか何かが、唯一、彼は今ではすべてが、消えていたことを良いことを行うことができます希望 知っているだけで、自分自身のために良いことです。</p>
+      <p>私は雰囲気を打つとき、私は流星のように燃えます。</p>
+    </div>
+    <div id="container">
+      <canvas width=800 height=800 class="wave-mesh" id="wave-mesh-1"></canvas>
+      <div id="whatever">Whatever</div>
+    </div>
+    <script src="js/TriangleClip.js"></script>
+    <script src="js/TriangleClipGrid.js"></script>
+    <script>
+      ~function () {
+        var ctx = document.getElementById('wave-mesh-1').getContext('2d');
+        var grid = new TriangleClipGrid(10, 10, 30);
+
+        setTimeout(function () {
+          grid.draw(ctx);
+        }, 500);
+      }();
+    </script>
+  </body>
+</html>
