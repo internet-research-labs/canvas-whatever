@@ -68,16 +68,16 @@ TriangleClipGrid.prototype.setup = function () {
 
   this.grid = [
     new TriangleClip(p1.x, p1.y, this.rad, img, 'black', -Math.PI/2.),
-//  new TriangleClip(p2.x, p2.y, this.rad, img, 'cyan', Math.PI/2.),
-//  new TriangleClip(p3.x, p3.y, this.rad, img, 'magenta', -Math.PI/2.),
-//  new TriangleClip(p4.x, p4.y, this.rad, img, 'gray', Math.PI/2.),
-//  new TriangleClip(p5.x, p5.y, this.rad, img, 'pink', -Math.PI/2.),
+    new TriangleClip(p2.x, p2.y, this.rad, img, 'cyan', Math.PI/2.),
+    new TriangleClip(p3.x, p3.y, this.rad, img, 'magenta', -Math.PI/2.),
+    new TriangleClip(p4.x, p4.y, this.rad, img, 'gray', Math.PI/2.),
+    new TriangleClip(p5.x, p5.y, this.rad, img, 'pink', -Math.PI/2.),
 
-//  new TriangleClip(q1.x, q1.y, this.rad, img, 'black', Math.PI/2.),
-//  new TriangleClip(q2.x, q2.y, this.rad, img, 'red', -Math.PI/2.),
-//  new TriangleClip(q3.x, q3.y, this.rad, img, 'magenta', Math.PI/2.),
-//  new TriangleClip(q4.x, q4.y, this.rad, img, 'red', -Math.PI/2.),
-//  new TriangleClip(q5.x, q5.y, this.rad, img, 'pink', Math.PI/2.),
+    new TriangleClip(q1.x, q1.y, this.rad, img, 'black', Math.PI/2.),
+    new TriangleClip(q2.x, q2.y, this.rad, img, 'red', -Math.PI/2.),
+    new TriangleClip(q3.x, q3.y, this.rad, img, 'magenta', Math.PI/2.),
+    new TriangleClip(q4.x, q4.y, this.rad, img, 'red', -Math.PI/2.),
+    new TriangleClip(q5.x, q5.y, this.rad, img, 'pink', Math.PI/2.),
 
 //  new TriangleClip(r2.x, r2.y, this.rad, img, 'yellow', Math.PI/2.),
 //  new TriangleClip(s2.x, s2.y, this.rad, img, 'blue', -Math.PI/2.),
