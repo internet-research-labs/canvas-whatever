@@ -10,6 +10,8 @@
         display: inline-block;
       }
       canvas, canvas.lines {
+        width: 800px;
+        height: 800px;
       }
       #welkommen {
         position: fixed;
@@ -28,7 +30,7 @@
       <p>私は雰囲気を打つとき、私は流星のように燃えます。</p>
     </div>
     <div id="container">
-      <canvas width=800 height=800 class="wave-mesh" id="wave-mesh-1"></canvas>
+      <canvas width=1200 height=1200 class="wave-mesh" id="wave-mesh-1"></canvas>
       <div id="whatever">Whatever</div>
     </div>
     <script src="js/TriangleClip.js"></script>
@@ -36,7 +38,7 @@
     <script>
       ~function () {
         var ctx = document.getElementById('wave-mesh-1').getContext('2d');
-        var grid = new TriangleClipGrid(10, 10, 30);
+        var grid = new TriangleClipGrid(0, 0, 90);
 
         setTimeout(function () {
           grid.draw(ctx);

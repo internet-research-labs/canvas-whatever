@@ -93,26 +93,34 @@ TriangleClip.prototype.draw = function (ctx) {
     // ctx.clip();
     // ctx.rect(0, 0, 1000, 1000);
     // ctx.fill();
-    ctx.stroke();
-    ctx.fill();
+    // ctx.stroke();
+    // ctx.fill();
 
+
+    // ctx.fill();
+
+
+  // Draw bounding box
+  // ctx.save();
     var size = 2*this.rad;
     var box = this.getRandomImageSlice(size, size);
-
-    ctx.fill();
-
-  ctx.restore();
-  ctx.save();
-
     var tri_box = this.getBoundingBox();
 
-    ctx.strokeStyle = 'red';
-    ctx.rect(
+    // ctx.beginPath();
+    ctx.clip();
+    ctx.fillStyle = 'red';
+    ctx.strokeStyle = 'black';
+    ctx.drawImage(
+      this.image,
+      box.sx,
+      box.sy,
+      box.sw,
+      box.sh,
       tri_box.x,
       tri_box.y,
       tri_box.w,
       tri_box.h
     );
-    ctx.stroke();
+    // ctx.stroke();
   ctx.restore();
 }
