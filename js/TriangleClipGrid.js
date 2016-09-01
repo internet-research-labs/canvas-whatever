@@ -10,13 +10,14 @@
  *   2,1\/    \/
  *  ---------------
  */
-function TriangleClipGrid(x, y, rad) {
+function TriangleClipGrid(x, y, rad, image) {
   this.x = x;
   this.y = y;
   this.dx = this.rad;
   this.dy = this.rad;
   this.dots = [];
   this.rad = rad;
+  this.image = image;
 
   // This is probably round-off too much, and creating
   // a slight overlap along the edges of the triangles
@@ -48,8 +49,7 @@ TriangleClipGrid.prototype.get = function (i, j) {
 };
 
 TriangleClipGrid.prototype.setup = function () {
-  var img = new Image();
-  img.src = 'img/wave-3.jpg';
+  img = this.image;
   this.grid = [];
 
   for (var i=0; i < 20; i++) {
