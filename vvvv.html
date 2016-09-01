@@ -38,12 +38,14 @@
     <script>
       ~function () {
         var ctx = document.getElementById('wave-mesh-1').getContext('2d');
-        var grid = new TriangleClipGrid(0, 0, 90);
-
-        setTimeout(function () {
+        var img = new Image();
+        img.onload = function () {
+          var grid = new TriangleClipGrid(0, 0, 90, img);
           grid.draw(ctx);
-        }, 500);
+        };
+        img.src = 'img/wave-3.jpg'
       }();
+
     </script>
   </body>
 </html>
