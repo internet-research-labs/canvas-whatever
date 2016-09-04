@@ -25,10 +25,6 @@ function TriangleMesh(rad, props) {
   // TODO: Generalize this for a given theta
   this.dx = 1.73/2. * this.rad;
   this.dy = this.rad/2.;
-
-  // Finally
-  this.grid = [];
-  this.setup();
 }
 
 /**
@@ -99,19 +95,4 @@ TriangleMesh.prototype.get = function (i, j) {
   var theta = (i + j) % 2 ? Math.PI/2 : -Math.PI/2;
   return new RegularTriangle(center.x, center.y, this.rad, theta);
 };
-
-TriangleMesh.prototype.setup = function () {
-  img = this.image;
-  this.grid = [];
-
-  for (var i=0; i < 20; i++) {
-    for (var j=0; j < 20; j++) {
-      var sig = (i+j) % 2 ? 1 : -1;
-      var theta = sig * Math.PI/2.;
-      var p = this.getCenter(i, j);
-      this.grid.push(new RegularTriangle(p.x, p.y, this.rad));
-    }
-  }
-};
-
 
