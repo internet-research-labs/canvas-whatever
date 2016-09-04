@@ -28,7 +28,6 @@ RegularTriangle.prototype.getPointList = function () {
 
   for (var i=0; i < 3; i++) {
     var theta = i * 2 * Math.PI / 3;
-    console.log(theta);
 
     var u = this.x + rad * Math.cos(t + theta);
     var v = this.y + rad * Math.sin(t + theta);
