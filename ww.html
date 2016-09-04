@@ -36,13 +36,32 @@
         var ctx = document.getElementById('that-mesh-tho-1').getContext('2d');
         var mesh = new TriangleMesh(100);
 
-        var tri1 = mesh.get(0, 0);
-        var tri2 = mesh.get(1, 0);
+        function drawTriangle (triangle, strokeStyle) {
+          ctx.save();
+            var points = triangle.getPointList();
+            ctx.beginPath();
+            ctx.strokeStyle = strokeStyle;
+            ctx.fillStyle = strokeStyle;
+            ctx.moveTo(points[0].x, points[0].y);
+            ctx.lineTo(points[1].x, points[1].y);
+            ctx.lineTo(points[2].x, points[2].y);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.fill();
+          ctx.restore();
+        }
 
-        console.log(tri1);
-        console.log(tri2);
+        var tri1 = mesh.get(0, 2);
+        var tri2 = mesh.get(1, 1);
+        var tri3 = mesh.get(1, 2);
+        var tri4 = mesh.get(2, 1);
+        var tri5 = mesh.get(2, 2);
 
-        // var grid = new TriangleMesh(90, {});
+        drawTriangle(tri1, 'magenta');
+        drawTriangle(tri2, 'cyan');
+        drawTriangle(tri3, 'yellow');
+        drawTriangle(tri4, 'black');
+        drawTriangle(tri5, 'gray');
       }();
 
     </script>
