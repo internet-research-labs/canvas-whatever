@@ -9,8 +9,13 @@
  *  /  \  /  \  /
  *   2,1\/    \/
  *  ---------------
+ *
+ *  This class mostly just wraps the Triangle method with some math to know
+ *  exactly where everything is located.
  */
 function TriangleMesh(rad, props) {
+  props = props || {};
+
   this.x = props.x || 0;
   this.y = props.y || 0;
   this.rad = rad;
@@ -86,6 +91,15 @@ TriangleMesh.prototype.getBoundingBox = function (i, j) {
   };
 };
 
+/**
+ * Return the Triangle defined at i, j
+ */
+TriangleMesh.prototype.get = function (i, j) {
+  var center = this.getCenter(i, j);
+  var theta = (i + j) % 2 ? Math.PI/2 : -Math.PI/2;
+  return new RegularTriangle(center.x, center.y, this.rad, theta);
+};
+
 TriangleMesh.prototype.setup = function () {
   img = this.image;
   this.grid = [];
@@ -94,18 +108,10 @@ TriangleMesh.prototype.setup = function () {
     for (var j=0; j < 20; j++) {
       var sig = (i+j) % 2 ? 1 : -1;
       var theta = sig * Math.PI/2.;
-      var p = this.get(i, j);
-      this.grid.push(new TriangleClip(p.x, p.y, this.rad, img, 'black', theta));
+      var p = this.getCenter(i, j);
+      this.grid.push(new RegularTriangle(p.x, p.y, this.rad));
     }
   }
+};
 
-}
 
-TriangleMesh.prototype.draw = function (ctx) {
-  var self = this;
-  ctx.save();
-    self.grid.forEach(function (tri, i) {
-      tri.draw(ctx);
-    });
-  ctx.restore();
-}
