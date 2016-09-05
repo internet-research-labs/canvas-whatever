@@ -11,8 +11,6 @@
         display: inline-block;
       }
       canvas, canvas.lines {
-        width: 800px;
-        height: 800px;
       }
       #welkommen {
         position: fixed;
@@ -26,7 +24,7 @@
   <body>
     <!-- ak -->
     <div id="container">
-      <canvas width=1200 height=1200 class="merge-mesh" id="that-mesh-tho-1"></canvas>
+      <canvas width=400 height=300 class="merge-mesh" id="that-mesh-tho-1"></canvas>
       <div id="whatever">Whatever</div>
     </div>
     <script src="js/RegularTriangle.js"></script>
@@ -34,7 +32,7 @@
     <script>
       ~function () {
         var ctx = document.getElementById('that-mesh-tho-1').getContext('2d');
-        var mesh = new TriangleMesh(100);
+        var mesh = new TriangleMesh(70);
 
         function drawTriangle (triangle, strokeStyle) {
           ctx.save();
