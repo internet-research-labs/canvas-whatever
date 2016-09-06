@@ -1,0 +1,25 @@
+{
+  "name": "svv.im",
+  "version": "0.42.0",
+  "description": "svv.im",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/internet-research-labs/svv.im.git"
+  },
+  "keywords": [
+    "svvim"
+  ],
+  "author": "Matt Owen",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/internet-research-labs/svv.im/issues"
+  },
+  "homepage": "https://github.com/internet-research-labs/svv.im",
+  "devDependencies": {
+    "webpack": "^1.13.2"
+  }
+}
