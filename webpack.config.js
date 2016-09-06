@@ -3,6 +3,10 @@ module.exports = {
   output: {
     path: './dist',
     filename: 'svv.im.bundled.js',
+    publicPath: '/assets/',
+    externals: ['Ayy', 'RegularTriangle'],
+    libraryTarget: 'var',
+    library: 'svv',
   },
   module: {
     loaders: [
