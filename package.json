@@ -6,6 +6,7 @@
   "scripts": {
     "ayy": "node ./node_modules/webpack/bin/webpack.js",
     "watch": "node ./node_modules/webpack/bin/webpack.js --watch",
+    "lmao": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base=app/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

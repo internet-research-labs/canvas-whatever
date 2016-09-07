@@ -71,4 +71,4 @@ class RegularTriangle {
 }
 
 
-module.exports = RegularTriangle;
+export { RegularTriangle };
