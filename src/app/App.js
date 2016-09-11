@@ -1,6 +1,5 @@
-class App {
-  constructor () {
-    throw new Error('Calling empty constructor');
+export default class App {
+  constructor (params) {
   };
 
   setup (params) {
@@ -11,9 +10,7 @@ class App {
     throw new Error('Calling empty update function');
   };
 
-  draw (ctx) {
+  draw () {
     throw new Error('Calling empty draw function');
   };
 }
-
-export {App};

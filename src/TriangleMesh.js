@@ -11,7 +11,7 @@ import { RegularTriangle } from './RegularTriangle.js';
  *   2,1\/    \/ 2,1\/    \/   ,1\/  
  * --------------------------------------
  */
-class TriangleMesh {
+export default class TriangleMesh {
 
   /**
    * Construct a grid where xy-coordinates correspond to triangles instead of squares
@@ -101,6 +101,3 @@ class TriangleMesh {
     return new RegularTriangle(center.x, center.y, this.rad, theta);
   };
 }
-
-
-module.exports = TriangleMesh;

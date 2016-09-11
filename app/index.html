@@ -15,7 +15,6 @@
       }
       canvas, canvas.lines {
         width: 300px;
-        height: 300px;
       }
       #welkommen {
         position: fixed;
@@ -41,37 +40,25 @@
       <p>私は雰囲気を打つとき、私は流星のように燃えます。</p>
     </div>
     <div>
-      <canvas width=800 height=800 class="circles" id="why-not-1"></canvas>
+      <canvas width=1200 height=8000 class="circles" id="why-not-1"></canvas>
       <div id="whatever">Whatever</div>
     </div>
     <script src="assets/svv.im.bundled.js"></script>
     <script>
       ~function() {
-        var ctx = document.getElementById('why-not-1').getContext('2d');
-        var grid = new svv.TriangleMesh(100);
-        var tri1 = grid.get(1, 1);
-        var tri2 = grid.get(1, 2);
-        var tri3 = grid.get(2, 1);
+        console.log('-- Start --');
 
-        drawTriangle(tri1);
-        drawTriangle(tri2, 'black');
-        drawTriangle(tri3, 'magenta');
-
-        function drawTriangle(tri, style) {
-          style = style || 'cyan';
-          var points = tri.getPointList();
-
-          ctx.save();
-            ctx.fillStyle = style;
-            ctx.strokeStyle = style;
-            ctx.beginPath();
-            ctx.moveTo(points[0].x, points[0].y);
-            ctx.lineTo(points[1].x, points[1].y);
-            ctx.lineTo(points[2].x, points[2].y);
-            ctx.fill();
-            ctx.stroke();
-          ctx.restore();
-        }
+        var img = new Image();
+        img.onload = function () {
+          var app = new svv.YeahYeahApp({
+            id: 'why-not-1',
+            size: 100,
+            image: img,
+            images: [img]
+          });
+          app.draw();
+        };
+        img.src = 'img/oil-1.jpg';
       }();
 
     </script>
