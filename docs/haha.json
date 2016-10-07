@@ -1,0 +1,13 @@
+{
+  "parse": "full",
+    "response_type": "in_channel",
+    "text": "<http://i.imgur.com/KTDbDiP.jpg>",
+    "attachments": [
+    {
+      "image_url": "http://i.imgur.com/KTDbDiP.jpg"
+    }
+  ],
+    "unfurl_media": true,
+    "unfurl_links": true
+
+}
