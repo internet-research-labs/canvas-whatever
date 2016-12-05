@@ -45,22 +45,10 @@
     </div>
     <script src="assets/svv.im.bundled.js"></script>
     <script>
-      ~function() {
-        console.log('-- Start --');
-
-        var img = new Image();
-        img.onload = function () {
-          var app = new svv.YeahYeahApp({
-            id: 'why-not-1',
-            size: 100,
-            image: img,
-            images: [img]
-          });
-          app.draw();
-        };
-        img.src = 'img/oil-1.jpg';
-      }();
-
+    var app = new svv.DripApp({
+      id: "why-not-1",
+    });
+    app.loop();
     </script>
   </body>
 </html>

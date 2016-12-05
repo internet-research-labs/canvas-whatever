@@ -1,16 +1,22 @@
 export default class App {
-  constructor (params) {
+  constructor(params) {
   };
 
-  setup (params) {
+  setup(params) {
     throw new Error('Calling empty setup function');
   };
 
-  update (params) {
+  update(params) {
     throw new Error('Calling empty update function');
   };
 
-  draw () {
+  draw() {
     throw new Error('Calling empty draw function');
   };
+
+  loop() {
+    this.update();
+    this.draw();
+    requestAnimationFrame(this.loop.bind(this));
+  }
 }
