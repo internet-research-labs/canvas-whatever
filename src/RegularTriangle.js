@@ -1,7 +1,7 @@
 /**
  * Abstraction for a regular triangle
  */
-class RegularTriangle {
+export class RegularTriangle {
   constructor (x, y, size, theta) {
     this.x = x;
     this.y = y;
@@ -69,6 +69,3 @@ class RegularTriangle {
     };
   };
 }
-
-
-export { RegularTriangle };
