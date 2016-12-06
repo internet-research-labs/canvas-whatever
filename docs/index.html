@@ -44,27 +44,27 @@
     <div>
       <canvas width=800 height=800 class="circles" id="circle-grid-1"></canvas>
       <canvas width=300 height=300 id="triangles-1"></canvas>
-      <canvas width=900 height=900 id="lines-1" class="lines"></canvas>
+      <canvas width=900 height=900 class="lines" id="lines-1"></canvas>
       <canvas width=300 height=300 id="circles-1"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-2"></canvas>
-      <canvas width=900 height=900 id="lines-2" class="lines"></canvas>
+      <canvas width=900 height=900 class="lines" id="lines-2"></canvas>
       <canvas width=300 height=300 id="ok"></canvas>
-      <canvas width=900 height=900 id="blob-4" class="lines"></canvas>
+      <canvas width=900 height=900 id="blob-4"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-3"></canvas>
       <canvas width=300 height=300 id="triangles-2"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-4"></canvas>
-      <canvas width=900 height=900 id="blob-1" class="lines"></canvas>
-      <canvas width=900 height=900 id="blob-3" class="lines"></canvas>
+      <canvas width=900 height=900 id="blob-1"></canvas>
+      <canvas width=900 height=900 id="blob-3"></canvas>
       <canvas width=300 height=300 id="circles-2"></canvas>
       <canvas width=300 height=300 id="circles-3"></canvas>
-      <canvas width=900 height=900 id="lines-3" class="lines"></canvas>
+      <canvas width=900 height=900 class="lines" id="lines-3"></canvas>
       <canvas width=300 height=300 id="circles-4"></canvas>
       <canvas width=300 height=300 id="triangles-3"></canvas>
       <canvas width=300 height=300 id="circles-5"></canvas>
       <canvas width=300 height=300 id="circles-6"></canvas>
       <canvas width=300 height=300 id="circles-7"></canvas>
       <canvas width=300 height=300 id="circles-8"></canvas>
-      <canvas width=900 height=900 id="blob-2" class="lines"></canvas>
+      <canvas width=900 height=900 id="blob-2"></canvas>
       <div id="whatever">Whatever</div>
     </div>
     <script src="svv.im.bundled.js"></script>
@@ -85,6 +85,14 @@
       });
     };
     oilImage.src = 'img/oil-1.jpg';
+
+    document.querySelectorAll('.lines').forEach(function (el) {
+      var app = new svv.DripApp({
+        id: el.id,
+      });
+      app.setup();
+      app.loop();
+    });
 
 
     </script>

@@ -50,15 +50,20 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.YeahYeahApp = undefined;
+	exports.DripApp = exports.YeahYeahApp = undefined;
 
 	var _YeahYeahApp = __webpack_require__(1);
 
 	var _YeahYeahApp2 = _interopRequireDefault(_YeahYeahApp);
 
+	var _DripApp = __webpack_require__(5);
+
+	var _DripApp2 = _interopRequireDefault(_DripApp);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.YeahYeahApp = _YeahYeahApp2.default;
+	exports.DripApp = _DripApp2.default;
 
 /***/ },
 /* 1 */
@@ -278,6 +283,13 @@ var svv =
 	    key: 'draw',
 	    value: function draw() {
 	      throw new Error('Calling empty draw function');
+	    }
+	  }, {
+	    key: 'loop',
+	    value: function loop() {
+	      this.update();
+	      this.draw();
+	      requestAnimationFrame(this.loop.bind(this));
 	    }
 	  }]);
 
@@ -524,6 +536,216 @@ var svv =
 
 	  return RegularTriangle;
 	}();
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	var _Line = __webpack_require__(6);
+
+	var _Line2 = _interopRequireDefault(_Line);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function random_between(low, high) {
+	  return (high - low) * Math.random() + low;
+	}
+
+	var DripApp = function (_App) {
+	  _inherits(DripApp, _App);
+
+	  function DripApp(params) {
+	    _classCallCheck(this, DripApp);
+
+	    var _this = _possibleConstructorReturn(this, (DripApp.__proto__ || Object.getPrototypeOf(DripApp)).call(this, params));
+
+	    _this.id = params.id;
+	    _this.el = document.getElementById(_this.id);
+	    _this.width = _this.el.width;
+	    _this.height = _this.el.height;
+	    _this.ctx = _this.el.getContext('2d');
+	    _this.lines = [];
+	    return _this;
+	  }
+
+	  _createClass(DripApp, [{
+	    key: 'setup',
+	    value: function setup() {
+	      for (var i = 0; i < 5; i++) {
+	        this.lines.unshift(new _Line2.default(300 + 40 * i, 500 + 80 * i + 20 * Math.random(), 40 + 30 + 40 * i + random_between(-30, 80), 450 + random_between(-100, 100)));
+	      }
+	    }
+	  }, {
+	    key: 'update',
+	    value: function update(params) {}
+	  }, {
+	    key: 'clear',
+	    value: function clear() {
+	      var ctx = this.ctx;
+	      ctx.fillStyle = "black";
+	      ctx.fillRect(0, 0, this.width, this.height);
+	    }
+	  }, {
+	    key: 'draw',
+	    value: function draw() {
+	      this.clear();
+	      var ctx = this.ctx;
+	      var width = this.width;
+	      ctx.imageSmoothingEnabled = true;
+	      this.lines.forEach(function (val) {
+	        val.draw(ctx, width);
+	      });
+	    }
+	  }]);
+
+	  return DripApp;
+	}(_App3.default);
+
+	/**
+
+	~function () {
+
+	  function makeAndRender3(id) {
+	    var a = new DripApp(id);
+	    a.setup();
+	    a.update();
+	    a.draw();
+	  }
+	  var ids = [
+	    'lines-1',
+	    'lines-2',
+	    'lines-3',
+	  ];
+
+	  function whatever() {
+	    ids.forEach(function (val) {
+	      makeAndRender3(val);
+	    });
+	  }
+
+	  whatever();
+
+	  function rand(list) {
+	    var i = Math.floor(Math.random() * list.length);
+	    return list[i];
+	  }
+
+	  ~function loop() {
+	    makeAndRender3(rand(ids));
+	    setTimeout(loop, 9000);
+	  }();
+	}();
+	*/
+
+
+	exports.default = DripApp;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Line = function () {
+	  function Line(top, bottom, width, mid) {
+	    _classCallCheck(this, Line);
+
+	    this.bot = bottom;
+	    this.top = top;
+	    this.width = width;
+	    this.mid = mid;
+	  }
+
+	  _createClass(Line, [{
+	    key: 'drawDip',
+	    value: function drawDip(ctx, w) {
+	      var mid = this.mid;
+	      var m = mid;
+	      var d = Math.floor(this.width / 2);
+	      ctx.moveTo(m - d, this.top);
+	      sCurveTo(ctx, m - d, this.top, m, this.bot);
+	      sCurveTo(ctx, m, this.bot, m + d, this.top);
+	    }
+	  }, {
+	    key: 'drawShape',
+	    value: function drawShape(ctx, w) {
+	      var mid = this.mid;
+	      var m = mid;
+	      var d = Math.floor(this.width / 2);
+	    }
+	  }, {
+	    key: 'draw',
+	    value: function draw(ctx, w) {
+	      var mid = this.mid;
+	      var m = mid;
+	      var d = Math.floor(this.width / 2);
+
+	      ctx.save();
+	      ctx.beginPath();
+	      this.drawDip(ctx, w);
+	      ctx.closePath();
+	      ctx.fillStyle = 'black';
+	      ctx.strokeStyle = 'white';
+	      ctx.lineWidth = '2.5';
+	      ctx.fill();
+	      ctx.restore();
+
+	      ctx.beginPath();
+	      ctx.closePath();
+
+	      ctx.save();
+	      ctx.moveTo(0, this.top);
+	      ctx.lineTo(m - d, this.top);
+
+	      ctx.moveTo(m + d, this.top);
+	      ctx.lineTo(w, this.top);
+
+	      this.drawDip(ctx, w);
+
+	      ctx.strokeStyle = 'white';
+	      ctx.lineWidth = '4.5';
+	      ctx.stroke();
+	      ctx.restore();
+	    }
+	  }]);
+
+	  return Line;
+	}();
+
+	exports.default = Line;
+
+
+	function sCurveTo(ctx, x0, y0, x1, y1) {
+	  var x_mid = x0 + Math.floor((x1 - x0) / 2);
+	  var y_mid = y0 + Math.floor((y1 - y0) / 2);
+	  ctx.bezierCurveTo(x_mid, y0, x_mid, y1, x1, y1);
+	}
 
 /***/ }
 /******/ ]);

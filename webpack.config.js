@@ -1,7 +1,7 @@
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: './dist',
+    path: './docs',
     filename: 'svv.im.bundled.js',
     publicPath: '/assets/',
     externals: ['RegularTriangle'],
