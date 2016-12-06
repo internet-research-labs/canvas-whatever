@@ -46,39 +46,3 @@ export default class DripApp extends App {
     });
   }
 }
-
-/**
-
-~function () {
-
-  function makeAndRender3(id) {
-    var a = new DripApp(id);
-    a.setup();
-    a.update();
-    a.draw();
-  }
-  var ids = [
-    'lines-1',
-    'lines-2',
-    'lines-3',
-  ];
-
-  function whatever() {
-    ids.forEach(function (val) {
-      makeAndRender3(val);
-    });
-  }
-
-  whatever();
-
-  function rand(list) {
-    var i = Math.floor(Math.random() * list.length);
-    return list[i];
-  }
-
-  ~function loop() {
-    makeAndRender3(rand(ids));
-    setTimeout(loop, 9000);
-  }();
-}();
-*/

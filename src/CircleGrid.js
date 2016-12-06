@@ -1,3 +1,4 @@
+/*
 function Dot(x, y, rad, color) {
   this.x = x;
   this.y = y;
@@ -118,3 +119,4 @@ CircleApp.prototype.clear = function () {
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, this.width, this.height);
 };
+*/

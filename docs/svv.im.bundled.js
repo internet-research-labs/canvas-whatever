@@ -50,20 +50,29 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.DripApp = exports.YeahYeahApp = undefined;
-
-	var _YeahYeahApp = __webpack_require__(1);
-
-	var _YeahYeahApp2 = _interopRequireDefault(_YeahYeahApp);
+	exports.YeahYeahApp = exports.CircleApp = exports.DripApp = undefined;
 
 	var _DripApp = __webpack_require__(5);
 
 	var _DripApp2 = _interopRequireDefault(_DripApp);
 
+	var _CircleApp = __webpack_require__(10);
+
+	var _CircleApp2 = _interopRequireDefault(_CircleApp);
+
+	var _TriGridApp = __webpack_require__(7);
+
+	var _TriGridApp2 = _interopRequireDefault(_TriGridApp);
+
+	var _YeahYeahApp = __webpack_require__(1);
+
+	var _YeahYeahApp2 = _interopRequireDefault(_YeahYeahApp);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.YeahYeahApp = _YeahYeahApp2.default;
 	exports.DripApp = _DripApp2.default;
+	exports.CircleApp = _CircleApp2.default;
+	exports.YeahYeahApp = _YeahYeahApp2.default;
 
 /***/ },
 /* 1 */
@@ -619,43 +628,6 @@ var svv =
 	  return DripApp;
 	}(_App3.default);
 
-	/**
-
-	~function () {
-
-	  function makeAndRender3(id) {
-	    var a = new DripApp(id);
-	    a.setup();
-	    a.update();
-	    a.draw();
-	  }
-	  var ids = [
-	    'lines-1',
-	    'lines-2',
-	    'lines-3',
-	  ];
-
-	  function whatever() {
-	    ids.forEach(function (val) {
-	      makeAndRender3(val);
-	    });
-	  }
-
-	  whatever();
-
-	  function rand(list) {
-	    var i = Math.floor(Math.random() * list.length);
-	    return list[i];
-	  }
-
-	  ~function loop() {
-	    makeAndRender3(rand(ids));
-	    setTimeout(loop, 9000);
-	  }();
-	}();
-	*/
-
-
 	exports.default = DripApp;
 
 /***/ },
@@ -746,6 +718,357 @@ var svv =
 	  var y_mid = y0 + Math.floor((y1 - y0) / 2);
 	  ctx.bezierCurveTo(x_mid, y0, x_mid, y1, x1, y1);
 	}
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	var _Line = __webpack_require__(6);
+
+	var _Line2 = _interopRequireDefault(_Line);
+
+	var _TriGrid = __webpack_require__(8);
+
+	var _TriGrid2 = _interopRequireDefault(_TriGrid);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TriGridApp = function (_App) {
+	  _inherits(TriGridApp, _App);
+
+	  function TriGridApp(params) {
+	    _classCallCheck(this, TriGridApp);
+
+	    return _possibleConstructorReturn(this, (TriGridApp.__proto__ || Object.getPrototypeOf(TriGridApp)).call(this, params));
+	  }
+
+	  _createClass(TriGridApp, [{
+	    key: 'setup',
+	    value: function setup() {}
+	  }, {
+	    key: 'update',
+	    value: function update(params) {}
+	  }, {
+	    key: 'clear',
+	    value: function clear() {}
+	  }, {
+	    key: 'draw',
+	    value: function draw() {}
+	  }]);
+
+	  return TriGridApp;
+	}(_App3.default);
+
+	exports.default = TriGridApp;
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _Tri = __webpack_require__(9);
+
+	var _Tri2 = _interopRequireDefault(_Tri);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var TriGrid = function () {
+	  function TriGrid(x, y, rad, size, color, theta) {
+	    _classCallCheck(this, TriGrid);
+
+	    this.theta = theta;
+	    this.x = x;
+	    this.y = y;
+	    this.dx = this.rad;
+	    this.dy = this.rad;
+	    this.dots = [];
+	    this.size = size;
+	    this.rad = rad;
+	    this.col = color;
+	    this.dx = 1.73 / 2. * this.rad;
+	    this.dy = this.rad / 2.;
+
+	    // Final
+	    this.setup();
+	  }
+
+	  _createClass(TriGrid, [{
+	    key: 'get',
+	    value: function get(i, j) {
+
+	      var row = Math.floor(i / 2);
+
+	      var x = j * this.dx;
+	      var y = (4 * i - 2 * row) * this.dy;
+
+	      if (i % 2 == 0 && j % 2 == 0) {
+	        y += this.dy;
+	      } else if (j % 2 == 0) {
+	        y -= this.dy;
+	      }
+
+	      return {
+	        'x': Math.round(x),
+	        'y': Math.round(y)
+	      };
+	    }
+	  }, {
+	    key: 'setup',
+	    value: function setup() {
+	      var p1 = this.get(1, 1);
+	      var p2 = this.get(2, 1);
+	      var p3 = this.get(3, 1);
+	      var p4 = this.get(4, 1);
+	      var p5 = this.get(5, 1);
+
+	      var q1 = this.get(1, 2);
+	      var q2 = this.get(2, 2);
+	      var q3 = this.get(3, 2);
+	      var q4 = this.get(4, 2);
+	      var q5 = this.get(5, 2);
+
+	      var r2 = this.get(2, 3);
+	      var s2 = this.get(2, 4);
+
+	      this.grid = [new _Tri2.default(p1.x, p1.y, this.rad, 'black', -Math.PI / 2.), new _Tri2.default(p2.x, p2.y, this.rad, 'cyan', Math.PI / 2.), new _Tri2.default(p3.x, p3.y, this.rad, 'magenta', -Math.PI / 2.), new _Tri2.default(p4.x, p4.y, this.rad, 'gray', Math.PI / 2.), new _Tri2.default(p5.x, p5.y, this.rad, 'pink', -Math.PI / 2.), new _Tri2.default(q1.x, q1.y, this.rad, 'black', Math.PI / 2.), new _Tri2.default(q2.x, q2.y, this.rad, 'red', -Math.PI / 2.), new _Tri2.default(q3.x, q3.y, this.rad, 'magenta', Math.PI / 2.), new _Tri2.default(q4.x, q4.y, this.rad, 'red', -Math.PI / 2.), new _Tri2.default(q5.x, q5.y, this.rad, 'pink', Math.PI / 2.), new _Tri2.default(r2.x, r2.y, this.rad, 'yellow', Math.PI / 2.), new _Tri2.default(s2.x, s2.y, this.rad, 'blue', -Math.PI / 2.)];
+	    }
+	  }, {
+	    key: 'draw',
+	    value: function draw(ctx) {
+	      var self = this;
+	      ctx.save();
+	      self.grid.forEach(function (tri, i) {
+	        tri.draw(ctx);
+	      });
+	      ctx.restore();
+	    }
+	  }]);
+
+	  return TriGrid;
+	}();
+
+	exports.default = TriGrid;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Tri = function () {
+	  function Tri() {
+	    _classCallCheck(this, Tri);
+	  }
+
+	  _createClass(Tri, [{
+	    key: "constuctor",
+	    value: function constuctor(x, y, rad, color, theta, up) {
+	      this.x = x;
+	      this.y = y;
+	      this.rad = rad;
+	      this.color = color;
+	      this.theta = theta;
+	      this.up = up;
+	    }
+	  }]);
+
+	  return Tri;
+	}();
+
+	exports.default = Tri;
+
+
+	Tri.prototype.draw = function (ctx) {
+	  var sig = this.up ? -1 : +1;
+	  var t = this.theta;
+
+	  ctx.save();
+	  ctx.beginPath();
+	  ctx.fillStyle = this.color;
+	  ctx.strokeStyle = this.color;
+	  ctx.lineWidth = 0.90;
+
+	  ctx.moveTo(Math.round(this.x + this.rad * Math.cos(t)), Math.round(this.y + this.rad * Math.sin(t)));
+
+	  for (var i = 1; i < 3; i++) {
+	    var theta = i * 2 * Math.PI / 3;
+	    var u = this.x + sig * this.rad * Math.cos(theta + t);
+	    var v = this.y + sig * this.rad * Math.sin(theta + t);
+	    u = Math.round(u);
+	    v = Math.round(v);
+	    ctx.lineTo(u, v);
+	  }
+
+	  ctx.closePath();
+	  ctx.stroke();
+	  ctx.fill();
+
+	  var d = 1.73 / 2. * this.rad;
+	  //  var w = 1.73*this.rad;
+	  //  var h = 1.5*this.rad;
+	  //  var x = this.x - w/2.;
+	  //  var y = this.y - this.rad;
+	  //  ctx.beginPath();
+	  //  ctx.strokeStyle = 'black';
+	  //  ctx.rect(x, y, w, h);
+	  //  ctx.stroke();
+
+	  //  ctx.beginPath();
+	  //  ctx.arc(this.x, this.y, this.rad, 0, 2*Math.PI);
+	  //  ctx.stroke();
+	  ctx.restore();
+	};
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	var _TriGrid = __webpack_require__(8);
+
+	var _TriGrid2 = _interopRequireDefault(_TriGrid);
+
+	var _colors = __webpack_require__(11);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CircleApp = function (_App) {
+	  _inherits(CircleApp, _App);
+
+	  function CircleApp(params) {
+	    _classCallCheck(this, CircleApp);
+
+	    var _this = _possibleConstructorReturn(this, (CircleApp.__proto__ || Object.getPrototypeOf(CircleApp)).call(this, params));
+
+	    _this.id = params.id;
+	    return _this;
+	  }
+
+	  _createClass(CircleApp, [{
+	    key: 'setup',
+	    value: function setup() {
+	      this.el = document.getElementById(this.id);
+	      this.width = this.el.width;
+	      this.height = this.el.height;
+	      this.ctx = this.el.getContext('2d');
+	      this.grid = new _TriGrid2.default(4, 4, 60, 60, 'red');
+	      this.setupDots();
+	    }
+	  }, {
+	    key: 'setupDots',
+	    value: function setupDots() {
+	      var x = Math.floor(this.width * Math.random());
+	      var y = Math.floor(this.width * Math.random());
+	      var size = 10;
+
+	      var r = Math.floor(Math.random() * 255);
+	      var g = Math.floor(Math.random() * 255);
+	      var b = Math.floor(Math.random() * 255);
+	      var a = 1;
+	      var rgb = (0, _colors.rgba)(r, g, b, a);
+	    }
+	  }, {
+	    key: 'update',
+	    value: function update() {}
+	  }, {
+	    key: 'clear',
+	    value: function clear() {
+	      var ctx = this.ctx;
+	      ctx.fillStyle = "white";
+	      ctx.fillRect(0, 0, this.width, this.height);
+	    }
+	  }, {
+	    key: 'draw',
+	    value: function draw() {
+	      var ctx = this.ctx;
+	      this.clear();
+	      ctx.save();
+	      ctx.globalCompositeOperation = 'darken';
+	      this.grid.draw(ctx);
+	      ctx.restore();
+	    }
+	  }]);
+
+	  return CircleApp;
+	}(_App3.default);
+
+	exports.default = CircleApp;
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	function rgba(r, g, b, a) {
+	  return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+	}
+
+	function randomRGB() {
+	  var r = Math.floor(Math.random() * 255);
+	  var g = Math.floor(Math.random() * 255);
+	  var b = Math.floor(Math.random() * 255);
+	  var a = 1;
+	  return rgba(r, g, b, a);
+	}
+
+	exports.rgba = rgba;
+	exports.randomRGB = randomRGB;
 
 /***/ }
 /******/ ]);
