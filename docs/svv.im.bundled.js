@@ -50,7 +50,7 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.CircleApp = exports.DripApp = undefined;
+	exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.SplotchApp = exports.CircleApp = exports.DripApp = undefined;
 
 	var _DripApp = __webpack_require__(1);
 
@@ -59,6 +59,10 @@ var svv =
 	var _CircleApp = __webpack_require__(4);
 
 	var _CircleApp2 = _interopRequireDefault(_CircleApp);
+
+	var _SplotchApp = __webpack_require__(17);
+
+	var _SplotchApp2 = _interopRequireDefault(_SplotchApp);
 
 	var _TriGridApp = __webpack_require__(8);
 
@@ -84,6 +88,7 @@ var svv =
 
 	exports.DripApp = _DripApp2.default;
 	exports.CircleApp = _CircleApp2.default;
+	exports.SplotchApp = _SplotchApp2.default;
 	exports.WaveApp = _WaveApp2.default;
 	exports.YeahYeahApp = _YeahYeahApp2.default;
 	exports.TriangleMesh = _TriangleMesh2.default;
@@ -1553,6 +1558,150 @@ var svv =
 	}();
 
 	exports.default = TriangleClip;
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Splotch = function () {
+	  function Splotch(x, y, size) {
+	    _classCallCheck(this, Splotch);
+
+	    this.x = x;
+	    this.y = y;
+	    this.r = size;
+	    this.dots = [];
+	    this.addEdge();
+	    this.addEdge();
+	    this.addEdge();
+	    this.addEdge();
+	  }
+
+	  _createClass(Splotch, [{
+	    key: 'addEdge',
+	    value: function addEdge() {
+	      var lastDot = this.dots.slice(-1);
+	      lastDot = lastDot.length ? lastDot[0] : false;
+
+	      if (!lastDot) {
+	        this.dots = [{ x: this.x, y: this.y, r: this.r / 3 }];
+	      } else {
+	        var randomAngle = Math.random() * 2 * Math.PI;
+	        this.dots.push({
+	          x: lastDot.x + lastDot.r * Math.cos(randomAngle),
+	          y: lastDot.y + lastDot.r * Math.sin(randomAngle),
+	          r: this.r / 3.
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'update',
+	    value: function update() {}
+	  }, {
+	    key: 'draw',
+	    value: function draw(ctx, callback) {
+	      var self = this;
+	      var colors = ['cyan', 'yellow', 'magenta'];
+	      var i = 0;
+	      this.dots.forEach(function (dot) {
+	        ctx.save();
+
+	        ctx.globalCompositeOperation = 'lighter';
+	        i++;
+	        ctx.fillStyle = colors[i % colors.length];
+	        ctx.beginPath();
+	        ctx.arc(dot.x, dot.y, dot.r, 0, 2 * Math.PI);
+	        ctx.fill();
+	        ctx.restore();
+
+	        if (callback) {
+	          callback.call(self, ctx);
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'nudged',
+	    value: function nudged(dx, dy, dr) {
+	      return new Splotch(this.x + dx, this.y + dy, this.r + dr);
+	    }
+	  }]);
+
+	  return Splotch;
+	}();
+
+	var SplotchApp = function (_App) {
+	  _inherits(SplotchApp, _App);
+
+	  function SplotchApp(params) {
+	    _classCallCheck(this, SplotchApp);
+
+	    var _this = _possibleConstructorReturn(this, (SplotchApp.__proto__ || Object.getPrototypeOf(SplotchApp)).call(this, params));
+
+	    _this.id = params.id;
+	    return _this;
+	  }
+
+	  _createClass(SplotchApp, [{
+	    key: 'setup',
+	    value: function setup() {
+	      this.el = document.getElementById(this.id);
+	      this.width = this.el.width;
+	      this.height = this.el.height;
+	      this.ctx = this.el.getContext('2d');
+	      this.splotches = [];
+
+	      for (var i = 0; i < 100; i++) {
+	        var x = Math.random() * this.width;
+	        var y = Math.random() * this.height;
+	        var r = 10 + Math.random() * 20;
+	        this.splotches.push(new Splotch(x, y, r));
+	      }
+	    }
+	  }, {
+	    key: 'update',
+	    value: function update() {}
+	  }, {
+	    key: 'draw',
+	    value: function draw() {
+	      var ctx = this.ctx;
+	      this.clear();
+	      this.splotches.forEach(function (s) {
+	        s.draw(ctx);
+	      });
+	    }
+	  }, {
+	    key: 'clear',
+	    value: function clear() {
+	      var ctx = this.ctx;
+	      ctx.fillStyle = "black";
+	      ctx.fillRect(0, 0, this.width, this.height);
+	    }
+	  }]);
+
+	  return SplotchApp;
+	}(_App3.default);
+
+	exports.default = SplotchApp;
 
 /***/ }
 /******/ ]);

@@ -49,12 +49,12 @@
       <canvas width=800 height=800 class="circles" id="circle-grid-2"></canvas>
       <canvas width=900 height=900 class="lines" id="lines-2"></canvas>
       <canvas width=300 height=300 id="ok"></canvas>
-      <canvas width=900 height=900 id="blob-4"></canvas>
+      <canvas width=900 height=900 class="splotches" id="blob-4"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-3"></canvas>
       <canvas width=300 height=300 id="triangles-2"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-4"></canvas>
-      <canvas width=900 height=900 id="blob-1"></canvas>
-      <canvas width=900 height=900 id="blob-3"></canvas>
+      <canvas width=900 height=900 class="splotches" id="blob-1"></canvas>
+      <canvas width=900 height=900 class="splotches" id="blob-3"></canvas>
       <canvas width=300 height=300 id="circles-2"></canvas>
       <canvas width=300 height=300 id="circles-3"></canvas>
       <canvas width=900 height=900 class="lines" id="lines-3"></canvas>
@@ -64,7 +64,7 @@
       <canvas width=300 height=300 id="circles-6"></canvas>
       <canvas width=300 height=300 id="circles-7"></canvas>
       <canvas width=300 height=300 id="circles-8"></canvas>
-      <canvas width=900 height=900 id="blob-2"></canvas>
+      <canvas width=900 height=900 class="splotches" id="blob-2"></canvas>
       <div id="whatever">Whatever</div>
     </div>
     <script src="svv.im.bundled.js"></script>
@@ -94,10 +94,17 @@
       app.loop();
     });
 
+    document.querySelectorAll('.splotches').forEach(function (el) {
+      var app = new svv.SplotchApp({
+        id: el.id,
+      });
+      app.setup();
+      app.loop();
+    });
+
 
     </script>
 
-    <!--
     <script src="overlaps.js"></script>
     <script src="triangles.js"></script>
     <script src="lines.js"></script>
@@ -108,10 +115,14 @@
         function alter() {
           var r = Math.floor(Math.random() * 10000);
           window.history.replaceState({}, ':D', '/#' + r);
+          setTimeout(alter, 333);
         }
-        setInterval(alter, 333);
+        try {
+          alter();
+        } catch (e) {
+          console.error("Cannot execute alter");
+        }
       }();
     </script>
-    -->
   </body>
 </html>
