@@ -36,14 +36,14 @@
       <canvas width=800 height=800 class="circles" id="wave-1"></canvas>
       <div id="whatever">Whatever</div>
     </div>
-    <script src="wave-grid.js"></script>
+    <script src="svv.im.bundled.js"></script>
     <script>
       ~function() {
-        function alter() {
-          var r = Math.floor(Math.random() * 10000);
-          // window.history.replaceState({}, ':D', '/#' + r);
-        }
-        setInterval(alter, 333);
+        var app = new svv.WaveApp({
+          id: 'wave-1',
+        });
+        app.setup();
+        app.loop();
       }();
     </script>
   </body>
