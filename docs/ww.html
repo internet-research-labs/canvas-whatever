@@ -29,12 +29,11 @@
     <div id="container">
       <canvas width=700 height=300 class="merge-mesh" id="that-mesh-tho-1"></canvas>
     </div>
-    <script src="js/RegularTriangle.js"></script>
-    <script src="js/TriangleMesh.js"></script>
+    <script src="svv.im.bundled.js"></script>
     <script>
       ~function () {
         var ctx = document.getElementById('that-mesh-tho-1').getContext('2d');
-        var mesh = new TriangleMesh(70);
+        var mesh = new svv.TriangleMesh(70);
 
         function drawTriangle (triangle, strokeStyle) {
           ctx.save();

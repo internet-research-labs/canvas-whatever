@@ -18,7 +18,7 @@ export default class TriangleMesh {
    *  This class mostly just wraps the Triangle method with some math to know
    *  exactly where everything is located.
    */
-  constructor (rad, props) {
+  constructor(rad, props) {
     props = props || {};
 
     this.x = props.x || 0;
@@ -35,7 +35,7 @@ export default class TriangleMesh {
   /**
    * Return the xy-coordinate
    */
-  getCenter (i, j) {
+  getCenter(i, j) {
     var row = Math.floor(i / 2);
     var x = j * this.dx;
     var y = (4*i-2*row) * this.dy;
@@ -90,7 +90,7 @@ export default class TriangleMesh {
       'x': Math.round(x),
       'y': Math.round(y),
     };
-  };
+  }
 
   /**
    * Return the Triangle defined at i, j
@@ -99,5 +99,5 @@ export default class TriangleMesh {
     var center = this.getCenter(i, j);
     var theta = (i + j) % 2 ? Math.PI/2 : -Math.PI/2;
     return new RegularTriangle(center.x, center.y, this.rad, theta);
-  };
+  }
 }

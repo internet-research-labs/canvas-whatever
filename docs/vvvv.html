@@ -33,14 +33,13 @@
       <canvas width=1200 height=1200 class="wave-mesh" id="wave-mesh-1"></canvas>
       <div id="whatever">Whatever</div>
     </div>
-    <script src="js/TriangleClip.js"></script>
-    <script src="js/TriangleClipGrid.js"></script>
+    <script src="svv.im.bundled.js"></script>
     <script>
       ~function () {
         var ctx = document.getElementById('wave-mesh-1').getContext('2d');
         var img = new Image();
         img.onload = function () {
-          var grid = new TriangleClipGrid(0, 0, 90, img);
+          var grid = new svv.TriangleClipGrid(0, 0, 90, img);
           grid.draw(ctx);
         };
         img.src = 'img/oil-1.jpg'

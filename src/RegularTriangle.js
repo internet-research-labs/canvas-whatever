@@ -43,7 +43,7 @@ export class RegularTriangle {
     }
 
     return points;
-  };
+  }
 
   /**
    * Return an xy-coord bounding box
@@ -67,5 +67,5 @@ export class RegularTriangle {
       'w': x.max-x.min,
       'h': y.max-y.min,
     };
-  };
+  }
 }
