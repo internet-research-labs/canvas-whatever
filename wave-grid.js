@@ -2,22 +2,6 @@ function random(x, y) {
   return Math.random() * (y-x) + x
 }
 
-function Composed (a, b) {
-  this.a = a;
-  this.b = b;
-  this.setup();
-}
-
-Composed.prototype.setup = function () {
-  this.a.setup();
-  this.b.setup();
-};
-
-Composed.prototype.draw = function (ctx) {
-  this.a.draw(ctx);
-  this.b.draw(ctx);
-};
-
 function Piece(x, y, w, h, color) {
   this.x = x;
   this.y = y;
