@@ -43,7 +43,7 @@
     </div>
     <div>
       <canvas width=800 height=800 class="circles" id="circle-grid-1"></canvas>
-      <canvas width=300 height=300 id="triangles-1"></canvas>
+      <canvas width=300 height=300 class="triangles" id="triangles-1"></canvas>
       <canvas width=900 height=900 class="lines" id="lines-1"></canvas>
       <canvas width=300 height=300 id="circles-1"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-2"></canvas>
@@ -51,7 +51,7 @@
       <canvas width=300 height=300 id="ok"></canvas>
       <canvas width=900 height=900 class="splotches" id="blob-4"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-3"></canvas>
-      <canvas width=300 height=300 id="triangles-2"></canvas>
+      <canvas width=300 height=300 class="triangles" id="triangles-2"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-4"></canvas>
       <canvas width=900 height=900 class="splotches" id="blob-1"></canvas>
       <canvas width=900 height=900 class="splotches" id="blob-3"></canvas>
@@ -59,7 +59,7 @@
       <canvas width=300 height=300 id="circles-3"></canvas>
       <canvas width=900 height=900 class="lines" id="lines-3"></canvas>
       <canvas width=300 height=300 id="circles-4"></canvas>
-      <canvas width=300 height=300 id="triangles-3"></canvas>
+      <canvas width=300 height=300 class="triangles" id="triangles-3"></canvas>
       <canvas width=300 height=300 id="circles-5"></canvas>
       <canvas width=300 height=300 id="circles-6"></canvas>
       <canvas width=300 height=300 id="circles-7"></canvas>
@@ -73,7 +73,7 @@
     <script>
     var oilImage = new Image();
     oilImage.onload = function () {
-      document.querySelectorAll('.circles').forEach(function (el) {
+      document.querySelectorAll('.triangles').forEach(function (el) {
         var app = new svv.YeahYeahApp({
           id: el.id,
           size: 30,
@@ -91,7 +91,8 @@
         id: el.id,
       });
       app.setup();
-      app.loop();
+      app.update();
+      app.draw();
     });
 
     document.querySelectorAll('.splotches').forEach(function (el) {
@@ -99,7 +100,17 @@
         id: el.id,
       });
       app.setup();
-      app.loop();
+      app.update();
+      app.draw();
+    });
+
+    document.querySelectorAll('.circles').forEach(function (el) {
+      var app = new svv.CircleGridApp({
+        id: el.id,
+      });
+      app.setup();
+      app.update();
+      app.draw();
     });
 
 
