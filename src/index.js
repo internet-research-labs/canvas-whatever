@@ -1,6 +1,7 @@
 import DripApp from './app/DripApp.js';
 import CircleApp from './app/CircleApp.js';
 import CircleGridApp from './app/CircleGridApp.js';
+import OverlapApp from './app/OverlapApp.js';
 import SplotchApp from './app/SplotchApp.js';
 import TriGridApp from './app/TriGridApp.js';
 import WaveApp from './app/WaveApp.js';
@@ -13,6 +14,7 @@ export {
   DripApp,
   CircleApp,
   CircleGridApp,
+  OverlapApp,
   SplotchApp,
   WaveApp,
   YeahYeahApp,

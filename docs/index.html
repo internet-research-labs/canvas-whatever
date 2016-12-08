@@ -45,25 +45,25 @@
       <canvas width=800 height=800 class="circles" id="circle-grid-1"></canvas>
       <canvas width=300 height=300 class="triangles" id="triangles-1"></canvas>
       <canvas width=900 height=900 class="lines" id="lines-1"></canvas>
-      <canvas width=300 height=300 id="circles-1"></canvas>
+      <canvas width=300 height=300 class="overlaps" id="circles-1"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-2"></canvas>
       <canvas width=900 height=900 class="lines" id="lines-2"></canvas>
-      <canvas width=300 height=300 id="ok"></canvas>
+      <!-- <canvas width=300 height=300 id="ok"></canvas> -->
       <canvas width=900 height=900 class="splotches" id="blob-4"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-3"></canvas>
       <canvas width=300 height=300 class="triangles" id="triangles-2"></canvas>
       <canvas width=800 height=800 class="circles" id="circle-grid-4"></canvas>
       <canvas width=900 height=900 class="splotches" id="blob-1"></canvas>
       <canvas width=900 height=900 class="splotches" id="blob-3"></canvas>
-      <canvas width=300 height=300 id="circles-2"></canvas>
-      <canvas width=300 height=300 id="circles-3"></canvas>
+      <canvas width=300 height=300 class="overlaps" id="circles-2"></canvas>
+      <canvas width=300 height=300 class="overlaps" id="circles-3"></canvas>
       <canvas width=900 height=900 class="lines" id="lines-3"></canvas>
-      <canvas width=300 height=300 id="circles-4"></canvas>
+      <canvas width=300 height=300 class="overlaps" id="circles-4"></canvas>
       <canvas width=300 height=300 class="triangles" id="triangles-3"></canvas>
-      <canvas width=300 height=300 id="circles-5"></canvas>
-      <canvas width=300 height=300 id="circles-6"></canvas>
-      <canvas width=300 height=300 id="circles-7"></canvas>
-      <canvas width=300 height=300 id="circles-8"></canvas>
+      <canvas width=300 height=300 class="overlaps" id="circles-5"></canvas>
+      <canvas width=300 height=300 class="overlaps" id="circles-6"></canvas>
+      <canvas width=300 height=300 class="overlaps" id="circles-7"></canvas>
+      <canvas width=300 height=300 class="overlaps" id="circles-8"></canvas>
       <canvas width=900 height=900 class="splotches" id="blob-2"></canvas>
       <div id="whatever">Whatever</div>
     </div>
@@ -113,14 +113,18 @@
       app.draw();
     });
 
+    document.querySelectorAll('.overlaps').forEach(function (el) {
+      var app = new svv.OverlapApp({
+        id: el.id,
+      });
+      app.setup();
+      app.update();
+      app.draw();
+    });
+
 
     </script>
 
-    <script src="overlaps.js"></script>
-    <script src="triangles.js"></script>
-    <script src="lines.js"></script>
-    <script src="splotch.js"></script>
-    <script src="circle-grid.js"></script>
     <script>
       ~function() {
         function alter() {
