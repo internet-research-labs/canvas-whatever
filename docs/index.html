@@ -74,10 +74,9 @@
     var oilImage = new Image();
     oilImage.onload = function () {
       document.querySelectorAll('.triangles').forEach(function (el) {
-        var app = new svv.YeahYeahApp({
+        var app = new svv.TriOverlapApp({
           id: el.id,
           size: 30,
-          image: oilImage,
         });
         app.setup();
         app.update();
