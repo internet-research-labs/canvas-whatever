@@ -50,7 +50,7 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.SplotchApp = exports.OverlapApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
+	exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.SplotchApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
 
 	var _DripApp = __webpack_require__(1);
 
@@ -64,6 +64,10 @@ var svv =
 
 	var _CircleGridApp2 = _interopRequireDefault(_CircleGridApp);
 
+	var _CubeApp = __webpack_require__(21);
+
+	var _CubeApp2 = _interopRequireDefault(_CubeApp);
+
 	var _OverlapApp = __webpack_require__(9);
 
 	var _OverlapApp2 = _interopRequireDefault(_OverlapApp);
@@ -76,23 +80,23 @@ var svv =
 
 	var _TriGridApp2 = _interopRequireDefault(_TriGridApp);
 
-	var _TriOverlapApp = __webpack_require__(20);
+	var _TriOverlapApp = __webpack_require__(12);
 
 	var _TriOverlapApp2 = _interopRequireDefault(_TriOverlapApp);
 
-	var _WaveApp = __webpack_require__(12);
+	var _WaveApp = __webpack_require__(13);
 
 	var _WaveApp2 = _interopRequireDefault(_WaveApp);
 
-	var _YeahYeahApp = __webpack_require__(15);
+	var _YeahYeahApp = __webpack_require__(16);
 
 	var _YeahYeahApp2 = _interopRequireDefault(_YeahYeahApp);
 
-	var _TriangleMesh = __webpack_require__(16);
+	var _TriangleMesh = __webpack_require__(17);
 
 	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
 
-	var _TriangleClipGrid = __webpack_require__(18);
+	var _TriangleClipGrid = __webpack_require__(19);
 
 	var _TriangleClipGrid2 = _interopRequireDefault(_TriangleClipGrid);
 
@@ -101,6 +105,7 @@ var svv =
 	exports.DripApp = _DripApp2.default;
 	exports.CircleApp = _CircleApp2.default;
 	exports.CircleGridApp = _CircleGridApp2.default;
+	exports.CubeApp = _CubeApp2.default;
 	exports.OverlapApp = _OverlapApp2.default;
 	exports.SplotchApp = _SplotchApp2.default;
 	exports.TriOverlapApp = _TriOverlapApp2.default;
@@ -1140,7 +1145,133 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
-	var _Grid = __webpack_require__(13);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Tri = function () {
+	  function Tri(x, y, rad) {
+	    _classCallCheck(this, Tri);
+
+	    this.x = x;
+	    this.y = y;
+	    this.rad = rad;
+	  }
+
+	  _createClass(Tri, [{
+	    key: 'randomEdge',
+	    value: function randomEdge() {
+	      var randomAngle = Math.random() * 2 * Math.PI;
+	      return [this.x + this.rad * Math.cos(randomAngle), this.y + this.rad * Math.sin(randomAngle)];
+	    }
+	  }, {
+	    key: 'draw',
+	    value: function draw(ctx) {
+	      ctx.beginPath();
+	      ctx.strokeStyle = 'cyan';
+	      ctx.lineWidth = "1";
+
+	      ctx.moveTo(this.x + this.rad, this.y);
+
+	      for (var i = 1; i < 3; i++) {
+	        var theta = i * 2 * Math.PI / 3;
+	        var u = this.x + this.rad * Math.cos(theta);
+	        var v = this.y + this.rad * Math.sin(theta);
+	        ctx.lineTo(u, v);
+	      }
+
+	      ctx.closePath();
+	      ctx.stroke();
+	    }
+	  }]);
+
+	  return Tri;
+	}();
+
+	var TriangleOverlapApp = function (_App) {
+	  _inherits(TriangleOverlapApp, _App);
+
+	  function TriangleOverlapApp(params) {
+	    _classCallCheck(this, TriangleOverlapApp);
+
+	    var _this = _possibleConstructorReturn(this, (TriangleOverlapApp.__proto__ || Object.getPrototypeOf(TriangleOverlapApp)).call(this, params));
+
+	    _this.id = params.id;
+	    return _this;
+	  }
+
+	  _createClass(TriangleOverlapApp, [{
+	    key: 'addOverlap',
+	    value: function addOverlap() {
+	      if (!this.overlaps) {
+	        this.overlaps = [new Tri(150, 150, 30)];
+	        return;
+	      }
+
+	      var newPos = this.overlaps.slice(-1)[0].randomEdge();
+	      var rad = 10 + Math.random() * 10;
+
+	      this.overlaps.push(new Tri(newPos[0], newPos[1], rad));
+	    }
+	  }, {
+	    key: 'setup',
+	    value: function setup() {
+	      this.el = document.getElementById(this.id);
+	      this.width = this.el.width;
+	      this.height = this.el.height;
+	      this.ctx = this.el.getContext('2d');
+
+	      for (var i = 0; i < 4000; i++) {
+	        this.addOverlap();
+	      }
+	    }
+	  }, {
+	    key: 'update',
+	    value: function update() {}
+	  }, {
+	    key: 'draw',
+	    value: function draw() {
+	      var ctx = this.ctx;
+	      this.clear();
+	      this.overlaps.forEach(function (val) {
+	        val.draw(ctx);
+	      });
+	    }
+	  }, {
+	    key: 'clear',
+	    value: function clear() {
+	      var ctx = this.ctx;
+	      ctx.fillStyle = "black";
+	      ctx.fillRect(0, 0, this.width, this.height);
+	    }
+	  }]);
+
+	  return TriangleOverlapApp;
+	}(_App3.default);
+
+	exports.default = TriangleOverlapApp;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	var _Grid = __webpack_require__(14);
 
 	var _Grid2 = _interopRequireDefault(_Grid);
 
@@ -1203,7 +1334,7 @@ var svv =
 	exports.default = WaveApp;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1214,7 +1345,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _Piece = __webpack_require__(14);
+	var _Piece = __webpack_require__(15);
 
 	var _Piece2 = _interopRequireDefault(_Piece);
 
@@ -1270,7 +1401,7 @@ var svv =
 	exports.default = Grid;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1335,7 +1466,7 @@ var svv =
 	exports.default = Piece;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1352,7 +1483,7 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
-	var _TriangleMesh = __webpack_require__(16);
+	var _TriangleMesh = __webpack_require__(17);
 
 	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
 
@@ -1520,7 +1651,7 @@ var svv =
 	}
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1531,7 +1662,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _RegularTriangle = __webpack_require__(17);
+	var _RegularTriangle = __webpack_require__(18);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1658,7 +1789,7 @@ var svv =
 	exports.default = TriangleMesh;
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1759,7 +1890,7 @@ var svv =
 	}();
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1770,7 +1901,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _TriangleClip = __webpack_require__(19);
+	var _TriangleClip = __webpack_require__(20);
 
 	var _TriangleClip2 = _interopRequireDefault(_TriangleClip);
 
@@ -1867,7 +1998,7 @@ var svv =
 	exports.default = TriangleClipGrid;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2018,7 +2149,7 @@ var svv =
 	exports.default = TriangleClip;
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2035,113 +2166,44 @@ var svv =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var THREE = __webpack_require__(22);
 
-	var Tri = function () {
-	  function Tri(x, y, rad) {
-	    _classCallCheck(this, Tri);
+	var CubeApp = function (_App) {
+	  _inherits(CubeApp, _App);
 
-	    this.x = x;
-	    this.y = y;
-	    this.rad = rad;
+	  function CubeApp(params) {
+	    _classCallCheck(this, CubeApp);
+
+	    return _possibleConstructorReturn(this, (CubeApp.__proto__ || Object.getPrototypeOf(CubeApp)).call(this, params));
 	  }
 
-	  _createClass(Tri, [{
-	    key: 'randomEdge',
-	    value: function randomEdge() {
-	      var randomAngle = Math.random() * 2 * Math.PI;
-	      return [this.x + this.rad * Math.cos(randomAngle), this.y + this.rad * Math.sin(randomAngle)];
-	    }
-	  }, {
-	    key: 'draw',
-	    value: function draw(ctx) {
-	      ctx.beginPath();
-	      ctx.strokeStyle = 'cyan';
-	      ctx.lineWidth = "1";
-
-	      ctx.moveTo(this.x + this.rad, this.y);
-
-	      for (var i = 1; i < 3; i++) {
-	        var theta = i * 2 * Math.PI / 3;
-	        var u = this.x + this.rad * Math.cos(theta);
-	        var v = this.y + this.rad * Math.sin(theta);
-	        ctx.lineTo(u, v);
-	      }
-
-	      ctx.closePath();
-	      ctx.stroke();
-	    }
-	  }]);
-
-	  return Tri;
-	}();
-
-	var TriangleOverlapApp = function (_App) {
-	  _inherits(TriangleOverlapApp, _App);
-
-	  function TriangleOverlapApp(params) {
-	    _classCallCheck(this, TriangleOverlapApp);
-
-	    var _this = _possibleConstructorReturn(this, (TriangleOverlapApp.__proto__ || Object.getPrototypeOf(TriangleOverlapApp)).call(this, params));
-
-	    _this.id = params.id;
-	    return _this;
-	  }
-
-	  _createClass(TriangleOverlapApp, [{
-	    key: 'addOverlap',
-	    value: function addOverlap() {
-	      if (!this.overlaps) {
-	        this.overlaps = [new Tri(150, 150, 30)];
-	        return;
-	      }
-
-	      var newPos = this.overlaps.slice(-1)[0].randomEdge();
-	      var rad = 10 + Math.random() * 10;
-
-	      this.overlaps.push(new Tri(newPos[0], newPos[1], rad));
-	    }
-	  }, {
+	  _createClass(CubeApp, [{
 	    key: 'setup',
-	    value: function setup() {
-	      this.el = document.getElementById(this.id);
-	      this.width = this.el.width;
-	      this.height = this.el.height;
-	      this.ctx = this.el.getContext('2d');
-
-	      for (var i = 0; i < 4000; i++) {
-	        this.addOverlap();
-	      }
-	    }
+	    value: function setup(params) {}
 	  }, {
 	    key: 'update',
-	    value: function update() {}
+	    value: function update(params) {}
 	  }, {
 	    key: 'draw',
-	    value: function draw() {
-	      var ctx = this.ctx;
-	      this.clear();
-	      this.overlaps.forEach(function (val) {
-	        val.draw(ctx);
-	      });
-	    }
-	  }, {
-	    key: 'clear',
-	    value: function clear() {
-	      var ctx = this.ctx;
-	      ctx.fillStyle = "black";
-	      ctx.fillRect(0, 0, this.width, this.height);
-	    }
+	    value: function draw() {}
 	  }]);
 
-	  return TriangleOverlapApp;
+	  return CubeApp;
 	}(_App3.default);
 
-	exports.default = TriangleOverlapApp;
+	exports.default = CubeApp;
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	module.exports = THREE;
 
 /***/ }
 /******/ ]);

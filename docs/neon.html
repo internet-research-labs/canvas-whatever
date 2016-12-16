@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>svv.im | NGE</title>
+    <style>
+      .svv {
+        font-family: "Times New Roman", sans-serif;
+        font-stretch: expanded;
+        font-size: 30pt;
+      }
+      #yeayeayea {
+        width: 600px;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <canvas width=1800 height=900 id="yeayeayea"></canvas>
+    </div>
+    <script>
+window.onload = function () {
+  var el = document.getElementById("yeayeayea");
+  var ctx = el.getContext("2d");
+  var height = el.height;
+  ctx.font = "200px Times New Roman";
+  ctx.scale(0.79, 1);
+  // ctx.fillText("SVV.IM", 0, height-100);
+  ctx.fillText("NEON GENESIS", 0, height-20);
+};
+    </script>
+  </body>
+</html>
