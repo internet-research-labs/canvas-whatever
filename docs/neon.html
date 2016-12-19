@@ -16,17 +16,21 @@
   </head>
   <body>
     <div>
-      <canvas width=1800 height=900 id="yeayeayea"></canvas>
+      <canvas width=2400 height=1200 id="yeayeayea"></canvas>
     </div>
     <script>
 window.onload = function () {
   var el = document.getElementById("yeayeayea");
   var ctx = el.getContext("2d");
   var height = el.height;
-  ctx.font = "200px Times New Roman";
+  ctx.font = "200px Times New Roman bold";
   ctx.scale(0.79, 1);
   // ctx.fillText("SVV.IM", 0, height-100);
-  ctx.fillText("NEON GENESIS", 0, height-20);
+  ctx.fillText("NEON", 0, height-20-210*3);
+  ctx.fillText('GENESIS', 0, height-20-210*2);
+  ctx.fillText('EVANGELION', 0, height-20-210*1);
+  // ctx.fillText('she said, "don\'t make others suffer', 0, height-20-210*2);
+  // ctx.filltext('for your personal hatred."', 0, height-20-210*1);
 };
     </script>
   </body>

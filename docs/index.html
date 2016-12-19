@@ -31,6 +31,12 @@
         background: linear-gradient(to bottom,  #db9474 0%,#5689a0 66%,#6b7699 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#db9474', endColorstr='#6b7699',GradientType=0 ); /* IE6-9 */
       }
+
+      #cover-time {
+        font-size: 200%;
+        position: fixed;
+        color: white;
+      }
     </style>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta charset="UTF-8">
@@ -40,6 +46,9 @@
       <p>私は焼くよ、彼は思った、とすべての大陸の土地の上に灰に散在します。私が使用するために置かれます。ほんの少し ビットが、灰は灰であり、彼らは土地に追加します。</p>
       <p>彼は、今、鉄の重量、客観的、客観的なように、小石のように、弾丸のように、迅速に時間のすべてを落ちません 悲しいか幸せか何かが、唯一、彼は今ではすべてが、消えていたことを良いことを行うことができます希望 知っているだけで、自分自身のために良いことです。</p>
       <p>私は雰囲気を打つとき、私は流星のように燃えます。</p>
+    </div>
+    <div id="cover-time">
+      <time datetime="2017-01-15" id="someone-made-them"></time> 秒
     </div>
     <div>
       <canvas width=800 height=800 class="circles" id="circle-grid-1"></canvas>
@@ -122,6 +131,16 @@
       app.draw();
     });
 
+    function tick() {
+      var el = document.getElementById('someone-made-them');
+      var now = new Date();
+      var then = new Date(el.getAttribute('datetime'));
+      var seconds = (then-now)/1000.0;
+      el.innerHTML = seconds.toFixed(3);
+      setTimeout(tick, 33);
+    }
+
+    tick();
 
     </script>
 
