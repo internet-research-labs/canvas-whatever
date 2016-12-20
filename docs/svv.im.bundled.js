@@ -64,39 +64,39 @@ var svv =
 
 	var _CircleGridApp2 = _interopRequireDefault(_CircleGridApp);
 
-	var _CubeApp = __webpack_require__(21);
+	var _CubeApp = __webpack_require__(9);
 
 	var _CubeApp2 = _interopRequireDefault(_CubeApp);
 
-	var _OverlapApp = __webpack_require__(9);
+	var _OverlapApp = __webpack_require__(11);
 
 	var _OverlapApp2 = _interopRequireDefault(_OverlapApp);
 
-	var _SplotchApp = __webpack_require__(10);
+	var _SplotchApp = __webpack_require__(12);
 
 	var _SplotchApp2 = _interopRequireDefault(_SplotchApp);
 
-	var _TriGridApp = __webpack_require__(11);
+	var _TriGridApp = __webpack_require__(13);
 
 	var _TriGridApp2 = _interopRequireDefault(_TriGridApp);
 
-	var _TriOverlapApp = __webpack_require__(12);
+	var _TriOverlapApp = __webpack_require__(14);
 
 	var _TriOverlapApp2 = _interopRequireDefault(_TriOverlapApp);
 
-	var _WaveApp = __webpack_require__(13);
+	var _WaveApp = __webpack_require__(15);
 
 	var _WaveApp2 = _interopRequireDefault(_WaveApp);
 
-	var _YeahYeahApp = __webpack_require__(16);
+	var _YeahYeahApp = __webpack_require__(18);
 
 	var _YeahYeahApp2 = _interopRequireDefault(_YeahYeahApp);
 
-	var _TriangleMesh = __webpack_require__(17);
+	var _TriangleMesh = __webpack_require__(19);
 
 	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
 
-	var _TriangleClipGrid = __webpack_require__(19);
+	var _TriangleClipGrid = __webpack_require__(21);
 
 	var _TriangleClipGrid2 = _interopRequireDefault(_TriangleClipGrid);
 
@@ -833,6 +833,63 @@ var svv =
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var THREE = __webpack_require__(10);
+
+	var CubeApp = function (_App) {
+	  _inherits(CubeApp, _App);
+
+	  function CubeApp(params) {
+	    _classCallCheck(this, CubeApp);
+
+	    return _possibleConstructorReturn(this, (CubeApp.__proto__ || Object.getPrototypeOf(CubeApp)).call(this, params));
+	  }
+
+	  _createClass(CubeApp, [{
+	    key: 'setup',
+	    value: function setup(params) {}
+	  }, {
+	    key: 'update',
+	    value: function update(params) {}
+	  }, {
+	    key: 'draw',
+	    value: function draw() {}
+	  }]);
+
+	  return CubeApp;
+	}(_App3.default);
+
+	exports.default = CubeApp;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	module.exports = THREE;
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 	var OverlapApp = function (_App) {
 	  _inherits(OverlapApp, _App);
 
@@ -926,7 +983,7 @@ var svv =
 	}();
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1070,7 +1127,7 @@ var svv =
 	exports.default = SplotchApp;
 
 /***/ },
-/* 11 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1130,7 +1187,7 @@ var svv =
 	exports.default = TriGridApp;
 
 /***/ },
-/* 12 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1256,7 +1313,7 @@ var svv =
 	exports.default = TriangleOverlapApp;
 
 /***/ },
-/* 13 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1271,7 +1328,7 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
-	var _Grid = __webpack_require__(14);
+	var _Grid = __webpack_require__(16);
 
 	var _Grid2 = _interopRequireDefault(_Grid);
 
@@ -1334,7 +1391,7 @@ var svv =
 	exports.default = WaveApp;
 
 /***/ },
-/* 14 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1345,7 +1402,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _Piece = __webpack_require__(15);
+	var _Piece = __webpack_require__(17);
 
 	var _Piece2 = _interopRequireDefault(_Piece);
 
@@ -1401,7 +1458,7 @@ var svv =
 	exports.default = Grid;
 
 /***/ },
-/* 15 */
+/* 17 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1466,7 +1523,7 @@ var svv =
 	exports.default = Piece;
 
 /***/ },
-/* 16 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1483,7 +1540,7 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
-	var _TriangleMesh = __webpack_require__(17);
+	var _TriangleMesh = __webpack_require__(19);
 
 	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
 
@@ -1651,7 +1708,7 @@ var svv =
 	}
 
 /***/ },
-/* 17 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1662,7 +1719,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _RegularTriangle = __webpack_require__(18);
+	var _RegularTriangle = __webpack_require__(20);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1789,7 +1846,7 @@ var svv =
 	exports.default = TriangleMesh;
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1890,7 +1947,7 @@ var svv =
 	}();
 
 /***/ },
-/* 19 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1901,7 +1958,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _TriangleClip = __webpack_require__(20);
+	var _TriangleClip = __webpack_require__(22);
 
 	var _TriangleClip2 = _interopRequireDefault(_TriangleClip);
 
@@ -1998,7 +2055,7 @@ var svv =
 	exports.default = TriangleClipGrid;
 
 /***/ },
-/* 20 */
+/* 22 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2147,63 +2204,6 @@ var svv =
 	}();
 
 	exports.default = TriangleClip;
-
-/***/ },
-/* 21 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _App2 = __webpack_require__(2);
-
-	var _App3 = _interopRequireDefault(_App2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var THREE = __webpack_require__(22);
-
-	var CubeApp = function (_App) {
-	  _inherits(CubeApp, _App);
-
-	  function CubeApp(params) {
-	    _classCallCheck(this, CubeApp);
-
-	    return _possibleConstructorReturn(this, (CubeApp.__proto__ || Object.getPrototypeOf(CubeApp)).call(this, params));
-	  }
-
-	  _createClass(CubeApp, [{
-	    key: 'setup',
-	    value: function setup(params) {}
-	  }, {
-	    key: 'update',
-	    value: function update(params) {}
-	  }, {
-	    key: 'draw',
-	    value: function draw() {}
-	  }]);
-
-	  return CubeApp;
-	}(_App3.default);
-
-	exports.default = CubeApp;
-
-/***/ },
-/* 22 */
-/***/ function(module, exports) {
-
-	module.exports = THREE;
 
 /***/ }
 /******/ ]);
