@@ -13,6 +13,7 @@ import TriangleMesh from './TriangleMesh.js';
 import TriangleClipGrid from './TriangleClipGrid.js';
 
 import Loading from './components/Loading.jsx';
+import LoadingCube from './LoadingCube.js';
 
 export {
   // Apps
@@ -32,4 +33,5 @@ export {
 
   // Components
   Loading,
+  LoadingCube,
 };

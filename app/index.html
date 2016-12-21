@@ -41,9 +41,7 @@
       <p>私は雰囲気を打つとき、私は流星のように燃えます。</p>
     </div>
     <div id="container"></div>
-    <div>
-      <canvas width=1200 height=8000 class="circles" id="why-not-1"></canvas>
-      <div id="whatever">Whatever</div>
+    <div id="ayyy">
     </div>
 
     <!-- React Jazz -->
@@ -54,21 +52,35 @@
     <!-- Bundle -->
     <script src="assets/svv.im.bundled.js"></script>
 
-    <!-- :/ -->
+    <!--
     <script>
       ReactDOM.render(
         React.createElement(svv.Loading),
         document.getElementById('container')
       );
     </script>
-    <!--
-    <script>
-    var app = new svv.CubeApp({
-      id: "why-not-1",
-    });
-    app.setup();
-    app.loop();
-    </script>
     -->
+
+    <script>
+    var cube = new svv.LoadingCube({
+      el: document.getElementById('ayyy')
+    });
+
+    cube.start();
+
+    function render() {
+      requestAnimationFrame(render);
+      cube.draw();
+    }
+
+    render();
+
+//  var app = new svv.CubeApp({
+//    id: "why-not-1",
+//  });
+//  app.setup();
+//  app.loop();
+    </script>
+
   </body>
 </html>

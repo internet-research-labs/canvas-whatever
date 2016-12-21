@@ -50,7 +50,7 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.SplotchApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
+	exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.SplotchApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
 
 	var _DripApp = __webpack_require__(1);
 
@@ -104,6 +104,10 @@ var svv =
 
 	var _Loading2 = _interopRequireDefault(_Loading);
 
+	var _LoadingCube = __webpack_require__(25);
+
+	var _LoadingCube2 = _interopRequireDefault(_LoadingCube);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.DripApp = _DripApp2.default;
@@ -118,6 +122,7 @@ var svv =
 	exports.TriangleMesh = _TriangleMesh2.default;
 	exports.TriangleClipGrid = _TriangleClipGrid2.default;
 	exports.Loading = _Loading2.default;
+	exports.LoadingCube = _LoadingCube2.default;
 
 /***/ },
 /* 1 */
@@ -2263,6 +2268,105 @@ var svv =
 /***/ function(module, exports) {
 
 	module.exports = React;
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var THREE = __webpack_require__(10);
+
+	var STATES = ['starting', 'thinking', 'success', 'failure'];
+
+	var TRANSITION_STATES = ['starting->thinking', 'thinking->success', 'thinking->failure'];
+
+	var LoadingCube = function () {
+	  function LoadingCube(params) {
+	    _classCallCheck(this, LoadingCube);
+
+	    this.el = params.el;
+	    this.apect = this.el.width / this.el.height;
+	    this.cubes = [];
+	    this.camera = new THREE.PerspectiveCamera(50, 0.5 * this.aspect, 1, 10000);
+	    this.camera.position.x = 5;
+	    this.camera.position.y = 5;
+	    this.camera.position.z = 5;
+	    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+	    this.state = 'starting';
+	    this.scene = new THREE.Scene();
+
+	    // Setup renderer
+	    this.isRunning = true;
+
+	    // ....
+	    this.renderer = new THREE.WebGLRenderer();
+	    this.renderer.setPixelRatio(window.devicePixelRatio);
+	    console.log(this.el.width, this.el.height);
+	    this.renderer.setSize(300, 300);
+	    this.renderer.setClearColor(0x000000, 1);
+
+	    // Attach canvas
+	    this.el.appendChild(this.renderer.domElement);
+	  }
+
+	  _createClass(LoadingCube, [{
+	    key: 'start',
+	    value: function start() {
+	      this.state = 'starting';
+	      this.scene.background = new THREE.Color(0xff0000);
+	    }
+	  }, {
+	    key: 'think',
+	    value: function think() {
+	      this.state = 'thinking';
+	    }
+	  }, {
+	    key: 'succeed',
+	    value: function succeed() {
+	      this.state = 'succeed';
+	    }
+	  }, {
+	    key: 'fail',
+	    value: function fail() {
+	      this.state = 'failure';
+	    }
+	  }, {
+	    key: 'kill',
+	    value: function kill() {
+	      this.state = 'killed';
+	    }
+	  }, {
+	    key: 'draw',
+	    value: function draw() {
+	      // Do nothing
+	      if (!this.isRunning) {
+	        return;
+	      }
+
+	      this._draw();
+	    }
+	  }, {
+	    key: '_draw',
+	    value: function _draw() {
+	      // this.renderer.clear();
+	      this.renderer.render(this.scene, this.camera);
+	    }
+	  }]);
+
+	  return LoadingCube;
+	}();
+
+	exports.default = LoadingCube;
 
 /***/ }
 /******/ ]);
