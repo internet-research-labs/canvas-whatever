@@ -12,7 +12,10 @@ import YeahYeahApp from './app/YeahYeahApp.js';
 import TriangleMesh from './TriangleMesh.js';
 import TriangleClipGrid from './TriangleClipGrid.js';
 
+import Loading from './components/Loading.jsx';
+
 export {
+  // Apps
   DripApp,
   CircleApp,
   CircleGridApp,
@@ -23,6 +26,10 @@ export {
   WaveApp,
   YeahYeahApp,
 
+  // Objects
   TriangleMesh,
   TriangleClipGrid,
+
+  // Components
+  Loading,
 };

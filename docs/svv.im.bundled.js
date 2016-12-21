@@ -50,7 +50,7 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.SplotchApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
+	exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.SplotchApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
 
 	var _DripApp = __webpack_require__(1);
 
@@ -100,6 +100,10 @@ var svv =
 
 	var _TriangleClipGrid2 = _interopRequireDefault(_TriangleClipGrid);
 
+	var _Loading = __webpack_require__(23);
+
+	var _Loading2 = _interopRequireDefault(_Loading);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.DripApp = _DripApp2.default;
@@ -113,6 +117,7 @@ var svv =
 	exports.YeahYeahApp = _YeahYeahApp2.default;
 	exports.TriangleMesh = _TriangleMesh2.default;
 	exports.TriangleClipGrid = _TriangleClipGrid2.default;
+	exports.Loading = _Loading2.default;
 
 /***/ },
 /* 1 */
@@ -1599,12 +1604,11 @@ var svv =
 	  }, {
 	    key: 'drawTransfer',
 	    value: function drawTransfer(destTri, _ref) {
-	      var _ref2 = _slicedToArray(_ref, 4);
-
-	      var sx = _ref2[0];
-	      var sy = _ref2[1];
-	      var sw = _ref2[2];
-	      var sh = _ref2[3];
+	      var _ref2 = _slicedToArray(_ref, 4),
+	          sx = _ref2[0],
+	          sy = _ref2[1],
+	          sw = _ref2[2],
+	          sh = _ref2[3];
 
 	      var ctx = this.ctx;
 	      var points = destTri.getPointList();
@@ -2204,6 +2208,61 @@ var svv =
 	}();
 
 	exports.default = TriangleClip;
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(24);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Loading = function (_React$Component) {
+	  _inherits(Loading, _React$Component);
+
+	  function Loading() {
+	    _classCallCheck(this, Loading);
+
+	    return _possibleConstructorReturn(this, (Loading.__proto__ || Object.getPrototypeOf(Loading)).apply(this, arguments));
+	  }
+
+	  _createClass(Loading, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'span',
+	        null,
+	        'Fuck'
+	      );
+	    }
+	  }]);
+
+	  return Loading;
+	}(_react2.default.Component);
+
+	exports.default = Loading;
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	module.exports = React;
 
 /***/ }
 /******/ ]);

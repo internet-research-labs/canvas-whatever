@@ -34,17 +34,34 @@
     <meta charset="UTF-8">
   </head>
   <body>
+    <Loading></Loading>
     <div id='welkommen'>
       <p>私は焼くよ、彼は思った、とすべての大陸の土地の上に灰に散在します。私が使用するために置かれます。ほんの少し ビットが、灰は灰であり、彼らは土地に追加します。</p>
       <p>彼は、今、鉄の重量、客観的、客観的なように、小石のように、弾丸のように、迅速に時間のすべてを落ちません 悲しいか幸せか何かが、唯一、彼は今ではすべてが、消えていたことを良いことを行うことができます希望 知っているだけで、自分自身のために良いことです。</p>
       <p>私は雰囲気を打つとき、私は流星のように燃えます。</p>
     </div>
+    <div id="container"></div>
     <div>
       <canvas width=1200 height=8000 class="circles" id="why-not-1"></canvas>
       <div id="whatever">Whatever</div>
     </div>
+
+    <!-- React Jazz -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.min.js"></script>
+    <!-- THREE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
+    <!-- Bundle -->
     <script src="assets/svv.im.bundled.js"></script>
+
+    <!-- :/ -->
+    <script>
+      ReactDOM.render(
+        React.createElement(svv.Loading),
+        document.getElementById('container')
+      );
+    </script>
+    <!--
     <script>
     var app = new svv.CubeApp({
       id: "why-not-1",
@@ -52,5 +69,6 @@
     app.setup();
     app.loop();
     </script>
+    -->
   </body>
 </html>
