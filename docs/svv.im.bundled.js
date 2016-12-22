@@ -2281,6 +2281,8 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _Flow = __webpack_require__(26);
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var THREE = __webpack_require__(10);
@@ -2288,6 +2290,9 @@ var svv =
 	var STATES = ['starting', 'thinking', 'success', 'failure'];
 
 	var TRANSITION_STATES = ['starting->thinking', 'thinking->success', 'thinking->failure'];
+
+	var flowBuilder = new _Flow.FlowBuilder();
+	var flow = flowBuilder.addState("starting").addState("thinking").addState("success").addState("failure").addConnection("starting", "thinking").addConnection("thinking", "success").addConnection("thinking", "failure").build();
 
 	var LoadingCube = function () {
 	  function LoadingCube(params) {
@@ -2388,6 +2393,123 @@ var svv =
 	}();
 
 	exports.default = LoadingCube;
+
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Node of a Graph
+	 */
+	var FlowState = exports.FlowState = function () {
+	  function FlowState(idName, props) {
+	    _classCallCheck(this, FlowState);
+
+	    this.idName = idName;
+	    this.connected = {};
+	    this.props = props;
+	  }
+
+	  _createClass(FlowState, [{
+	    key: "connect",
+	    value: function connect(state) {
+	      this.connected[state.idName] = state;
+	    }
+	  }, {
+	    key: "disconnect",
+	    value: function disconnect(state) {
+	      delete this.connected[state.idName];
+	    }
+	  }]);
+
+	  return FlowState;
+	}();
+
+	/**
+	 * Digraph
+	 */
+
+
+	var Flow = exports.Flow = function () {
+	  function Flow() {
+	    _classCallCheck(this, Flow);
+
+	    this.lookup = {};
+	  }
+
+	  _createClass(Flow, [{
+	    key: "addState",
+	    value: function addState(flowState) {
+	      this.lookup[flowState.idName] = flowState;
+	    }
+	  }, {
+	    key: "connectStates",
+	    value: function connectStates(startState, endState) {
+	      var start = this.lookup[startState.idName];
+	      var end = this.lookup[endState.idName];
+	      start.connect(end);
+	    }
+	  }, {
+	    key: "getState",
+	    value: function getState(idName) {
+	      return this.lookup[idName];
+	    }
+	  }, {
+	    key: "getNodes",
+	    value: function getNodes() {
+	      return Object.values(this.lookup);
+	    }
+	  }, {
+	    key: "getEdges",
+	    value: function getEdges() {
+	      throw new Error("getEdges is Unimplemented");
+	      return undefined;
+	    }
+	  }]);
+
+	  return Flow;
+	}();
+
+	var FlowBuilder = exports.FlowBuilder = function () {
+	  function FlowBuilder() {
+	    _classCallCheck(this, FlowBuilder);
+
+	    this.flow = new Flow();
+	  }
+
+	  _createClass(FlowBuilder, [{
+	    key: "addState",
+	    value: function addState(idName, props) {
+	      this.flow.addState(new FlowState(idName, props));
+	      return this;
+	    }
+	  }, {
+	    key: "addConnection",
+	    value: function addConnection(startId, endId) {
+	      var start = this.flow.getState(startId);
+	      var end = this.flow.getState(endId);
+	      this.flow.connectStates(start, end);
+	      return this;
+	    }
+	  }, {
+	    key: "build",
+	    value: function build() {
+	      return this.flow;
+	    }
+	  }]);
+
+	  return FlowBuilder;
+	}();
 
 /***/ }
 /******/ ]);

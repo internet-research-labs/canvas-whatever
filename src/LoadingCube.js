@@ -1,3 +1,5 @@
+import {FlowBuilder, Flow, FlowState} from './Flow.js';
+
 var THREE = require('THREE');
 
 var STATES = [
@@ -12,6 +14,17 @@ var TRANSITION_STATES = [
   'thinking->success',
   'thinking->failure',
 ];
+
+let flowBuilder = new FlowBuilder();
+let flow = flowBuilder.addState("starting")
+                      .addState("thinking")
+                      .addState("success")
+                      .addState("failure")
+                      .addConnection("starting", "thinking")
+                      .addConnection("thinking", "success")
+                      .addConnection("thinking", "failure")
+                      .build();
+
 
 export default class LoadingCube {
   constructor(params) {
