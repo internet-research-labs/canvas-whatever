@@ -16,10 +16,16 @@ export class FlowState {
   disconnect(state) {
     delete this.connected[state.idName];
   }
+
+  hasConnection(state) {
+    return this.connected.hasOwnProperty(state.idName);
+  }
 }
 
 /**
  * Digraph
+ * Maybe this should be immutable... and we should just use the builder/make
+ * make function to make these.
  */
 export class Flow {
   constructor() {
@@ -40,16 +46,34 @@ export class Flow {
     return this.lookup[idName];
   }
 
+  /**
+   * Return a list of nodes
+   */
   getNodes() {
     return Object.values(this.lookup);
   }
 
+  /**
+   * Return a list of edges
+   */
   getEdges() {
     throw new Error("getEdges is Unimplemented");
     return undefined;
   }
 
+  hasState(id) {
+    return this.lookup.hasOwnProperty(id);
+  }
 
+  hasConnection(startId, endId) {
+    var start = this.getState(startId);
+    var end = this.getState(endId);
+    if (start == undefined || end == undefined) {
+      return false;
+    } else {
+      return start.hasConnection(end);
+    }
+  }
 }
 
 export class FlowBuilder {

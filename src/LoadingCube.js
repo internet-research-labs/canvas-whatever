@@ -2,29 +2,15 @@ import {FlowBuilder, Flow, FlowState} from './Flow.js';
 
 var THREE = require('THREE');
 
-var STATES = [
-  'starting',
-  'thinking',
-  'success',
-  'failure',
-];
-
-var TRANSITION_STATES = [
-  'starting->thinking',
-  'thinking->success',
-  'thinking->failure',
-];
-
-let flowBuilder = new FlowBuilder();
-let flow = flowBuilder.addState("starting")
-                      .addState("thinking")
-                      .addState("success")
-                      .addState("failure")
-                      .addConnection("starting", "thinking")
-                      .addConnection("thinking", "success")
-                      .addConnection("thinking", "failure")
-                      .build();
-
+let FLOW_STATES = new FlowBuilder()
+  .addState("starting")
+  .addState("thinking")
+  .addState("success")
+  .addState("failure")
+  .addConnection("starting", "thinking")
+  .addConnection("thinking", "success")
+  .addConnection("thinking", "failure")
+  .build();
 
 export default class LoadingCube {
   constructor(params) {
@@ -56,9 +42,9 @@ export default class LoadingCube {
     this.scene = new THREE.Scene();
     this.scene.add(this.singleCube);
 
-    this.singleCube.rotation.x += 0.1
+    this.singleCube.rotation.x += 0.3
     this.singleCube.rotation.y += 0.8
-    this.singleCube.rotation.y -= 0.4
+    this.singleCube.rotation.y -= 1.4
 
     // Setup renderer
     this.isRunning = true;
@@ -73,28 +59,18 @@ export default class LoadingCube {
     // Attach canvas
     this.el.appendChild(this.renderer.domElement);
 
-    console.log("Finished creating");
+
+    this.currentState = FLOW_STATES.getState("starting");
   }
 
-  start() {
-    this.state = 'starting';
-    this.scene.background = new THREE.Color( 0xFFFFFF );
+  getStates() {
+    throw new Error("Implement getStates");
   }
 
-  think() {
-    this.state = 'thinking';
-  }
-
-  succeed() {
-    this.state = 'succeed';
-  }
-
-  fail() {
-    this.state = 'failure';
-  }
-
-  kill() {
-    this.state = 'killed';
+  setState(stateId) {
+    var newState = FLOW_STATES.getState(stateId);
+    FLOW_STATES.hasConnection(this.currentState, newState);
+    this.currentState = newState;
   }
 
   draw() {

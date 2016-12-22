@@ -2287,12 +2287,7 @@ var svv =
 
 	var THREE = __webpack_require__(10);
 
-	var STATES = ['starting', 'thinking', 'success', 'failure'];
-
-	var TRANSITION_STATES = ['starting->thinking', 'thinking->success', 'thinking->failure'];
-
-	var flowBuilder = new _Flow.FlowBuilder();
-	var flow = flowBuilder.addState("starting").addState("thinking").addState("success").addState("failure").addConnection("starting", "thinking").addConnection("thinking", "success").addConnection("thinking", "failure").build();
+	var FLOW_STATES = new _Flow.FlowBuilder().addState("starting").addState("thinking").addState("success").addState("failure").addConnection("starting", "thinking").addConnection("thinking", "success").addConnection("thinking", "failure").build();
 
 	var LoadingCube = function () {
 	  function LoadingCube(params) {
@@ -2326,9 +2321,9 @@ var svv =
 	    this.scene = new THREE.Scene();
 	    this.scene.add(this.singleCube);
 
-	    this.singleCube.rotation.x += 0.1;
+	    this.singleCube.rotation.x += 0.3;
 	    this.singleCube.rotation.y += 0.8;
-	    this.singleCube.rotation.y -= 0.4;
+	    this.singleCube.rotation.y -= 1.4;
 
 	    // Setup renderer
 	    this.isRunning = true;
@@ -2342,34 +2337,20 @@ var svv =
 	    // Attach canvas
 	    this.el.appendChild(this.renderer.domElement);
 
-	    console.log("Finished creating");
+	    this.currentState = FLOW_STATES.getState("starting");
 	  }
 
 	  _createClass(LoadingCube, [{
-	    key: 'start',
-	    value: function start() {
-	      this.state = 'starting';
-	      this.scene.background = new THREE.Color(0xFFFFFF);
+	    key: 'getStates',
+	    value: function getStates() {
+	      throw new Error("Implement getStates");
 	    }
 	  }, {
-	    key: 'think',
-	    value: function think() {
-	      this.state = 'thinking';
-	    }
-	  }, {
-	    key: 'succeed',
-	    value: function succeed() {
-	      this.state = 'succeed';
-	    }
-	  }, {
-	    key: 'fail',
-	    value: function fail() {
-	      this.state = 'failure';
-	    }
-	  }, {
-	    key: 'kill',
-	    value: function kill() {
-	      this.state = 'killed';
+	    key: 'setState',
+	    value: function setState(stateId) {
+	      var newState = FLOW_STATES.getState(stateId);
+	      FLOW_STATES.hasConnection(this.currentState, newState);
+	      this.currentState = newState;
 	    }
 	  }, {
 	    key: 'draw',
@@ -2430,6 +2411,11 @@ var svv =
 	    value: function disconnect(state) {
 	      delete this.connected[state.idName];
 	    }
+	  }, {
+	    key: "hasConnection",
+	    value: function hasConnection(state) {
+	      return this.connected.hasOwnProperty(state.idName);
+	    }
 	  }]);
 
 	  return FlowState;
@@ -2437,6 +2423,8 @@ var svv =
 
 	/**
 	 * Digraph
+	 * Maybe this should be immutable... and we should just use the builder/make
+	 * make function to make these.
 	 */
 
 
@@ -2464,16 +2452,42 @@ var svv =
 	    value: function getState(idName) {
 	      return this.lookup[idName];
 	    }
+
+	    /**
+	     * Return a list of nodes
+	     */
+
 	  }, {
 	    key: "getNodes",
 	    value: function getNodes() {
 	      return Object.values(this.lookup);
 	    }
+
+	    /**
+	     * Return a list of edges
+	     */
+
 	  }, {
 	    key: "getEdges",
 	    value: function getEdges() {
 	      throw new Error("getEdges is Unimplemented");
 	      return undefined;
+	    }
+	  }, {
+	    key: "hasState",
+	    value: function hasState(id) {
+	      return this.lookup.hasOwnProperty(id);
+	    }
+	  }, {
+	    key: "hasConnection",
+	    value: function hasConnection(startId, endId) {
+	      var start = this.getState(startId);
+	      var end = this.getState(endId);
+	      if (start == undefined || end == undefined) {
+	        return false;
+	      } else {
+	        return start.hasConnection(end);
+	      }
 	    }
 	  }]);
 
