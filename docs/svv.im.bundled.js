@@ -50,7 +50,7 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.SplotchApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
+	exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.TriangleClipGridApp = exports.SplotchApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
 
 	var _DripApp = __webpack_require__(1);
 
@@ -79,6 +79,10 @@ var svv =
 	var _TriGridApp = __webpack_require__(13);
 
 	var _TriGridApp2 = _interopRequireDefault(_TriGridApp);
+
+	var _TriangleClipGridApp = __webpack_require__(27);
+
+	var _TriangleClipGridApp2 = _interopRequireDefault(_TriangleClipGridApp);
 
 	var _TriOverlapApp = __webpack_require__(14);
 
@@ -116,6 +120,7 @@ var svv =
 	exports.CubeApp = _CubeApp2.default;
 	exports.OverlapApp = _OverlapApp2.default;
 	exports.SplotchApp = _SplotchApp2.default;
+	exports.TriangleClipGridApp = _TriangleClipGridApp2.default;
 	exports.TriOverlapApp = _TriOverlapApp2.default;
 	exports.WaveApp = _WaveApp2.default;
 	exports.YeahYeahApp = _YeahYeahApp2.default;
@@ -245,9 +250,9 @@ var svv =
 	  }, {
 	    key: 'loop',
 	    value: function loop() {
+	      requestAnimationFrame(this.loop.bind(this));
 	      this.update();
 	      this.draw();
-	      requestAnimationFrame(this.loop.bind(this));
 	    }
 	  }]);
 
@@ -2524,6 +2529,112 @@ var svv =
 
 	  return FlowBuilder;
 	}();
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	var _utils = __webpack_require__(28);
+
+	var _TriangleMesh = __webpack_require__(19);
+
+	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 *
+	 */
+	function drawTriangle(ctx, tri, style) {
+	  var points = tri.getPointList();
+	  ctx.save();
+	  ctx.beginPath();
+	  ctx.fillStyle = style || 'black';
+	  ctx.strokeStyle = style || 'white';
+	  ctx.lineWidth = 1;
+	  ctx.moveTo(points[0].x, points[0].y);
+	  ctx.lineTo(points[1].x, points[1].y);
+	  ctx.lineTo(points[2].x, points[2].y);
+	  ctx.fill();
+	  ctx.fill();
+	  ctx.fill();
+	  ctx.fill();
+	  ctx.stroke();
+	  ctx.restore();
+	}
+
+	var TriangleClipGridApp = function (_App) {
+	  _inherits(TriangleClipGridApp, _App);
+
+	  function TriangleClipGridApp(params) {
+	    _classCallCheck(this, TriangleClipGridApp);
+
+	    var _this = _possibleConstructorReturn(this, (TriangleClipGridApp.__proto__ || Object.getPrototypeOf(TriangleClipGridApp)).call(this, params));
+
+	    _this.el = params.el;
+	    _this.ctx = _this.el.getContext('2d');
+	    _this.size = params.size || 30;
+	    _this.width = _this.el.width;
+	    _this.height = _this.el.height;
+	    _this.mesh = new _TriangleMesh2.default(_this.size, { x: 0, y: 0 });
+	    return _this;
+	  }
+
+	  _createClass(TriangleClipGridApp, [{
+	    key: 'setup',
+	    value: function setup() {}
+	  }, {
+	    key: 'update',
+	    value: function update() {}
+	  }, {
+	    key: 'draw',
+	    value: function draw() {
+	      for (var i = 0; i < 11; i++) {
+	        for (var j = 0; j < 21; j++) {
+	          var tri = this.mesh.get(i, j);
+	          var style = (0, _utils.select)(["black", "cyan", "white", "magenta"]);
+	          drawTriangle(this.ctx, tri, style);
+	        }
+	      }
+	    }
+	  }]);
+
+	  return TriangleClipGridApp;
+	}(_App3.default);
+
+	exports.default = TriangleClipGridApp;
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.select = select;
+	function select(list) {
+	  return list[Math.floor(Math.random() * list.length)];
+	}
 
 /***/ }
 /******/ ]);

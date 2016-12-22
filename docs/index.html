@@ -5,6 +5,7 @@
       html, body {
         font-family: sans-serif;
         font-size: 20pt;
+          margin: 0;
       }
       #ok {
         height: 300px;
@@ -15,7 +16,6 @@
       }
       canvas, canvas.lines {
         width: 300px;
-        height: 300px;
       }
       #welkommen {
         position: fixed;
@@ -44,6 +44,15 @@
         margin: 0 auto;
         max-width: 1000px;
       }
+
+      #you-wont-believe-it h3 span {
+        font-style: italic;
+          border-bottom: solid 2px black;
+      }
+
+      #triangles-stretched-01 {
+        width: 100%;
+      }
     </style>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta charset="UTF-8">
@@ -58,6 +67,10 @@
       <time datetime="2017-01-15" id="someone-made-them"></time> 秒
     </div>
     <!-- circles -->
+    <section id="you-wont-believe-it">
+      <h3><span id="yeah">du wuerdst nicht glaben, was ich gesehen habe</span></h3>
+      <canvas width=1600 height=399 id="triangles-stretched-01"></canvas>
+    </section>
     <section class="svv-project">
       <h3>Misc</h3>
       <div>
@@ -161,6 +174,13 @@
     }
 
     tick();
+
+    var app = new svv.TriangleClipGridApp({
+      el: document.getElementById("triangles-stretched-01"),
+      size: 100,
+    });
+    app.setup();
+    app.draw();
 
     </script>
 

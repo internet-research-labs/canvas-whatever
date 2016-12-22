@@ -5,6 +5,7 @@ import CubeApp from './app/CubeApp.js';
 import OverlapApp from './app/OverlapApp.js';
 import SplotchApp from './app/SplotchApp.js';
 import TriGridApp from './app/TriGridApp.js';
+import TriangleClipGridApp from './app/TriangleClipGridApp.js';
 import TriOverlapApp from './app/TriOverlapApp.js';
 import WaveApp from './app/WaveApp.js';
 import YeahYeahApp from './app/YeahYeahApp.js';
@@ -23,6 +24,7 @@ export {
   CubeApp,
   OverlapApp,
   SplotchApp,
+  TriangleClipGridApp,
   TriOverlapApp,
   WaveApp,
   YeahYeahApp,

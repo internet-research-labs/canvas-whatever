@@ -15,8 +15,8 @@ export default class App {
   };
 
   loop() {
+    requestAnimationFrame(this.loop.bind(this));
     this.update();
     this.draw();
-    requestAnimationFrame(this.loop.bind(this));
   }
 }
