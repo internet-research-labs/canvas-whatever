@@ -33,6 +33,7 @@ export default class TriangleClipGridApp extends App {
     this.width = this.el.width;
     this.height = this.el.height;
     this.mesh = new TriangleMesh(this.size, {x: 0, y: 0});
+    this.colors = params.colors;
   }
 
   setup() {
@@ -45,7 +46,7 @@ export default class TriangleClipGridApp extends App {
     for (let i=0; i < 11; i++) {
       for (let j=0; j < 21; j++) {
         let tri = this.mesh.get(i, j);
-        let style = select(["black", "cyan", "white", "magenta"]);
+        let style = select(this.colors);
         drawTriangle(this.ctx, tri, style);
       }
     }

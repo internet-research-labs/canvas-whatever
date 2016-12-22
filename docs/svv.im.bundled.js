@@ -80,35 +80,35 @@ var svv =
 
 	var _TriGridApp2 = _interopRequireDefault(_TriGridApp);
 
-	var _TriangleClipGridApp = __webpack_require__(27);
+	var _TriangleClipGridApp = __webpack_require__(14);
 
 	var _TriangleClipGridApp2 = _interopRequireDefault(_TriangleClipGridApp);
 
-	var _TriOverlapApp = __webpack_require__(14);
+	var _TriOverlapApp = __webpack_require__(18);
 
 	var _TriOverlapApp2 = _interopRequireDefault(_TriOverlapApp);
 
-	var _WaveApp = __webpack_require__(15);
+	var _WaveApp = __webpack_require__(19);
 
 	var _WaveApp2 = _interopRequireDefault(_WaveApp);
 
-	var _YeahYeahApp = __webpack_require__(18);
+	var _YeahYeahApp = __webpack_require__(22);
 
 	var _YeahYeahApp2 = _interopRequireDefault(_YeahYeahApp);
 
-	var _TriangleMesh = __webpack_require__(19);
+	var _TriangleMesh = __webpack_require__(16);
 
 	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
 
-	var _TriangleClipGrid = __webpack_require__(21);
+	var _TriangleClipGrid = __webpack_require__(23);
 
 	var _TriangleClipGrid2 = _interopRequireDefault(_TriangleClipGrid);
 
-	var _Loading = __webpack_require__(23);
+	var _Loading = __webpack_require__(25);
 
 	var _Loading2 = _interopRequireDefault(_Loading);
 
-	var _LoadingCube = __webpack_require__(25);
+	var _LoadingCube = __webpack_require__(27);
 
 	var _LoadingCube2 = _interopRequireDefault(_LoadingCube);
 
@@ -1217,6 +1217,352 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
+	var _utils = __webpack_require__(15);
+
+	var _TriangleMesh = __webpack_require__(16);
+
+	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 *
+	 */
+	function drawTriangle(ctx, tri, style) {
+	  var points = tri.getPointList();
+	  ctx.save();
+	  ctx.beginPath();
+	  ctx.fillStyle = style || 'black';
+	  ctx.strokeStyle = style || 'white';
+	  ctx.lineWidth = 1;
+	  ctx.moveTo(points[0].x, points[0].y);
+	  ctx.lineTo(points[1].x, points[1].y);
+	  ctx.lineTo(points[2].x, points[2].y);
+	  ctx.fill();
+	  ctx.fill();
+	  ctx.fill();
+	  ctx.fill();
+	  ctx.stroke();
+	  ctx.restore();
+	}
+
+	var TriangleClipGridApp = function (_App) {
+	  _inherits(TriangleClipGridApp, _App);
+
+	  function TriangleClipGridApp(params) {
+	    _classCallCheck(this, TriangleClipGridApp);
+
+	    var _this = _possibleConstructorReturn(this, (TriangleClipGridApp.__proto__ || Object.getPrototypeOf(TriangleClipGridApp)).call(this, params));
+
+	    _this.el = params.el;
+	    _this.ctx = _this.el.getContext('2d');
+	    _this.size = params.size || 30;
+	    _this.width = _this.el.width;
+	    _this.height = _this.el.height;
+	    _this.mesh = new _TriangleMesh2.default(_this.size, { x: 0, y: 0 });
+	    _this.colors = params.colors;
+	    return _this;
+	  }
+
+	  _createClass(TriangleClipGridApp, [{
+	    key: 'setup',
+	    value: function setup() {}
+	  }, {
+	    key: 'update',
+	    value: function update() {}
+	  }, {
+	    key: 'draw',
+	    value: function draw() {
+	      for (var i = 0; i < 11; i++) {
+	        for (var j = 0; j < 21; j++) {
+	          var tri = this.mesh.get(i, j);
+	          var style = (0, _utils.select)(this.colors);
+	          drawTriangle(this.ctx, tri, style);
+	        }
+	      }
+	    }
+	  }]);
+
+	  return TriangleClipGridApp;
+	}(_App3.default);
+
+	exports.default = TriangleClipGridApp;
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.select = select;
+	function select(list) {
+	  return list[Math.floor(Math.random() * list.length)];
+	}
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _RegularTriangle = __webpack_require__(17);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/*
+	 * --------------------------------------
+	 * \1,1 /\1,3 /\1,1 /\1,3 /\   1 /\1,
+	 *  \  /  \  /  \  /  \  /  \   /  \ 
+	 *   \/1,2 \/1,  \/1,2 \/1,4 \ /1,2 \
+	 *  ---------------------------------
+	 *   /\2,2 /\    /\2,2 /\    / \2,2 /
+	 *  /  \  /  \  /  \  /  \  /   \  / 
+	 *   2,1\/    \/ 2,1\/    \/   ,1\/  
+	 * --------------------------------------
+	 */
+	var TriangleMesh = function () {
+
+	  /**
+	   * Construct a grid where xy-coordinates correspond to triangles instead of squares
+	   *  This class mostly just wraps the Triangle method with some math to know
+	   *  exactly where everything is located.
+	   */
+	  function TriangleMesh(rad, props) {
+	    _classCallCheck(this, TriangleMesh);
+
+	    props = props || {};
+
+	    this.x = props.x || 0;
+	    this.y = props.y || 0;
+	    this.rad = rad;
+
+	    // This is probably rounded-off too much, and creating
+	    // a slight overlap along the edges of the triangles
+	    // TODO: Generalize this for a given theta
+	    this.dx = 1.73 / 2. * this.rad;
+	    this.dy = this.rad / 2.;
+	  }
+
+	  /**
+	   * Return the xy-coordinate
+	   */
+
+
+	  _createClass(TriangleMesh, [{
+	    key: 'getCenter',
+	    value: function getCenter(i, j) {
+	      var row = Math.floor(i / 2);
+	      var x = j * this.dx;
+	      var y = (4 * i - 2 * row) * this.dy;
+
+	      if (i % 2 == 0 && j % 2 == 0) {
+	        y += this.dy;
+	      } else if (j % 2 == 0) {
+	        y -= this.dy;
+	      }
+
+	      return {
+	        'x': Math.round(x),
+	        'y': Math.round(y)
+	      };
+	    }
+	  }, {
+	    key: 'getPoints',
+
+
+	    /**
+	     * Return the xy-coordinate
+	     */
+	    value: function getPoints(i, j) {
+	      var row = Math.floor(i / 2);
+	      var x = j * this.dx;
+	      var y = (4 * i - 2 * row) * this.dy;
+
+	      if (i % 2 == 0 && j % 2 == 0) {
+	        y += this.dy;
+	      } else if (j % 2 == 0) {
+	        y -= this.dy;
+	      }
+
+	      return {
+	        'x': Math.round(x),
+	        'y': Math.round(y)
+	      };
+	    }
+	  }, {
+	    key: 'getBoundingBox',
+
+
+	    /**
+	     * Return the xy-coordinate
+	     */
+	    value: function getBoundingBox(i, j) {
+	      var row = Math.floor(i / 2);
+	      var x = j * this.dx;
+	      var y = (4 * i - 2 * row) * this.dy;
+
+	      if (i % 2 == 0 && j % 2 == 0) {
+	        y += this.dy;
+	      } else if (j % 2 == 0) {
+	        y -= this.dy;
+	      }
+
+	      return {
+	        'x': Math.round(x),
+	        'y': Math.round(y)
+	      };
+	    }
+
+	    /**
+	     * Return the Triangle defined at i, j
+	     */
+
+	  }, {
+	    key: 'get',
+	    value: function get(i, j) {
+	      var center = this.getCenter(i, j);
+	      var theta = (i + j) % 2 ? Math.PI / 2 : -Math.PI / 2;
+	      return new _RegularTriangle.RegularTriangle(center.x, center.y, this.rad, theta);
+	    }
+	  }]);
+
+	  return TriangleMesh;
+	}();
+
+	exports.default = TriangleMesh;
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Abstraction for a regular triangle
+	 */
+	var RegularTriangle = exports.RegularTriangle = function () {
+	  function RegularTriangle(x, y, size, theta) {
+	    _classCallCheck(this, RegularTriangle);
+
+	    this.x = x;
+	    this.y = y;
+	    this.size = size;
+	    this.theta = theta || 0;
+	  }
+
+	  /**
+	   * Return the center point
+	   */
+
+
+	  _createClass(RegularTriangle, [{
+	    key: 'getCenter',
+	    value: function getCenter() {
+	      return {
+	        'x': this.x,
+	        'y': this.y
+	      };
+	    }
+
+	    /**
+	     * Return a list of points used to draw, etc. this triangle
+	     */
+
+	  }, {
+	    key: 'getPointList',
+	    value: function getPointList() {
+	      var t = this.theta;
+	      var rad = this.size;
+	      var points = [];
+
+	      for (var i = 0; i < 3; i++) {
+	        var theta = i * 2 * Math.PI / 3;
+
+	        var u = this.x + rad * Math.cos(t + theta);
+	        var v = this.y + rad * Math.sin(t + theta);
+
+	        u = Math.round(u);
+	        v = Math.round(v);
+
+	        points.push({
+	          'x': u,
+	          'y': v
+	        });
+	      }
+
+	      return points;
+	    }
+
+	    /**
+	     * Return an xy-coord bounding box
+	     */
+
+	  }, {
+	    key: 'getBoundingBox',
+	    value: function getBoundingBox() {
+	      var points = this.getPointList();
+	      var x = { 'min': +Infinity, 'max': -Infinity };
+	      var y = { 'min': +Infinity, 'max': -Infinity };
+
+	      // Naive
+	      points.forEach(function (val) {
+	        x.min = Math.min(x.min, val.x);
+	        x.max = Math.max(x.max, val.x);
+	        y.min = Math.min(y.min, val.y);
+	        y.max = Math.max(y.max, val.y);
+	      });
+
+	      return {
+	        'x': x.min,
+	        'y': y.min,
+	        'w': x.max - x.min,
+	        'h': y.max - y.min
+	      };
+	    }
+	  }]);
+
+	  return RegularTriangle;
+	}();
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1328,7 +1674,7 @@ var svv =
 	exports.default = TriangleOverlapApp;
 
 /***/ },
-/* 15 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1343,7 +1689,7 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
-	var _Grid = __webpack_require__(16);
+	var _Grid = __webpack_require__(20);
 
 	var _Grid2 = _interopRequireDefault(_Grid);
 
@@ -1406,7 +1752,7 @@ var svv =
 	exports.default = WaveApp;
 
 /***/ },
-/* 16 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1417,7 +1763,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _Piece = __webpack_require__(17);
+	var _Piece = __webpack_require__(21);
 
 	var _Piece2 = _interopRequireDefault(_Piece);
 
@@ -1473,7 +1819,7 @@ var svv =
 	exports.default = Grid;
 
 /***/ },
-/* 17 */
+/* 21 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1538,7 +1884,7 @@ var svv =
 	exports.default = Piece;
 
 /***/ },
-/* 18 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1555,7 +1901,7 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
-	var _TriangleMesh = __webpack_require__(19);
+	var _TriangleMesh = __webpack_require__(16);
 
 	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
 
@@ -1722,7 +2068,7 @@ var svv =
 	}
 
 /***/ },
-/* 19 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1733,246 +2079,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _RegularTriangle = __webpack_require__(20);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/*
-	 * --------------------------------------
-	 * \1,1 /\1,3 /\1,1 /\1,3 /\   1 /\1,
-	 *  \  /  \  /  \  /  \  /  \   /  \ 
-	 *   \/1,2 \/1,  \/1,2 \/1,4 \ /1,2 \
-	 *  ---------------------------------
-	 *   /\2,2 /\    /\2,2 /\    / \2,2 /
-	 *  /  \  /  \  /  \  /  \  /   \  / 
-	 *   2,1\/    \/ 2,1\/    \/   ,1\/  
-	 * --------------------------------------
-	 */
-	var TriangleMesh = function () {
-
-	  /**
-	   * Construct a grid where xy-coordinates correspond to triangles instead of squares
-	   *  This class mostly just wraps the Triangle method with some math to know
-	   *  exactly where everything is located.
-	   */
-	  function TriangleMesh(rad, props) {
-	    _classCallCheck(this, TriangleMesh);
-
-	    props = props || {};
-
-	    this.x = props.x || 0;
-	    this.y = props.y || 0;
-	    this.rad = rad;
-
-	    // This is probably rounded-off too much, and creating
-	    // a slight overlap along the edges of the triangles
-	    // TODO: Generalize this for a given theta
-	    this.dx = 1.73 / 2. * this.rad;
-	    this.dy = this.rad / 2.;
-	  }
-
-	  /**
-	   * Return the xy-coordinate
-	   */
-
-
-	  _createClass(TriangleMesh, [{
-	    key: 'getCenter',
-	    value: function getCenter(i, j) {
-	      var row = Math.floor(i / 2);
-	      var x = j * this.dx;
-	      var y = (4 * i - 2 * row) * this.dy;
-
-	      if (i % 2 == 0 && j % 2 == 0) {
-	        y += this.dy;
-	      } else if (j % 2 == 0) {
-	        y -= this.dy;
-	      }
-
-	      return {
-	        'x': Math.round(x),
-	        'y': Math.round(y)
-	      };
-	    }
-	  }, {
-	    key: 'getPoints',
-
-
-	    /**
-	     * Return the xy-coordinate
-	     */
-	    value: function getPoints(i, j) {
-	      var row = Math.floor(i / 2);
-	      var x = j * this.dx;
-	      var y = (4 * i - 2 * row) * this.dy;
-
-	      if (i % 2 == 0 && j % 2 == 0) {
-	        y += this.dy;
-	      } else if (j % 2 == 0) {
-	        y -= this.dy;
-	      }
-
-	      return {
-	        'x': Math.round(x),
-	        'y': Math.round(y)
-	      };
-	    }
-	  }, {
-	    key: 'getBoundingBox',
-
-
-	    /**
-	     * Return the xy-coordinate
-	     */
-	    value: function getBoundingBox(i, j) {
-	      var row = Math.floor(i / 2);
-	      var x = j * this.dx;
-	      var y = (4 * i - 2 * row) * this.dy;
-
-	      if (i % 2 == 0 && j % 2 == 0) {
-	        y += this.dy;
-	      } else if (j % 2 == 0) {
-	        y -= this.dy;
-	      }
-
-	      return {
-	        'x': Math.round(x),
-	        'y': Math.round(y)
-	      };
-	    }
-
-	    /**
-	     * Return the Triangle defined at i, j
-	     */
-
-	  }, {
-	    key: 'get',
-	    value: function get(i, j) {
-	      var center = this.getCenter(i, j);
-	      var theta = (i + j) % 2 ? Math.PI / 2 : -Math.PI / 2;
-	      return new _RegularTriangle.RegularTriangle(center.x, center.y, this.rad, theta);
-	    }
-	  }]);
-
-	  return TriangleMesh;
-	}();
-
-	exports.default = TriangleMesh;
-
-/***/ },
-/* 20 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/**
-	 * Abstraction for a regular triangle
-	 */
-	var RegularTriangle = exports.RegularTriangle = function () {
-	  function RegularTriangle(x, y, size, theta) {
-	    _classCallCheck(this, RegularTriangle);
-
-	    this.x = x;
-	    this.y = y;
-	    this.size = size;
-	    this.theta = theta || 0;
-	  }
-
-	  /**
-	   * Return the center point
-	   */
-
-
-	  _createClass(RegularTriangle, [{
-	    key: 'getCenter',
-	    value: function getCenter() {
-	      return {
-	        'x': this.x,
-	        'y': this.y
-	      };
-	    }
-
-	    /**
-	     * Return a list of points used to draw, etc. this triangle
-	     */
-
-	  }, {
-	    key: 'getPointList',
-	    value: function getPointList() {
-	      var t = this.theta;
-	      var rad = this.size;
-	      var points = [];
-
-	      for (var i = 0; i < 3; i++) {
-	        var theta = i * 2 * Math.PI / 3;
-
-	        var u = this.x + rad * Math.cos(t + theta);
-	        var v = this.y + rad * Math.sin(t + theta);
-
-	        u = Math.round(u);
-	        v = Math.round(v);
-
-	        points.push({
-	          'x': u,
-	          'y': v
-	        });
-	      }
-
-	      return points;
-	    }
-
-	    /**
-	     * Return an xy-coord bounding box
-	     */
-
-	  }, {
-	    key: 'getBoundingBox',
-	    value: function getBoundingBox() {
-	      var points = this.getPointList();
-	      var x = { 'min': +Infinity, 'max': -Infinity };
-	      var y = { 'min': +Infinity, 'max': -Infinity };
-
-	      // Naive
-	      points.forEach(function (val) {
-	        x.min = Math.min(x.min, val.x);
-	        x.max = Math.max(x.max, val.x);
-	        y.min = Math.min(y.min, val.y);
-	        y.max = Math.max(y.max, val.y);
-	      });
-
-	      return {
-	        'x': x.min,
-	        'y': y.min,
-	        'w': x.max - x.min,
-	        'h': y.max - y.min
-	      };
-	    }
-	  }]);
-
-	  return RegularTriangle;
-	}();
-
-/***/ },
-/* 21 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _TriangleClip = __webpack_require__(22);
+	var _TriangleClip = __webpack_require__(24);
 
 	var _TriangleClip2 = _interopRequireDefault(_TriangleClip);
 
@@ -2069,7 +2176,7 @@ var svv =
 	exports.default = TriangleClipGrid;
 
 /***/ },
-/* 22 */
+/* 24 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2220,7 +2327,7 @@ var svv =
 	exports.default = TriangleClip;
 
 /***/ },
-/* 23 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2231,7 +2338,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(24);
+	var _react = __webpack_require__(26);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -2269,13 +2376,13 @@ var svv =
 	exports.default = Loading;
 
 /***/ },
-/* 24 */
+/* 26 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 25 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2286,7 +2393,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _Flow = __webpack_require__(26);
+	var _Flow = __webpack_require__(28);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2381,7 +2488,7 @@ var svv =
 	exports.default = LoadingCube;
 
 /***/ },
-/* 26 */
+/* 28 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2529,112 +2636,6 @@ var svv =
 
 	  return FlowBuilder;
 	}();
-
-/***/ },
-/* 27 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _App2 = __webpack_require__(2);
-
-	var _App3 = _interopRequireDefault(_App2);
-
-	var _utils = __webpack_require__(28);
-
-	var _TriangleMesh = __webpack_require__(19);
-
-	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/**
-	 *
-	 */
-	function drawTriangle(ctx, tri, style) {
-	  var points = tri.getPointList();
-	  ctx.save();
-	  ctx.beginPath();
-	  ctx.fillStyle = style || 'black';
-	  ctx.strokeStyle = style || 'white';
-	  ctx.lineWidth = 1;
-	  ctx.moveTo(points[0].x, points[0].y);
-	  ctx.lineTo(points[1].x, points[1].y);
-	  ctx.lineTo(points[2].x, points[2].y);
-	  ctx.fill();
-	  ctx.fill();
-	  ctx.fill();
-	  ctx.fill();
-	  ctx.stroke();
-	  ctx.restore();
-	}
-
-	var TriangleClipGridApp = function (_App) {
-	  _inherits(TriangleClipGridApp, _App);
-
-	  function TriangleClipGridApp(params) {
-	    _classCallCheck(this, TriangleClipGridApp);
-
-	    var _this = _possibleConstructorReturn(this, (TriangleClipGridApp.__proto__ || Object.getPrototypeOf(TriangleClipGridApp)).call(this, params));
-
-	    _this.el = params.el;
-	    _this.ctx = _this.el.getContext('2d');
-	    _this.size = params.size || 30;
-	    _this.width = _this.el.width;
-	    _this.height = _this.el.height;
-	    _this.mesh = new _TriangleMesh2.default(_this.size, { x: 0, y: 0 });
-	    return _this;
-	  }
-
-	  _createClass(TriangleClipGridApp, [{
-	    key: 'setup',
-	    value: function setup() {}
-	  }, {
-	    key: 'update',
-	    value: function update() {}
-	  }, {
-	    key: 'draw',
-	    value: function draw() {
-	      for (var i = 0; i < 11; i++) {
-	        for (var j = 0; j < 21; j++) {
-	          var tri = this.mesh.get(i, j);
-	          var style = (0, _utils.select)(["black", "cyan", "white", "magenta"]);
-	          drawTriangle(this.ctx, tri, style);
-	        }
-	      }
-	    }
-	  }]);
-
-	  return TriangleClipGridApp;
-	}(_App3.default);
-
-	exports.default = TriangleClipGridApp;
-
-/***/ },
-/* 28 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.select = select;
-	function select(list) {
-	  return list[Math.floor(Math.random() * list.length)];
-	}
 
 /***/ }
 /******/ ]);

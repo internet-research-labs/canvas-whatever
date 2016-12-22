@@ -50,7 +50,7 @@
           border-bottom: solid 2px black;
       }
 
-      #triangles-stretched-01 {
+      .width-triangles {
         width: 100%;
       }
     </style>
@@ -69,7 +69,9 @@
     <!-- circles -->
     <section id="you-wont-believe-it">
       <h3><span id="yeah">du wuerdst nicht glaben, was ich gesehen habe</span></h3>
-      <canvas width=1600 height=399 id="triangles-stretched-01"></canvas>
+      <canvas width=1800 height=399 class="width-triangles" id="triangles-stretched-01"></canvas>
+      <!-- <canvas width=1800 height=299 class="width-triangles" id="triangles-stretched-02"></canvas> -->
+      <!-- <canvas width=1800 height=299 class="width-triangles" id="triangles-stretched-03"></canvas> -->
     </section>
     <section class="svv-project">
       <h3>Misc</h3>
@@ -175,12 +177,18 @@
 
     tick();
 
-    var app = new svv.TriangleClipGridApp({
-      el: document.getElementById("triangles-stretched-01"),
-      size: 100,
-    });
-    app.setup();
-    app.draw();
+    function drawTriangleGridApp(id, colors) {
+      var app = new svv.TriangleClipGridApp({
+        el: document.getElementById(id),
+        size: 100,
+        colors: colors,
+      });
+      app.setup();
+      app.draw();
+    }
+
+    drawTriangleGridApp("triangles-stretched-01", ["black", "white", "magenta", "cyan"]);
+    drawTriangleGridApp("triangles-stretched-02", ["black", "white", "gray"]);
 
     </script>
 
@@ -198,5 +206,3 @@
         }
       }();
     </script>
-  </body>
-</html>
