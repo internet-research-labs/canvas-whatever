@@ -7,7 +7,6 @@ export default class SmileApp extends App {
   constructor(params) {
     super(params);
     this.el = params.el;
-    console.log(this.el);
     this.width = this.el.width;
     this.height = this.el.height;
     this.ctx = this.el.getContext('2d');

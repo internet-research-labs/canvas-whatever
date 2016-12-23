@@ -50,7 +50,7 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.TriangleClipGridApp = exports.SplotchApp = exports.SmileApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
+	exports.Subtitle = exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.TriangleClipGridApp = exports.SplotchApp = exports.SmileApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
 
 	var _DripApp = __webpack_require__(1);
 
@@ -116,6 +116,8 @@ var svv =
 
 	var _LoadingCube2 = _interopRequireDefault(_LoadingCube);
 
+	var _Subtitles = __webpack_require__(31);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.DripApp = _DripApp2.default;
@@ -133,6 +135,7 @@ var svv =
 	exports.TriangleClipGrid = _TriangleClipGrid2.default;
 	exports.Loading = _Loading2.default;
 	exports.LoadingCube = _LoadingCube2.default;
+	exports.Subtitle = _Subtitles.Subtitle;
 
 /***/ },
 /* 1 */
@@ -2775,7 +2778,6 @@ var svv =
 	    var _this = _possibleConstructorReturn(this, (SmileApp.__proto__ || Object.getPrototypeOf(SmileApp)).call(this, params));
 
 	    _this.el = params.el;
-	    console.log(_this.el);
 	    _this.width = _this.el.width;
 	    _this.height = _this.el.height;
 	    _this.ctx = _this.el.getContext('2d');
@@ -2902,6 +2904,101 @@ var svv =
 	}();
 
 	exports.default = Smile;
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Subtitle = exports.Subtitle = function () {
+	  function Subtitle(text, style) {
+	    _classCallCheck(this, Subtitle);
+
+	    style = style || {};
+	    this.text = text;
+	    this.color = style.color || "white";
+	    this.outlineColor = style.outlineColor || "black";
+	    this.divWidth = style.width || "100%";
+	    this.divHeight = style.height;
+	    this.bottom = style.bottom || "0px";
+	    this.left = style.left || "0px";
+
+	    // 
+	    this.domElement = this._createDomElement();
+	  }
+
+	  _createClass(Subtitle, [{
+	    key: "_createDomElement",
+	    value: function _createDomElement() {
+	      var div = document.createElement("DIV");
+	      var span = document.createElement("SPAN");
+	      div.appendChild(span);
+	      span.innerHTML = this.text;
+
+	      div.style.position = "fixed";
+	      div.style.left = this.left;
+	      div.style.bottom = this.bottom;
+	      div.style.zIndex = "9000";
+	      div.style.textShadow = "0.5px 0.5px white, -0.5px -0.5px white, -0.5px 0.5px white, 0.5px -0.5px white";
+	      div.style.width = this.divWidth;
+	      if (this.divHeight) {
+	        div.style.height = this.divHeight;
+	      }
+
+	      div.style.textAlign = "center";
+
+	      return div;
+	    }
+	  }, {
+	    key: "showFor",
+	    value: function showFor(milliseconds, callback) {
+	      this.show();
+
+	      setTimeout(function () {
+	        this.hide();
+	        if (callback != undefined) {
+	          callback.apply(this);
+	        }
+	      }.bind(this), milliseconds);
+	    }
+	  }, {
+	    key: "show",
+	    value: function show() {
+	      document.body.appendChild(this.domElement);
+	    }
+	  }, {
+	    key: "hide",
+	    value: function hide() {
+	      document.body.removeChild(this.domElement);
+	    }
+	  }]);
+
+	  return Subtitle;
+	}();
+
+	var SubtitleScript = exports.SubtitleScript = function () {
+	  function SubtitleScript(style) {
+	    _classCallCheck(this, SubtitleScript);
+
+	    this.style = style;
+	  }
+
+	  _createClass(SubtitleScript, [{
+	    key: "showFor",
+	    value: function showFor(text, duration) {}
+	  }]);
+
+	  return SubtitleScript;
+	}();
 
 /***/ }
 /******/ ]);

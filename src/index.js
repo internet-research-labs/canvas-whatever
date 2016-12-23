@@ -17,6 +17,8 @@ import TriangleClipGrid from './TriangleClipGrid.js';
 import Loading from './components/Loading.jsx';
 import LoadingCube from './LoadingCube.js';
 
+import {Subtitle} from './subtitles/Subtitles.js';
+
 export {
   // Apps
   DripApp,
@@ -38,4 +40,7 @@ export {
   // Components
   Loading,
   LoadingCube,
+  Subtitle,
+
+  // 
 };
