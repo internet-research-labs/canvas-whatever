@@ -1,6 +1,6 @@
 export default class Smile {
   constructor(params) {
-    this.position = [100, 100];
+    this.position = params.position;
     this.faceSize = params.faceSize;
     this.eyeSize = this.faceSize/9.;
     this.eyeDistance = this.faceSize/3.;
