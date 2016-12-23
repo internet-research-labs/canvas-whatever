@@ -50,7 +50,7 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.TriangleClipGridApp = exports.SplotchApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
+	exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.TriangleClipGridApp = exports.SplotchApp = exports.SmileApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
 
 	var _DripApp = __webpack_require__(1);
 
@@ -71,6 +71,10 @@ var svv =
 	var _OverlapApp = __webpack_require__(11);
 
 	var _OverlapApp2 = _interopRequireDefault(_OverlapApp);
+
+	var _SmileApp = __webpack_require__(29);
+
+	var _SmileApp2 = _interopRequireDefault(_SmileApp);
 
 	var _SplotchApp = __webpack_require__(12);
 
@@ -119,6 +123,7 @@ var svv =
 	exports.CircleGridApp = _CircleGridApp2.default;
 	exports.CubeApp = _CubeApp2.default;
 	exports.OverlapApp = _OverlapApp2.default;
+	exports.SmileApp = _SmileApp2.default;
 	exports.SplotchApp = _SplotchApp2.default;
 	exports.TriangleClipGridApp = _TriangleClipGridApp2.default;
 	exports.TriOverlapApp = _TriOverlapApp2.default;
@@ -249,9 +254,11 @@ var svv =
 	    }
 	  }, {
 	    key: 'loop',
-	    value: function loop() {
-	      requestAnimationFrame(this.loop.bind(this));
-	      this.update();
+	    value: function loop(params) {
+	      requestAnimationFrame(function () {
+	        this.loop(params);
+	      }.bind(this));
+	      this.update(params);
 	      this.draw();
 	    }
 	  }]);
@@ -1305,6 +1312,7 @@ var svv =
 	});
 	exports.select = select;
 	exports.makeArray3 = makeArray3;
+	exports.rgb = rgb;
 	function select(list) {
 	  return list[Math.floor(Math.random() * list.length)];
 	}
@@ -1322,6 +1330,10 @@ var svv =
 	    }
 	  }
 	  return array3;
+	}
+
+	function rgb(r, g, b) {
+	  return "rgb(" + r + ", " + g + ", " + b + ")";
 	}
 
 /***/ },
@@ -2723,6 +2735,173 @@ var svv =
 
 	  return FlowBuilder;
 	}();
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	var _Smile = __webpack_require__(30);
+
+	var _Smile2 = _interopRequireDefault(_Smile);
+
+	var _utils = __webpack_require__(15);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SmileApp = function (_App) {
+	  _inherits(SmileApp, _App);
+
+	  function SmileApp(params) {
+	    _classCallCheck(this, SmileApp);
+
+	    var _this = _possibleConstructorReturn(this, (SmileApp.__proto__ || Object.getPrototypeOf(SmileApp)).call(this, params));
+
+	    _this.el = params.el;
+	    console.log(_this.el);
+	    _this.width = _this.el.width;
+	    _this.height = _this.el.height;
+	    _this.ctx = _this.el.getContext('2d');
+	    _this.color = "rgb(0, 200, 100)";
+
+	    _this.smile = new _Smile2.default({
+	      position: [_this.width / 2., _this.height / 2.],
+	      size: 30
+	    });
+	    return _this;
+	  }
+
+	  _createClass(SmileApp, [{
+	    key: 'update',
+	    value: function update(params) {
+	      this.color = params.color || "#000000";
+	      this.smile.update(params);
+	    }
+	  }, {
+	    key: 'draw',
+	    value: function draw() {
+	      this.ctx.save();
+	      this.ctx.clearRect(0, 0, this.width, this.height);
+	      this.ctx.restore();
+
+	      this.ctx.save();
+	      this.ctx.lineWidth = 3;
+	      this.ctx.fillStyle = this.ctx.strokeStyle = this.color;
+	      this.smile.draw(this.ctx);
+	      this.ctx.restore();
+	    }
+	  }]);
+
+	  return SmileApp;
+	}(_App3.default);
+
+	exports.default = SmileApp;
+
+/***/ },
+/* 30 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Smile = function () {
+	  function Smile(params) {
+	    _classCallCheck(this, Smile);
+
+	    this.position = [100, 100];
+	    this.faceSize = params.faceSize;
+	    this.eyeSize = this.faceSize / 9.;
+	    this.eyeDistance = this.faceSize / 3.;
+	    this.eyeSpacing = this.faceSize / 1.3;
+	  }
+
+	  _createClass(Smile, [{
+	    key: "update",
+	    value: function update(params) {
+	      this.faceSize = params.faceSize;
+	      this.eyeSize = params.eyeSize || this.faceSize / 9.;
+	      this.eyeSpacing = params.eyeSpacing || this.faceSize / 1.3;
+	      this.eyeDistance = params.eyeDistance || this.faceSize / 3.;
+	      this.mouthDistance = params.mouthDistance;
+	      this.mouthWidth = params.mouthWidth;
+	      this.mouthCrookedFactor = params.mouthCrookedFactor || 0.;
+	    }
+	  }, {
+	    key: "drawFace",
+	    value: function drawFace(ctx) {
+	      ctx.save();
+	      ctx.beginPath();
+	      ctx.arc(this.position[0], this.position[1], this.faceSize, 0, 2 * Math.PI);
+	      ctx.stroke();
+	      ctx.restore();
+	    }
+	  }, {
+	    key: "drawEyes",
+	    value: function drawEyes(ctx) {
+	      ctx.save();
+	      var x = this.position[0];
+	      var y = this.position[1] - this.eyeDistance;
+	      ctx.beginPath();
+	      ctx.arc(x - this.eyeSpacing / 2., y, this.eyeSize, 0, 2 * Math.PI);
+	      ctx.fill();
+	      ctx.closePath();
+
+	      ctx.beginPath();
+	      ctx.arc(x + this.eyeSpacing / 2., y, this.eyeSize, 0, 2 * Math.PI);
+	      ctx.fill();
+	      ctx.closePath();
+	      ctx.restore();
+	    }
+	  }, {
+	    key: "drawMouth",
+	    value: function drawMouth(ctx) {
+	      ctx.save();
+	      var x = this.position[0] - this.mouthWidth / 2.;
+	      var y = this.position[1] + this.mouthDistance;
+	      var kink = this.mouthCrookedFactor;
+	      ctx.beginPath();
+	      ctx.moveTo(x, y);
+	      ctx.quadraticCurveTo(x + this.mouthWidth / 2. + kink, y + 10, x + this.mouthWidth, y + kink);
+	      ctx.stroke();
+	      ctx.restore();
+	    }
+	  }, {
+	    key: "draw",
+	    value: function draw(ctx) {
+	      this.drawFace(ctx);
+	      this.drawEyes(ctx);
+	      this.drawMouth(ctx);
+	    }
+	  }]);
+
+	  return Smile;
+	}();
+
+	exports.default = Smile;
 
 /***/ }
 /******/ ]);

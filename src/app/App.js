@@ -14,9 +14,11 @@ export default class App {
     throw new Error('Calling empty draw function');
   };
 
-  loop() {
-    requestAnimationFrame(this.loop.bind(this));
-    this.update();
+  loop(params) {
+    requestAnimationFrame(function () {
+      this.loop(params);
+    }.bind(this));
+    this.update(params);
     this.draw();
   }
 }

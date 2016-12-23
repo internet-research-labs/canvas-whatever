@@ -39,15 +39,17 @@
       <p>彼は、今、鉄の重量、客観的、客観的なように、小石のように、弾丸のように、迅速に時間のすべてを落ちません 悲しいか幸せか何かが、唯一、彼は今ではすべてが、消えていたことを良いことを行うことができます希望 知っているだけで、自分自身のために良いことです。</p>
       <p>私は雰囲気を打つとき、私は流星のように燃えます。</p>
     </div>
+    <canvas width=300 height=300 id="smile-canvas"></canvas>
     <div id="container"></div>
-    <div id="ayyy">
-    </div>
+    <div id="ayyy"></div>
 
     <!-- React Jazz -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.min.js"></script>
     <!-- THREE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
+    <!-- dat gui -->
+    <script src="dat.gui.min.js"></script>
     <!-- Bundle -->
     <script src="assets/svv.im.bundled.js"></script>
 
@@ -61,8 +63,27 @@
     -->
 
     <script>
+    var smile = new svv.SmileApp({
+      el: document.getElementById('smile-canvas'),
+    });
+
+    var smileParams = {
+      "faceSize": 30.0, 
+      "eyeSize": 4.0,
+      "eyeSpacing": 0.0,
+      "eyeDistance": 0.0,
+      "mouthDistance": 10.0,
+      "mouthWidth": 10.0,
+      "mouthCrookedFactor": 0.0,
+      "color": "#00CCAA",
+    };
+
+    smile.update(smileParams);
+    smile.draw();
+    smile.loop(smileParams);
+
     var cube = new svv.LoadingCube({
-      el: document.getElementById('ayyy')
+      el: document.getElementById('ayyy'),
     });
 
     cube.setState('starting');
@@ -72,8 +93,22 @@
       cube.draw();
     }
 
-    render();
+    // render();
 
+    </script>
+
+    <script>
+    window.addEventListener('load', function () {
+    var gui = new dat.GUI();
+      gui.add(smileParams, "faceSize", 0, 100);
+      gui.add(smileParams, "eyeSize", 0, 30);
+      gui.add(smileParams, "eyeSpacing", 0, 100);
+      gui.add(smileParams, "eyeDistance", 0, 30);
+      gui.add(smileParams, "mouthDistance", 0, 30);
+      gui.add(smileParams, "mouthWidth", 0, 30);
+      gui.add(smileParams, "mouthCrookedFactor", -10, 10);
+      gui.add(smileParams, "color");
+    });
     </script>
 
   </body>

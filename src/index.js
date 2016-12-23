@@ -3,6 +3,7 @@ import CircleApp from './app/CircleApp.js';
 import CircleGridApp from './app/CircleGridApp.js';
 import CubeApp from './app/CubeApp.js';
 import OverlapApp from './app/OverlapApp.js';
+import SmileApp from './app/SmileApp.js';
 import SplotchApp from './app/SplotchApp.js';
 import TriGridApp from './app/TriGridApp.js';
 import TriangleClipGridApp from './app/TriangleClipGridApp.js';
@@ -23,6 +24,7 @@ export {
   CircleGridApp,
   CubeApp,
   OverlapApp,
+  SmileApp,
   SplotchApp,
   TriangleClipGridApp,
   TriOverlapApp,
