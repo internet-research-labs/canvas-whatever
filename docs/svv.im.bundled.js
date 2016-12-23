@@ -1304,8 +1304,24 @@ var svv =
 	  value: true
 	});
 	exports.select = select;
+	exports.makeArray3 = makeArray3;
 	function select(list) {
 	  return list[Math.floor(Math.random() * list.length)];
+	}
+
+	/**
+	 * Make 3 dimensional multi array
+	 *
+	 */
+	function makeArray3(height, width, depth) {
+	  var array3 = new Array(height);
+	  for (var i = 0; i < height; i++) {
+	    array3[i] = new Array(width);
+	    for (var j = 0; j < width; j++) {
+	      array3[i][j] = new Array(depth);
+	    }
+	  }
+	  return array3;
 	}
 
 /***/ },
@@ -2395,11 +2411,88 @@ var svv =
 
 	var _Flow = __webpack_require__(28);
 
+	var _utils = __webpack_require__(15);
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var THREE = __webpack_require__(10);
 
 	var FLOW_STATES = new _Flow.FlowBuilder().addState("starting").addState("thinking").addState("success").addState("failure").addConnection("starting", "thinking").addConnection("thinking", "success").addConnection("thinking", "failure").build();
+
+	var SplittableCube = function () {
+	  function SplittableCube(position, cubeSize, spacing) {
+	    _classCallCheck(this, SplittableCube);
+
+	    this.position = position || new THREE.Vector3(0, 0, 0);
+	    this.smallCubeSize = cubeSize || 1;
+	    this.spacing = spacing || 0.1 * cubeSize;
+
+	    this.isSplit = true;
+	    this.group = new THREE.Group();
+	    this._setupSmallCubes(this.smallCubeSize);
+
+	    this._forCubes(function (cube) {
+	      this.group.add(cube);
+	    });
+
+	    this.group.rotation.x += 1.0;
+	    this.group.rotation.y += 1.6;
+	    this.group.rotation.z -= 2.0;
+	  }
+
+	  _createClass(SplittableCube, [{
+	    key: '_newCube',
+	    value: function _newCube() {
+	      var geometry = new THREE.BoxGeometry(this.smallCubeSize, this.smallCubeSize, this.smallCubeSize);
+	      var material = new THREE.MeshNormalMaterial();
+	      return new THREE.Mesh(geometry, material);
+	    }
+
+	    /**
+	     * Worst function ever
+	     */
+
+	  }, {
+	    key: '_setupSmallCubes',
+	    value: function _setupSmallCubes(cubeSize) {
+	      this.cubes = (0, _utils.makeArray3)(3, 3, 3);
+
+	      this._forCubes(function (_, i, j, k) {
+	        var x = this.position.x + (j - 1) * (this.smallCubeSize + this.spacing);
+	        var y = this.position.y + (i - 1) * (this.smallCubeSize + this.spacing);
+	        var z = this.position.z + (k - 1) * (this.smallCubeSize + this.spacing);
+
+	        this.cubes[i][j][k] = this._newCube();
+	        cube = this.cubes[i][j][k];
+	        cube.position.x = x;
+	        cube.position.y = y;
+	        cube.position.z = z;
+	      });
+	    }
+	  }, {
+	    key: '_forCubes',
+	    value: function _forCubes(callback) {
+	      for (var i = 0; i < 3; i++) {
+	        for (var j = 0; j < 3; j++) {
+	          for (var k = 0; k < 3; k++) {
+	            callback.call(this, this.cubes[i][j][k], i, j, k);
+	          }
+	        }
+	      }
+	    }
+	  }, {
+	    key: '_positionSmallCubes',
+	    value: function _positionSmallCubes() {}
+	  }, {
+	    key: 'split',
+	    value: function split(distance) {}
+	  }, {
+	    key: 'unsplit',
+	    value: function unsplit() {}
+	  }]);
+
+	  return SplittableCube;
+	}();
 
 	var LoadingCube = function () {
 	  function LoadingCube(params) {
@@ -2410,15 +2503,10 @@ var svv =
 
 	    var geometry = new THREE.BoxGeometry(1, 1, 1);
 	    var material = new THREE.MeshBasicMaterial({
-	      wireframe: true,
+	      // wireframe: true,
 	      color: 0x000000
 	    });
 	    this.singleCube = new THREE.Mesh(geometry, material);
-
-	    //this.singleCube.position.x = 0;
-	    //this.singleCube.position.y = 0;
-	    //this.singleCube.position.z = 0;
-
 
 	    this.cubeList = [];
 
@@ -2431,11 +2519,10 @@ var svv =
 
 	    this.state = 'starting';
 	    this.scene = new THREE.Scene();
-	    this.scene.add(this.singleCube);
 
-	    this.singleCube.rotation.x += 0.3;
-	    this.singleCube.rotation.y += 0.8;
-	    this.singleCube.rotation.y -= 1.4;
+	    // ...
+	    this.splittableCube = new SplittableCube(new THREE.Vector3(0, 0, 0), 1);
+	    this.scene.add(this.splittableCube.group);
 
 	    // Setup renderer
 	    this.isRunning = true;
@@ -2444,7 +2531,7 @@ var svv =
 	    this.renderer = new THREE.WebGLRenderer();
 	    this.renderer.setPixelRatio(window.devicePixelRatio);
 	    this.renderer.setSize(300, 300);
-	    this.renderer.setClearColor(0x000000, 1);
+	    this.renderer.setClearColor(0xFFFFFF, 1);
 
 	    // Attach canvas
 	    this.el.appendChild(this.renderer.domElement);
@@ -2477,7 +2564,7 @@ var svv =
 	  }, {
 	    key: '_draw',
 	    value: function _draw() {
-	      // this.renderer.clear();
+	      this.renderer.clear();
 	      this.renderer.render(this.scene, this.camera);
 	    }
 	  }]);

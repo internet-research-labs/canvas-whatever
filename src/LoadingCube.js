@@ -1,4 +1,5 @@
 import {FlowBuilder, Flow, FlowState} from './Flow.js';
+import {makeArray3} from './utils.js';
 
 var THREE = require('THREE');
 
@@ -12,6 +13,77 @@ let FLOW_STATES = new FlowBuilder()
   .addConnection("thinking", "failure")
   .build();
 
+
+
+class SplittableCube {
+  constructor(position, cubeSize, spacing) {
+    this.position = position || new THREE.Vector3(0, 0, 0);
+    this.smallCubeSize = cubeSize || 1;
+    this.spacing = spacing || 0.1*cubeSize;
+
+    this.isSplit = true;
+    this.group = new THREE.Group();
+    this._setupSmallCubes(this.smallCubeSize);
+
+    this._forCubes(function (cube) {
+      this.group.add(cube);
+    });
+
+
+    this.group.rotation.x += 1.0;
+    this.group.rotation.y += 1.6;
+    this.group.rotation.z -= 2.0;
+  }
+
+  _newCube() {
+    let geometry = new THREE.BoxGeometry(
+      this.smallCubeSize,
+      this.smallCubeSize,
+      this.smallCubeSize
+    );
+    let material = new THREE.MeshNormalMaterial();
+    return new THREE.Mesh(geometry, material);
+  }
+
+  /**
+   * Worst function ever
+   */
+  _setupSmallCubes(cubeSize) {
+    this.cubes = makeArray3(3, 3, 3);
+
+    this._forCubes(function (_, i, j, k) {
+      let x = this.position.x + (j-1) * (this.smallCubeSize + this.spacing);
+      let y = this.position.y + (i-1) * (this.smallCubeSize + this.spacing);
+      let z = this.position.z + (k-1) * (this.smallCubeSize + this.spacing);
+
+      this.cubes[i][j][k] = this._newCube();
+      cube = this.cubes[i][j][k];
+      cube.position.x = x;
+      cube.position.y = y;
+      cube.position.z = z;
+    });
+  }
+
+  _forCubes(callback) {
+    for (let i=0; i < 3; i++) {
+      for (let j=0; j < 3; j++) {
+        for (let k=0; k < 3; k++) {
+          callback.call(this, this.cubes[i][j][k], i, j, k);
+        }
+      }
+    }
+  }
+
+  _positionSmallCubes() {
+  }
+
+  split(distance) {
+  }
+
+  unsplit() {
+  }
+}
+
 export default class LoadingCube {
   constructor(params) {
     this.el = params.el;
@@ -19,15 +91,10 @@ export default class LoadingCube {
 
     var geometry = new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshBasicMaterial({
-      wireframe: true,
+      // wireframe: true,
       color: 0x000000,
     });
     this.singleCube = new THREE.Mesh(geometry, material);
-
-    //this.singleCube.position.x = 0;
-    //this.singleCube.position.y = 0;
-    //this.singleCube.position.z = 0;
-
 
     this.cubeList = [];
 
@@ -40,11 +107,10 @@ export default class LoadingCube {
 
     this.state = 'starting';
     this.scene = new THREE.Scene();
-    this.scene.add(this.singleCube);
 
-    this.singleCube.rotation.x += 0.3
-    this.singleCube.rotation.y += 0.8
-    this.singleCube.rotation.y -= 1.4
+    // ...
+    this.splittableCube = new SplittableCube(new THREE.Vector3(0, 0, 0), 1);
+    this.scene.add(this.splittableCube.group);
 
     // Setup renderer
     this.isRunning = true;
@@ -54,13 +120,14 @@ export default class LoadingCube {
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(300, 300);
-    this.renderer.setClearColor(0x000000, 1);
+    this.renderer.setClearColor(0xFFFFFF, 1);
 
     // Attach canvas
     this.el.appendChild(this.renderer.domElement);
 
 
     this.currentState = FLOW_STATES.getState("starting");
+
   }
 
   getStates() {
@@ -83,7 +150,7 @@ export default class LoadingCube {
   }
 
   _draw() {
-    // this.renderer.clear();
+    this.renderer.clear();
     this.renderer.render(this.scene, this.camera);
   }
 }
