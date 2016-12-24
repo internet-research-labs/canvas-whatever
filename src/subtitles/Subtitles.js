@@ -1,3 +1,5 @@
+import {waterfall} from 'async';
+
 export class Subtitle {
   constructor(text, style) {
     style = style || {};
@@ -59,8 +61,21 @@ export class Subtitle {
 export class SubtitleScript {
   constructor(style) {
     this.style = style;
+    this.functions = []
   }
 
-  showFor(text, duration) {
+  add(text, duration) {
+    this.functions.push((next) => {
+      let sub = new Subtitle(text, this.style);
+      sub.showFor(duration, this.read.bind(this));
+    });
+    return this;
+  }
+
+  read() {
+    let fn = this.functions.shift();
+    if (fn) {
+      fn.call();
+    }
   }
 }

@@ -111,8 +111,30 @@
     </script>
 
     <script>
-    var script = new svv.Subtitle("Panda panda panda", {bottom: ".5em"});
-    script.showFor(3000);
+    var script = new svv.SubtitleScript({
+      bottom: "10px",
+      // width: "300px",
+    });
+    for (var i=0; i < 100; i++) {
+      var string = "Panda";
+      var length = Math.floor(Math.random() * 7);
+      for (var j=0; j < length; j++) {
+        string += " panda";
+      }
+
+      script.add(string, length * 250);
+    }
+
+    script.read();
+
+//  var script = new svv.SubtitleScript()
+//                      .add("Panda", 3000)
+//                      .add("Panda panda", 3000)
+//                      .add("Panda panda panda", 3000)
+//                      .add("Panda panda panda panda", 3000)
+//                      .read();
+    // var script = new svv.Subtitle("Panda panda panda", {bottom: ".5em"});
+    // script.showFor(3000);
     </script>
 
 
