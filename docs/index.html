@@ -177,18 +177,18 @@
 
     tick();
 
-    function drawTriangleGridApp(id, colors) {
+    var img = new Image();
+    img.onload = function () {
       var app = new svv.TriangleClipGridApp({
-        el: document.getElementById(id),
+        el: document.getElementById("triangles-stretched-01"),
         size: 100,
-        colors: colors,
+        image: img,
+        colors: ["black", "white", "magenta", "cyan"],
       });
       app.setup();
       app.draw();
-    }
-
-    drawTriangleGridApp("triangles-stretched-01", ["black", "white", "magenta", "cyan"]);
-    drawTriangleGridApp("triangles-stretched-02", ["black", "white", "gray"]);
+    };
+    img.src = "img/oil-1.jpg";
 
     </script>
 

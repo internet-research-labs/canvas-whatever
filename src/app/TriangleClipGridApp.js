@@ -3,6 +3,34 @@ import App from './App.js';
 import {select} from '../utils.js';
 import TriangleMesh from '../TriangleMesh.js';
 
+function drawTransfer(ctx, image, destTri, [sx, sy, sw, sh]) {
+  let points = destTri.getPointList();
+  let box = destTri.getBoundingBox();
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.fillStyle = 'black';
+  ctx.strokeStyle = 'black';
+  ctx.imageSmoothingEnabled = true;
+
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  ctx.lineTo(points[1].x, points[1].y);
+  ctx.lineTo(points[2].x, points[2].y);
+
+  ctx.clip();
+
+  for (let i=0; i < 3; i++) {
+    ctx.drawImage(
+      image,
+      sx, sy, sw, sh,
+      box.x, box.y, box.w, box.h
+    );
+  }
+
+  ctx.restore();
+}
+
 /**
  *
  */
@@ -34,6 +62,7 @@ export default class TriangleClipGridApp extends App {
     this.height = this.el.height;
     this.mesh = new TriangleMesh(this.size, {x: 0, y: 0});
     this.colors = params.colors;
+    this.image = params.image;
   }
 
   setup() {
@@ -47,7 +76,20 @@ export default class TriangleClipGridApp extends App {
       for (let j=0; j < 21; j++) {
         let tri = this.mesh.get(i, j);
         let style = select(this.colors);
-        drawTriangle(this.ctx, tri, style);
+
+        let coinFlip = Math.floor(3*Math.random()) == 0;
+
+        let bounds = tri.getBoundingBox();
+        if (!coinFlip) {
+          drawTriangle(this.ctx, tri, style);
+        } else {
+          drawTransfer(
+            this.ctx,
+            this.image,
+            tri,
+            [bounds.x, bounds.y, bounds.w, bounds.h],
+          );
+        }
       }
     }
   }

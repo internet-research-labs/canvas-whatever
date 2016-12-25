@@ -1425,6 +1425,8 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 	var _App2 = __webpack_require__(2);
 
 	var _App3 = _interopRequireDefault(_App2);
@@ -1442,6 +1444,36 @@ var svv =
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function drawTransfer(ctx, image, destTri, _ref) {
+	  var _ref2 = _slicedToArray(_ref, 4),
+	      sx = _ref2[0],
+	      sy = _ref2[1],
+	      sw = _ref2[2],
+	      sh = _ref2[3];
+
+	  var points = destTri.getPointList();
+	  var box = destTri.getBoundingBox();
+
+	  ctx.save();
+	  ctx.beginPath();
+	  ctx.fillStyle = 'black';
+	  ctx.strokeStyle = 'black';
+	  ctx.imageSmoothingEnabled = true;
+
+	  ctx.beginPath();
+	  ctx.moveTo(points[0].x, points[0].y);
+	  ctx.lineTo(points[1].x, points[1].y);
+	  ctx.lineTo(points[2].x, points[2].y);
+
+	  ctx.clip();
+
+	  for (var i = 0; i < 3; i++) {
+	    ctx.drawImage(image, sx, sy, sw, sh, box.x, box.y, box.w, box.h);
+	  }
+
+	  ctx.restore();
+	}
 
 	/**
 	 *
@@ -1479,6 +1511,7 @@ var svv =
 	    _this.height = _this.el.height;
 	    _this.mesh = new _TriangleMesh2.default(_this.size, { x: 0, y: 0 });
 	    _this.colors = params.colors;
+	    _this.image = params.image;
 	    return _this;
 	  }
 
@@ -1495,7 +1528,15 @@ var svv =
 	        for (var j = 0; j < 21; j++) {
 	          var tri = this.mesh.get(i, j);
 	          var style = (0, _utils.select)(this.colors);
-	          drawTriangle(this.ctx, tri, style);
+
+	          var coinFlip = Math.floor(3 * Math.random()) == 0;
+
+	          var bounds = tri.getBoundingBox();
+	          if (!coinFlip) {
+	            drawTriangle(this.ctx, tri, style);
+	          } else {
+	            drawTransfer(this.ctx, this.image, tri, [bounds.x, bounds.y, bounds.w, bounds.h]);
+	          }
 	        }
 	      }
 	    }
@@ -1739,6 +1780,11 @@ var svv =
 	        'w': x.max - x.min,
 	        'h': y.max - y.min
 	      };
+	    }
+	  }, {
+	    key: 'getAlteredTriangle',
+	    value: function getAlteredTriangle(radius) {
+	      return new RegularTriangle(this.x, this.y, radius, this.theta);
 	    }
 	  }]);
 

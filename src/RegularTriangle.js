@@ -68,4 +68,13 @@ export class RegularTriangle {
       'h': y.max-y.min,
     };
   }
+
+  getAlteredTriangle(radius) {
+    return new RegularTriangle(
+      this.x,
+      this.y,
+      radius,
+      this.theta,
+    );
+  }
 }

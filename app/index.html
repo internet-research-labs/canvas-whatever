@@ -15,6 +15,10 @@
       canvas, canvas.lines {
         width: 300px;
       }
+      #triangles-stretched-01 {
+        width: 100%;
+        display: block;
+      }
       #welkommen {
         position: fixed;
         left: -1000px;
@@ -32,7 +36,7 @@
     <meta charset="UTF-8">
   </head>
   <body>
-    <Loading></Loading>
+    <canvas width=1800 height=399 class="width-triangles" id="triangles-stretched-01"></canvas>
     <div id='welkommen'>
       <p>私は焼くよ、彼は思った、とすべての大陸の土地の上に灰に散在します。私が使用するために置かれます。ほんの少し ビットが、灰は灰であり、彼らは土地に追加します。</p>
       <p>彼は、今、鉄の重量、客観的、客観的なように、小石のように、弾丸のように、迅速に時間のすべてを落ちません 悲しいか幸せか何かが、唯一、彼は今ではすべてが、消えていたことを良いことを行うことができます希望 知っているだけで、自分自身のために良いことです。</p>
@@ -137,6 +141,18 @@
 //                      .read();
     // var script = new svv.Subtitle("Panda panda panda", {bottom: ".5em"});
     // script.showFor(3000);
+    var img = new Image();
+    img.onload = function () {
+      var app = new svv.TriangleClipGridApp({
+        el: document.getElementById("triangles-stretched-01"),
+        size: 100,
+        image: img,
+        colors: ["black", "white", "magenta", "cyan"],
+      });
+      app.setup();
+      app.draw();
+    };
+    img.src = "img/oil-1.jpg";
     </script>
 
 
