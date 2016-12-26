@@ -50,7 +50,7 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.SubtitleScript = exports.Subtitle = exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.TriangleClipGridApp = exports.SplotchApp = exports.SmileApp = exports.OverlapApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
+	exports.SubtitleScript = exports.Subtitle = exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.TriangleClipGridApp = exports.SplotchApp = exports.SmileApp = exports.OverlapApp = exports.GoldGridApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
 
 	var _DripApp = __webpack_require__(1);
 
@@ -67,6 +67,10 @@ var svv =
 	var _CubeApp = __webpack_require__(9);
 
 	var _CubeApp2 = _interopRequireDefault(_CubeApp);
+
+	var _GoldGridApp = __webpack_require__(35);
+
+	var _GoldGridApp2 = _interopRequireDefault(_GoldGridApp);
 
 	var _OverlapApp = __webpack_require__(11);
 
@@ -124,6 +128,7 @@ var svv =
 	exports.CircleApp = _CircleApp2.default;
 	exports.CircleGridApp = _CircleGridApp2.default;
 	exports.CubeApp = _CubeApp2.default;
+	exports.GoldGridApp = _GoldGridApp2.default;
 	exports.OverlapApp = _OverlapApp2.default;
 	exports.SmileApp = _SmileApp2.default;
 	exports.SplotchApp = _SplotchApp2.default;
@@ -2975,8 +2980,8 @@ var svv =
 
 	    style = style || {};
 	    this.text = text;
-	    this.color = style.color || "white";
-	    this.outlineColor = style.outlineColor || "black";
+	    this.color = style.color || "black";
+	    this.outlineColor = style.outlineColor || "white";
 	    this.divWidth = style.width || "100%";
 	    this.divHeight = style.height;
 	    this.bottom = style.bottom || "0px";
@@ -2994,11 +2999,12 @@ var svv =
 	      div.appendChild(span);
 	      span.innerHTML = this.text;
 
+	      div.style.color = this.color;
 	      div.style.position = "fixed";
 	      div.style.left = this.left;
 	      div.style.bottom = this.bottom;
 	      div.style.zIndex = "9000";
-	      div.style.textShadow = "0.5px 0.5px white, -0.5px -0.5px white, -0.5px 0.5px white, 0.5px -0.5px white";
+	      div.style.textShadow = "1px 1px white, -1px -1px white, -1px 1px white, 1px -1px white";
 	      div.style.width = this.divWidth;
 	      if (this.divHeight) {
 	        div.style.height = this.divHeight;
@@ -4606,6 +4612,52 @@ var svv =
 	};
 	process.umask = function() { return 0; };
 
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var GoldGridApp = function (_App) {
+	  _inherits(GoldGridApp, _App);
+
+	  function GoldGridApp(params) {
+	    _classCallCheck(this, GoldGridApp);
+
+	    return _possibleConstructorReturn(this, (GoldGridApp.__proto__ || Object.getPrototypeOf(GoldGridApp)).call(this, params));
+	  }
+
+	  _createClass(GoldGridApp, [{
+	    key: 'update',
+	    value: function update(params) {}
+	  }, {
+	    key: 'draw',
+	    value: function draw(params) {}
+	  }]);
+
+	  return GoldGridApp;
+	}(_App3.default);
+
+	exports.default = GoldGridApp;
 
 /***/ }
 /******/ ]);

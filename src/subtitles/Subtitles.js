@@ -4,8 +4,8 @@ export class Subtitle {
   constructor(text, style) {
     style = style || {};
     this.text = text;
-    this.color = style.color || "white";
-    this.outlineColor = style.outlineColor || "black";
+    this.color = style.color || "black";
+    this.outlineColor = style.outlineColor || "white";
     this.divWidth = style.width || "100%";
     this.divHeight = style.height;
     this.bottom = style.bottom || "0px";
@@ -23,11 +23,12 @@ export class Subtitle {
     span.innerHTML = this.text;
 
 
+    div.style.color = this.color;
     div.style.position = "fixed";
     div.style.left = this.left;
     div.style.bottom = this.bottom;
     div.style.zIndex = "9000";
-    div.style.textShadow = "0.5px 0.5px white, -0.5px -0.5px white, -0.5px 0.5px white, 0.5px -0.5px white";
+    div.style.textShadow = "1px 1px white, -1px -1px white, -1px 1px white, 1px -1px white";
     div.style.width = this.divWidth;
     if (this.divHeight) {
       div.style.height = this.divHeight;

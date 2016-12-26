@@ -205,4 +205,20 @@
           console.error("Cannot execute alter");
         }
       }();
+
+      fetch("/panda.txt").then(function (resp) {
+        return resp.text();
+      }).then(function (text) {
+        var script = new svv.SubtitleScript({
+          bottom: "10px",
+        });
+
+        var lines = text.split("\n");
+        lines.forEach(function (val) {
+          script.add(val, 100+45*val.length);
+        });
+
+        script.read();
+
+      });
     </script>

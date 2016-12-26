@@ -36,6 +36,10 @@
     <meta charset="UTF-8">
   </head>
   <body>
+    <h3>That Grid Though</h3>
+    <canvas width=1800 height=399 class="width-triangles" id="triangles-stretched-01"></canvas>
+
+    <h3>Yea...</h3>
     <canvas width=1800 height=399 class="width-triangles" id="triangles-stretched-01"></canvas>
     <div id='welkommen'>
       <p>私は焼くよ、彼は思った、とすべての大陸の土地の上に灰に散在します。私が使用するために置かれます。ほんの少し ビットが、灰は灰であり、彼らは土地に追加します。</p>
@@ -117,42 +121,43 @@
     </script>
 
     <script>
-    var script = new svv.SubtitleScript({
-      bottom: "10px",
-      // width: "300px",
-    });
-    for (var i=0; i < 100; i++) {
-      var string = "Panda";
-      var length = Math.floor(Math.random() * 7);
-      for (var j=0; j < length; j++) {
-        string += " panda";
-      }
 
-      script.add(string, length * 250);
-    }
-
-    script.read();
-
-//  var script = new svv.SubtitleScript()
-//                      .add("Panda", 3000)
-//                      .add("Panda panda", 3000)
-//                      .add("Panda panda panda", 3000)
-//                      .add("Panda panda panda panda", 3000)
-//                      .read();
-    // var script = new svv.Subtitle("Panda panda panda", {bottom: ".5em"});
-    // script.showFor(3000);
-    var img = new Image();
-    img.onload = function () {
-      var app = new svv.TriangleClipGridApp({
-        el: document.getElementById("triangles-stretched-01"),
-        size: 100,
-        image: img,
-        colors: ["black", "white", "magenta", "cyan"],
+    fetch("/panda.txt").then(function (resp) {
+      return resp.text();
+    }).then(function (text) {
+      var script = new svv.SubtitleScript({
+        bottom: "10px",
       });
-      app.setup();
-      app.draw();
-    };
-    img.src = "img/oil-1.jpg";
+
+      var lines = text.split("\n");
+      lines.forEach(function (val) {
+        script.add(val, 100+45*val.length);
+      });
+
+      script.read();
+
+    });
+    ~function() {
+
+      var img = new Image();
+      img.onload = function () {
+        var app = new svv.TriangleClipGridApp({
+          el: document.getElementById("triangles-stretched-01"),
+          size: 100,
+          image: img,
+          colors: ["black", "white", "magenta", "cyan"],
+        });
+        app.setup();
+        app.draw();
+      };
+      img.src = "img/oil-1.jpg";
+    }();
+
+    ~function() {
+      var app = new svv.GoldGridApp({
+        el: document.getElementById("gold-grid-01"),
+      });
+    }();
     </script>
 
 
