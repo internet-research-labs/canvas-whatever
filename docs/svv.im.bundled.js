@@ -68,59 +68,59 @@ var svv =
 
 	var _CubeApp2 = _interopRequireDefault(_CubeApp);
 
-	var _GoldGridApp = __webpack_require__(35);
+	var _GoldGridApp = __webpack_require__(11);
 
 	var _GoldGridApp2 = _interopRequireDefault(_GoldGridApp);
 
-	var _OverlapApp = __webpack_require__(11);
+	var _OverlapApp = __webpack_require__(12);
 
 	var _OverlapApp2 = _interopRequireDefault(_OverlapApp);
 
-	var _SmileApp = __webpack_require__(12);
+	var _SmileApp = __webpack_require__(13);
 
 	var _SmileApp2 = _interopRequireDefault(_SmileApp);
 
-	var _SplotchApp = __webpack_require__(15);
+	var _SplotchApp = __webpack_require__(16);
 
 	var _SplotchApp2 = _interopRequireDefault(_SplotchApp);
 
-	var _TriGridApp = __webpack_require__(16);
+	var _TriGridApp = __webpack_require__(17);
 
 	var _TriGridApp2 = _interopRequireDefault(_TriGridApp);
 
-	var _TriangleClipGridApp = __webpack_require__(17);
+	var _TriangleClipGridApp = __webpack_require__(18);
 
 	var _TriangleClipGridApp2 = _interopRequireDefault(_TriangleClipGridApp);
 
-	var _TriOverlapApp = __webpack_require__(20);
+	var _TriOverlapApp = __webpack_require__(21);
 
 	var _TriOverlapApp2 = _interopRequireDefault(_TriOverlapApp);
 
-	var _WaveApp = __webpack_require__(21);
+	var _WaveApp = __webpack_require__(22);
 
 	var _WaveApp2 = _interopRequireDefault(_WaveApp);
 
-	var _YeahYeahApp = __webpack_require__(24);
+	var _YeahYeahApp = __webpack_require__(25);
 
 	var _YeahYeahApp2 = _interopRequireDefault(_YeahYeahApp);
 
-	var _TriangleMesh = __webpack_require__(18);
+	var _TriangleMesh = __webpack_require__(19);
 
 	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
 
-	var _TriangleClipGrid = __webpack_require__(25);
+	var _TriangleClipGrid = __webpack_require__(26);
 
 	var _TriangleClipGrid2 = _interopRequireDefault(_TriangleClipGrid);
 
-	var _Loading = __webpack_require__(27);
+	var _Loading = __webpack_require__(28);
 
 	var _Loading2 = _interopRequireDefault(_Loading);
 
-	var _LoadingCube = __webpack_require__(29);
+	var _LoadingCube = __webpack_require__(30);
 
 	var _LoadingCube2 = _interopRequireDefault(_LoadingCube);
 
-	var _Subtitles = __webpack_require__(31);
+	var _Subtitles = __webpack_require__(32);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -913,6 +913,115 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
+	var _THREE = __webpack_require__(10);
+
+	var THREE = _interopRequireWildcard(_THREE);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 * Grid with disconnected (unsmoothed) faces.
+	 * xy-coordinates follow this layout
+	 *  +---*---*---*---*---*
+	 *   \ / \ / \ / \ / \ / \
+	 *    *---*---*---*---*---*
+	 *   / \ / \ / \ / \ / \ /
+	 *  *---*---*---*---*---*
+	 *   \ / \ / \ / \ / \ / \
+	 *    *---*---*---*---*---*
+	 *   / \ / \ / \ / \ / \ /
+	 *  *---*---*---*---*---*
+	 */
+
+	var TrianglePlane = function TrianglePlane(width, height) {
+	  _classCallCheck(this, TrianglePlane);
+
+	  this.geometry = new THREE.Geometry();
+	};
+
+	var GoldGridApp = function (_App) {
+	  _inherits(GoldGridApp, _App);
+
+	  function GoldGridApp(params) {
+	    _classCallCheck(this, GoldGridApp);
+
+	    var _this = _possibleConstructorReturn(this, (GoldGridApp.__proto__ || Object.getPrototypeOf(GoldGridApp)).call(this, params));
+
+	    _this.el = params.el, _this.setup();
+	    return _this;
+	  }
+
+	  /**
+	   * Setup ...
+	   */
+
+
+	  _createClass(GoldGridApp, [{
+	    key: 'setup',
+	    value: function setup() {
+	      // Camera
+	      this.camera = new THREE.PerspectiveCamera(75, 1.0, 0.1, 1000);
+	      this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+	      // Scene and rengerer
+	      this.scene = new THREE.Scene();
+	      this.renderer = new THREE.WebGLRenderer({
+	        canvas: this.el
+	      });
+
+	      // Whatever work
+	      this.renderer.setClearColor(0xFFFFFF, 1);
+	    }
+
+	    /**
+	     * Update ...
+	     */
+
+	  }, {
+	    key: 'update',
+	    value: function update(params) {}
+
+	    /**
+	     * Draw ...
+	     */
+
+	  }, {
+	    key: 'draw',
+	    value: function draw(params) {
+	      this.renderer.clear();
+	      this.renderer.render(this.scene, this.camera);
+	    }
+	  }]);
+
+	  return GoldGridApp;
+	}(_App3.default);
+
+	exports.default = GoldGridApp;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _App2 = __webpack_require__(2);
+
+	var _App3 = _interopRequireDefault(_App2);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1014,7 +1123,7 @@ var svv =
 	}();
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1029,11 +1138,11 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
-	var _Smile = __webpack_require__(13);
+	var _Smile = __webpack_require__(14);
 
 	var _Smile2 = _interopRequireDefault(_Smile);
 
-	var _utils = __webpack_require__(14);
+	var _utils = __webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1091,7 +1200,7 @@ var svv =
 	exports.default = SmileApp;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1180,7 +1289,7 @@ var svv =
 	exports.default = Smile;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1215,7 +1324,7 @@ var svv =
 	}
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1359,7 +1468,7 @@ var svv =
 	exports.default = SplotchApp;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1419,7 +1528,7 @@ var svv =
 	exports.default = TriGridApp;
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1436,9 +1545,9 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
-	var _utils = __webpack_require__(14);
+	var _utils = __webpack_require__(15);
 
-	var _TriangleMesh = __webpack_require__(18);
+	var _TriangleMesh = __webpack_require__(19);
 
 	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
 
@@ -1553,7 +1662,7 @@ var svv =
 	exports.default = TriangleClipGridApp;
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1564,7 +1673,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _RegularTriangle = __webpack_require__(19);
+	var _RegularTriangle = __webpack_require__(20);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1691,7 +1800,7 @@ var svv =
 	exports.default = TriangleMesh;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1797,7 +1906,7 @@ var svv =
 	}();
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1923,7 +2032,7 @@ var svv =
 	exports.default = TriangleOverlapApp;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1938,7 +2047,7 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
-	var _Grid = __webpack_require__(22);
+	var _Grid = __webpack_require__(23);
 
 	var _Grid2 = _interopRequireDefault(_Grid);
 
@@ -2001,7 +2110,7 @@ var svv =
 	exports.default = WaveApp;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2012,7 +2121,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _Piece = __webpack_require__(23);
+	var _Piece = __webpack_require__(24);
 
 	var _Piece2 = _interopRequireDefault(_Piece);
 
@@ -2068,7 +2177,7 @@ var svv =
 	exports.default = Grid;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2133,7 +2242,7 @@ var svv =
 	exports.default = Piece;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2150,7 +2259,7 @@ var svv =
 
 	var _App3 = _interopRequireDefault(_App2);
 
-	var _TriangleMesh = __webpack_require__(18);
+	var _TriangleMesh = __webpack_require__(19);
 
 	var _TriangleMesh2 = _interopRequireDefault(_TriangleMesh);
 
@@ -2317,7 +2426,7 @@ var svv =
 	}
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2328,7 +2437,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _TriangleClip = __webpack_require__(26);
+	var _TriangleClip = __webpack_require__(27);
 
 	var _TriangleClip2 = _interopRequireDefault(_TriangleClip);
 
@@ -2425,7 +2534,7 @@ var svv =
 	exports.default = TriangleClipGrid;
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2576,7 +2685,7 @@ var svv =
 	exports.default = TriangleClip;
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2587,7 +2696,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(28);
+	var _react = __webpack_require__(29);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -2625,13 +2734,13 @@ var svv =
 	exports.default = Loading;
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports) {
 
 	module.exports = React;
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2642,9 +2751,9 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _Flow = __webpack_require__(30);
+	var _Flow = __webpack_require__(31);
 
-	var _utils = __webpack_require__(14);
+	var _utils = __webpack_require__(15);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2808,7 +2917,7 @@ var svv =
 	exports.default = LoadingCube;
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2958,7 +3067,7 @@ var svv =
 	}();
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2970,7 +3079,7 @@ var svv =
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _async = __webpack_require__(32);
+	var _async = __webpack_require__(33);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3074,7 +3183,7 @@ var svv =
 	}();
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, setImmediate, process) {/*!
@@ -4343,13 +4452,13 @@ var svv =
 
 	}());
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(33).setImmediate, __webpack_require__(34)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(34).setImmediate, __webpack_require__(35)))
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(34).nextTick;
+	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(35).nextTick;
 	var apply = Function.prototype.apply;
 	var slice = Array.prototype.slice;
 	var immediateIds = {};
@@ -4425,10 +4534,10 @@ var svv =
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33).setImmediate, __webpack_require__(33).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34).setImmediate, __webpack_require__(34).clearImmediate))
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -4612,52 +4721,6 @@ var svv =
 	};
 	process.umask = function() { return 0; };
 
-
-/***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _App2 = __webpack_require__(2);
-
-	var _App3 = _interopRequireDefault(_App2);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var GoldGridApp = function (_App) {
-	  _inherits(GoldGridApp, _App);
-
-	  function GoldGridApp(params) {
-	    _classCallCheck(this, GoldGridApp);
-
-	    return _possibleConstructorReturn(this, (GoldGridApp.__proto__ || Object.getPrototypeOf(GoldGridApp)).call(this, params));
-	  }
-
-	  _createClass(GoldGridApp, [{
-	    key: 'update',
-	    value: function update(params) {}
-	  }, {
-	    key: 'draw',
-	    value: function draw(params) {}
-	  }]);
-
-	  return GoldGridApp;
-	}(_App3.default);
-
-	exports.default = GoldGridApp;
 
 /***/ }
 /******/ ]);

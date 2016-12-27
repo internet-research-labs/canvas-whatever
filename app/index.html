@@ -12,9 +12,7 @@
       #whatever {
         display: inline-block;
       }
-      canvas, canvas.lines {
-        width: 300px;
-      }
+      #gold-mesh-01,
       #triangles-stretched-01 {
         width: 100%;
         display: block;
@@ -156,8 +154,10 @@
 
     ~function() {
       var app = new svv.GoldGridApp({
-        el: document.getElementById("gold-grid-01"),
+        el: document.getElementById("gold-mesh-01"),
       });
+      app.update();
+      app.draw();
     }();
     </script>
 
