@@ -927,9 +927,9 @@ var svv =
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var TriangleMesh = function () {
-	  function TriangleMesh(w, h, cols, rows) {
-	    _classCallCheck(this, TriangleMesh);
+	var FlatTriangleMesh = function () {
+	  function FlatTriangleMesh(w, h, cols, rows) {
+	    _classCallCheck(this, FlatTriangleMesh);
 
 	    this.width = w;
 	    this.height = h;
@@ -939,7 +939,7 @@ var svv =
 	    this.dy = this.height / rows;
 	  }
 
-	  _createClass(TriangleMesh, [{
+	  _createClass(FlatTriangleMesh, [{
 	    key: 'get',
 	    value: function get(i, j) {
 	      var dx = this.dx,
@@ -954,19 +954,19 @@ var svv =
 	         *  /+\
 	         * 1---2
 	         */
-	        return [[Math.round(x - dx / 2.), Math.round(y - dy / 2.)], [Math.round(x + dx / 2.), Math.round(y - dy / 2.)], [Math.round(x), Math.round(y + dy / 2.)]];
+	        return [[x - dx / 2., y - dy / 2.], [x + dx / 2., y - dy / 2.], [x, y + dy / 2.]];
 	      } else {
 	        /**
 	         *  1---2
 	         *   \ /
 	         *    3
 	         */
-	        return [[Math.round(x - dx / 2.), Math.round(y + dy / 2.)], [Math.round(x + dx / 2.), Math.round(y + dy / 2.)], [Math.round(x), Math.round(y - dy / 2.)]];
+	        return [[x - dx / 2., y + dy / 2.], [x + dx / 2., y + dy / 2.], [x, y - dy / 2.]];
 	      }
 	    }
 	  }]);
 
-	  return TriangleMesh;
+	  return FlatTriangleMesh;
 	}();
 
 	var FlatApp = exports.FlatApp = function (_App) {
@@ -981,7 +981,7 @@ var svv =
 	    _this.width = _this.el.width;
 	    _this.height = _this.el.height;
 
-	    _this.mesh = new TriangleMesh(_this.width, _this.height, 11, 10);
+	    _this.mesh = new FlatTriangleMesh(_this.width, _this.height, 11, 10);
 	    _this.ctx = _this.el.getContext('2d');
 	    return _this;
 	  }
@@ -1009,10 +1009,6 @@ var svv =
 	  }, {
 	    key: 'draw',
 	    value: function draw() {
-	      console.log(this.mesh.get(0, 0));
-	      console.log(this.mesh.get(0, 1));
-	      console.log(this.mesh.get(0, 2));
-
 	      this.drawTriangle(this.mesh.get(0, 0), "black");
 	      this.drawTriangle(this.mesh.get(0, 1), "magenta");
 	      this.drawTriangle(this.mesh.get(0, 2), "cyan");
@@ -1049,12 +1045,6 @@ var svv =
 	 *  *---*---*---*---*---*
 	 */
 
-	var TrianglePlane = function TrianglePlane(width, height, params) {
-	  _classCallCheck(this, TrianglePlane);
-
-	  this.geometry = new THREE.Geometry();
-	};
-
 	var GoldGridApp = exports.GoldGridApp = function (_App2) {
 	  _inherits(GoldGridApp, _App2);
 
@@ -1063,20 +1053,77 @@ var svv =
 
 	    var _this2 = _possibleConstructorReturn(this, (GoldGridApp.__proto__ || Object.getPrototypeOf(GoldGridApp)).call(this, params));
 
-	    _this2.el = params.el, _this2.setup();
+	    _this2.el = params.el;
+	    var REGULAR_TRIANGLE_RATIO = Math.sqrt(3) / 2.0;
+	    _this2.geometry = null;
+	    _this2.triMesh = new FlatTriangleMesh(10, // Width
+	    10 * REGULAR_TRIANGLE_RATIO, // Height
+	    10, // Number of columns
+	    10 // Number of rows
+	    );
+
+	    _this2.geometry = _this2.buildGeometry();
+	    _this2.geometry.computeFaceNormals();
+
+	    _this2.material = new THREE.MeshNormalMaterial();
+	    _this2.mesh = new THREE.Mesh(_this2.geometry, _this2.material);
+
+	    _this2.setup();
 	    return _this2;
 	  }
 
-	  /**
-	   * Setup ...
-	   */
-
-
 	  _createClass(GoldGridApp, [{
+	    key: 'asVectors',
+	    value: function asVectors(points) {
+	      var vectors = [];
+	      points.forEach(function (val) {
+	        vectors.push(new THREE.Vector2(val[0], val[1]));
+	      });
+	      return vectors;
+	    }
+	  }, {
+	    key: 'buildGeometry',
+	    value: function buildGeometry() {
+	      var geometry = new THREE.Geometry();
+
+	      for (var i = -12; i <= 12; i++) {
+	        for (var j = -19; j <= 19; j++) {
+	          var points = this.asVectors(this.triMesh.get(i, j));
+
+	          // Add vertices
+	          points.forEach(function (p) {
+	            var vector = new THREE.Vector3(p.x, p.y, Math.cos(p.x) + Math.sin(p.y));
+	            geometry.vertices.push(vector);
+	          });
+
+	          var h = geometry.vertices.length - 3;
+	          var face = void 0;
+
+	          if ((i + j) % 2 == 0) {
+	            face = new THREE.Face3(h + 0, h + 1, h + 2);
+	          } else {
+	            face = new THREE.Face3(h + 2, h + 1, h + 0);
+	          }
+
+	          geometry.faces.push(face);
+	        }
+	      }
+
+	      return geometry;
+	    }
+
+	    /**
+	     * Setup ...
+	     */
+
+	  }, {
 	    key: 'setup',
 	    value: function setup() {
 	      // Camera
 	      this.camera = new THREE.PerspectiveCamera(75, 1.0, 0.1, 1000);
+	      this.camera.position.x = 0;
+	      this.camera.position.y = 0;
+	      this.camera.position.z = 10;
 	      this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 	      // Scene and rengerer
@@ -1087,6 +1134,7 @@ var svv =
 
 	      // Whatever work
 	      this.renderer.setClearColor(0xFFFFFF, 1);
+	      this.scene.add(this.mesh);
 	    }
 
 	    /**

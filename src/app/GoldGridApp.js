@@ -2,7 +2,7 @@ import App from './App.js';
 import * as THREE from 'THREE';
 
 
-class TriangleMesh {
+class FlatTriangleMesh {
   constructor(w, h, cols, rows) {
     this.width = w;
     this.height = h;
@@ -24,9 +24,9 @@ class TriangleMesh {
        * 1---2
        */
       return [
-        [Math.round(x-dx/2.), Math.round(y-dy/2.)],
-        [Math.round(x+dx/2.), Math.round(y-dy/2.)],
-        [Math.round(x), Math.round(y+dy/2.)],
+        [x-dx/2., y-dy/2.],
+        [x+dx/2., y-dy/2.],
+        [x, y+dy/2.],
       ];
     } else {
       /**
@@ -35,9 +35,9 @@ class TriangleMesh {
        *    3
        */
       return [
-        [Math.round(x-dx/2.), Math.round(y+dy/2.)],
-        [Math.round(x+dx/2.), Math.round(y+dy/2.)],
-        [Math.round(x), Math.round(y-dy/2.)],
+        [x-dx/2., y+dy/2.],
+        [x+dx/2., y+dy/2.],
+        [x, y-dy/2.],
       ];
     }
   }
@@ -50,7 +50,7 @@ export class FlatApp extends App {
     this.width = this.el.width;
     this.height = this.el.height;
 
-    this.mesh = new TriangleMesh(this.width, this.height, 11, 10);
+    this.mesh = new FlatTriangleMesh(this.width, this.height, 11, 10);
     this.ctx = this.el.getContext('2d');
   }
 
@@ -74,10 +74,6 @@ export class FlatApp extends App {
   }
 
   draw() {
-    console.log(this.mesh.get(0, 0));
-    console.log(this.mesh.get(0, 1));
-    console.log(this.mesh.get(0, 2));
-
     this.drawTriangle(this.mesh.get(0, 0), "black");
     this.drawTriangle(this.mesh.get(0, 1), "magenta");
     this.drawTriangle(this.mesh.get(0, 2), "cyan");
@@ -111,17 +107,63 @@ export class FlatApp extends App {
  *  *---*---*---*---*---*
  */
 
-class TrianglePlane {
-  constructor(width, height, params) {
-    this.geometry = new THREE.Geometry();
-  }
-}
-
 export class GoldGridApp extends App {
   constructor(params) {
     super(params);
-    this.el = params.el,
+    this.el = params.el;
+    const REGULAR_TRIANGLE_RATIO = Math.sqrt(3)/2.0;
+    this.geometry = null;
+    this.triMesh = new FlatTriangleMesh(
+      10, // Width
+      10*REGULAR_TRIANGLE_RATIO, // Height
+      10, // Number of columns
+      10  // Number of rows
+    );
+
+    this.geometry = this.buildGeometry();
+    this.geometry.computeFaceNormals();
+
+    this.material = new THREE.MeshNormalMaterial();
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
+
     this.setup();
+  }
+
+  asVectors(points) {
+    let vectors = [];
+    points.forEach(function (val) {
+      vectors.push(new THREE.Vector2(val[0], val[1]));
+    });
+    return vectors;
+  }
+
+  buildGeometry() {
+    let geometry = new THREE.Geometry();
+
+    for (let i=-12; i <= 12; i++) {
+      for (let j=-19; j <= 19; j++) {
+        let points = this.asVectors(this.triMesh.get(i, j));
+
+        // Add vertices
+        points.forEach((p) => {
+          let vector = new THREE.Vector3(p.x, p.y, Math.cos(p.x) + Math.sin(p.y));
+          geometry.vertices.push(vector);
+        });
+
+        let h = geometry.vertices.length-3;
+        let face;
+
+        if ((i+j)%2 == 0) {
+          face = new THREE.Face3(h+0, h+1, h+2);
+        } else {
+          face = new THREE.Face3(h+2, h+1, h+0);
+        }
+
+        geometry.faces.push(face);
+      }
+    }
+
+    return geometry;
   }
 
   /**
@@ -130,6 +172,9 @@ export class GoldGridApp extends App {
   setup() {
     // Camera
     this.camera = new THREE.PerspectiveCamera(75, 1.0, 0.1, 1000 );
+    this.camera.position.x = 0;
+    this.camera.position.y = 0;
+    this.camera.position.z = 10;
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     // Scene and rengerer
@@ -140,6 +185,7 @@ export class GoldGridApp extends App {
 
     // Whatever work
     this.renderer.setClearColor(0xFFFFFF, 1);
+    this.scene.add(this.mesh);
   }
 
   /**

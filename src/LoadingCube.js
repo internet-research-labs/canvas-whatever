@@ -127,7 +127,6 @@ export default class LoadingCube {
 
 
     this.currentState = FLOW_STATES.getState("starting");
-
   }
 
   getStates() {
