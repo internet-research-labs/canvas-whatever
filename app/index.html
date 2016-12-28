@@ -12,6 +12,10 @@
       #whatever {
         display: inline-block;
       }
+      #flat-mesh-01 {
+        width: 300px;
+          border: solid 1px black;
+      }
       #gold-mesh-01,
       #triangles-stretched-01 {
         width: 100%;
@@ -35,6 +39,7 @@
   </head>
   <body>
     <h3>Black X6</h3>
+    <canvas width=900 height=779 class="width-triangles" id="flat-mesh-01"></canvas>
     <!-- ...-->
     <canvas width=1800 height=399 class="width-triangles" id="gold-mesh-01"></canvas>
 
@@ -150,6 +155,16 @@
         app.draw();
       };
       img.src = "img/oil-1.jpg";
+    }();
+
+    ~function() {
+      var app = new svv.FlatApp({
+        el: document.getElementById("flat-mesh-01"),
+        dx: 5,
+        dy: 5,
+      });
+      app.update();
+      app.draw();
     }();
 
     ~function() {

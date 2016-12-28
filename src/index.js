@@ -2,7 +2,7 @@ import DripApp from './app/DripApp.js';
 import CircleApp from './app/CircleApp.js';
 import CircleGridApp from './app/CircleGridApp.js';
 import CubeApp from './app/CubeApp.js';
-import GoldGridApp from './app/GoldGridApp.js';
+import {FlatApp, GoldGridApp} from './app/GoldGridApp.js';
 import OverlapApp from './app/OverlapApp.js';
 import SmileApp from './app/SmileApp.js';
 import SplotchApp from './app/SplotchApp.js';
@@ -26,6 +26,7 @@ export {
   CircleApp,
   CircleGridApp,
   CubeApp,
+  FlatApp,
   GoldGridApp,
   OverlapApp,
   SmileApp,

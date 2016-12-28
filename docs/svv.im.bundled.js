@@ -50,7 +50,7 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.SubtitleScript = exports.Subtitle = exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.TriangleClipGridApp = exports.SplotchApp = exports.SmileApp = exports.OverlapApp = exports.GoldGridApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
+	exports.SubtitleScript = exports.Subtitle = exports.LoadingCube = exports.Loading = exports.TriangleClipGrid = exports.TriangleMesh = exports.YeahYeahApp = exports.WaveApp = exports.TriOverlapApp = exports.TriangleClipGridApp = exports.SplotchApp = exports.SmileApp = exports.OverlapApp = exports.GoldGridApp = exports.FlatApp = exports.CubeApp = exports.CircleGridApp = exports.CircleApp = exports.DripApp = undefined;
 
 	var _DripApp = __webpack_require__(1);
 
@@ -69,8 +69,6 @@ var svv =
 	var _CubeApp2 = _interopRequireDefault(_CubeApp);
 
 	var _GoldGridApp = __webpack_require__(11);
-
-	var _GoldGridApp2 = _interopRequireDefault(_GoldGridApp);
 
 	var _OverlapApp = __webpack_require__(12);
 
@@ -128,7 +126,8 @@ var svv =
 	exports.CircleApp = _CircleApp2.default;
 	exports.CircleGridApp = _CircleGridApp2.default;
 	exports.CubeApp = _CubeApp2.default;
-	exports.GoldGridApp = _GoldGridApp2.default;
+	exports.FlatApp = _GoldGridApp.FlatApp;
+	exports.GoldGridApp = _GoldGridApp.GoldGridApp;
 	exports.OverlapApp = _OverlapApp2.default;
 	exports.SmileApp = _SmileApp2.default;
 	exports.SplotchApp = _SplotchApp2.default;
@@ -906,12 +905,13 @@ var svv =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.GoldGridApp = exports.FlatApp = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _App2 = __webpack_require__(2);
+	var _App3 = __webpack_require__(2);
 
-	var _App3 = _interopRequireDefault(_App2);
+	var _App4 = _interopRequireDefault(_App3);
 
 	var _THREE = __webpack_require__(10);
 
@@ -927,6 +927,114 @@ var svv =
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	var TriangleMesh = function () {
+	  function TriangleMesh(w, h, cols, rows) {
+	    _classCallCheck(this, TriangleMesh);
+
+	    this.width = w;
+	    this.height = h;
+	    this.cols = cols;
+	    this.rows = rows;
+	    this.dx = cols % 2 == 1 ? this.width / (cols + 1) : this.width / cols;
+	    this.dy = this.height / rows;
+	  }
+
+	  _createClass(TriangleMesh, [{
+	    key: 'get',
+	    value: function get(i, j) {
+	      var dx = this.dx,
+	          dy = this.dy;
+
+	      var x = this.dx / 2.0 + j * this.dx / 2.;
+	      var y = this.dy / 2.0 + i * this.dy;
+
+	      if ((i + j) % 2 == 0) {
+	        /**
+	         *   3
+	         *  /+\
+	         * 1---2
+	         */
+	        return [[Math.round(x - dx / 2.), Math.round(y - dy / 2.)], [Math.round(x + dx / 2.), Math.round(y - dy / 2.)], [Math.round(x), Math.round(y + dy / 2.)]];
+	      } else {
+	        /**
+	         *  1---2
+	         *   \ /
+	         *    3
+	         */
+	        return [[Math.round(x - dx / 2.), Math.round(y + dy / 2.)], [Math.round(x + dx / 2.), Math.round(y + dy / 2.)], [Math.round(x), Math.round(y - dy / 2.)]];
+	      }
+	    }
+	  }]);
+
+	  return TriangleMesh;
+	}();
+
+	var FlatApp = exports.FlatApp = function (_App) {
+	  _inherits(FlatApp, _App);
+
+	  function FlatApp(params) {
+	    _classCallCheck(this, FlatApp);
+
+	    var _this = _possibleConstructorReturn(this, (FlatApp.__proto__ || Object.getPrototypeOf(FlatApp)).call(this, params));
+
+	    _this.el = params.el;
+	    _this.width = _this.el.width;
+	    _this.height = _this.el.height;
+
+	    _this.mesh = new TriangleMesh(_this.width, _this.height, 11, 10);
+	    _this.ctx = _this.el.getContext('2d');
+	    return _this;
+	  }
+
+	  _createClass(FlatApp, [{
+	    key: 'update',
+	    value: function update(params) {}
+	  }, {
+	    key: 'drawTriangle',
+	    value: function drawTriangle(points, color) {
+	      var ctx = this.ctx;
+	      ctx.save();
+	      ctx.beginPath();
+	      ctx.fillStyle = color;
+	      ctx.moveTo(points[0][0], points[0][1]);
+	      ctx.lineTo(points[1][0], points[1][1]);
+	      ctx.lineTo(points[2][0], points[2][1]);
+	      ctx.fill();
+	      ctx.fill();
+	      ctx.fill();
+	      ctx.fill();
+	      ctx.closePath();
+	      ctx.restore();
+	    }
+	  }, {
+	    key: 'draw',
+	    value: function draw() {
+	      console.log(this.mesh.get(0, 0));
+	      console.log(this.mesh.get(0, 1));
+	      console.log(this.mesh.get(0, 2));
+
+	      this.drawTriangle(this.mesh.get(0, 0), "black");
+	      this.drawTriangle(this.mesh.get(0, 1), "magenta");
+	      this.drawTriangle(this.mesh.get(0, 2), "cyan");
+
+	      this.drawTriangle(this.mesh.get(1, 0), "yellow");
+	      this.drawTriangle(this.mesh.get(1, 1), "black");
+	      this.drawTriangle(this.mesh.get(1, 2), "gray");
+
+	      this.drawTriangle(this.mesh.get(0, 22), "gray");
+	      this.drawTriangle(this.mesh.get(1, 22), "gray");
+	      this.drawTriangle(this.mesh.get(2, 22), "gray");
+
+	      this.drawTriangle(this.mesh.get(9, 0), "gray");
+	      this.drawTriangle(this.mesh.get(9, 1), "black");
+	      this.drawTriangle(this.mesh.get(9, 2), "gray");
+	      this.drawTriangle(this.mesh.get(10, 2), "gray");
+	    }
+	  }]);
+
+	  return FlatApp;
+	}(_App4.default);
+
 	/**
 	 * Grid with disconnected (unsmoothed) faces.
 	 * xy-coordinates follow this layout
@@ -941,22 +1049,22 @@ var svv =
 	 *  *---*---*---*---*---*
 	 */
 
-	var TrianglePlane = function TrianglePlane(width, height) {
+	var TrianglePlane = function TrianglePlane(width, height, params) {
 	  _classCallCheck(this, TrianglePlane);
 
 	  this.geometry = new THREE.Geometry();
 	};
 
-	var GoldGridApp = function (_App) {
-	  _inherits(GoldGridApp, _App);
+	var GoldGridApp = exports.GoldGridApp = function (_App2) {
+	  _inherits(GoldGridApp, _App2);
 
 	  function GoldGridApp(params) {
 	    _classCallCheck(this, GoldGridApp);
 
-	    var _this = _possibleConstructorReturn(this, (GoldGridApp.__proto__ || Object.getPrototypeOf(GoldGridApp)).call(this, params));
+	    var _this2 = _possibleConstructorReturn(this, (GoldGridApp.__proto__ || Object.getPrototypeOf(GoldGridApp)).call(this, params));
 
-	    _this.el = params.el, _this.setup();
-	    return _this;
+	    _this2.el = params.el, _this2.setup();
+	    return _this2;
 	  }
 
 	  /**
@@ -1002,9 +1110,7 @@ var svv =
 	  }]);
 
 	  return GoldGridApp;
-	}(_App3.default);
-
-	exports.default = GoldGridApp;
+	}(_App4.default);
 
 /***/ },
 /* 12 */
