@@ -114,17 +114,11 @@ export class GoldGridApp extends App {
     const REGULAR_TRIANGLE_RATIO = Math.sqrt(3)/2.0;
     this.geometry = null;
     this.triMesh = new FlatTriangleMesh(
-      10, // Width
-      10*REGULAR_TRIANGLE_RATIO, // Height
-      10, // Number of columns
-      10  // Number of rows
+      11, // Width
+      11*REGULAR_TRIANGLE_RATIO, // Height
+      4, // Number of columns
+      4  // Number of rows
     );
-
-    this.geometry = this.buildGeometry();
-    this.geometry.computeFaceNormals();
-
-    this.material = new THREE.MeshNormalMaterial();
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
 
     this.setup();
   }
@@ -140,13 +134,16 @@ export class GoldGridApp extends App {
   buildGeometry() {
     let geometry = new THREE.Geometry();
 
-    for (let i=-12; i <= 12; i++) {
-      for (let j=-19; j <= 19; j++) {
+    for (let i=-this.triMesh.rows; i <= this.triMesh.rows; i++) {
+      for (let j=-2*this.triMesh.cols; j <= 2*this.triMesh.cols; j++) {
         let points = this.asVectors(this.triMesh.get(i, j));
 
         // Add vertices
         points.forEach((p) => {
-          let vector = new THREE.Vector3(p.x, p.y, Math.cos(p.x) + Math.sin(p.y));
+          let x = 0.9*p.x;
+          let y = 0.1*p.y;
+          let z = 0.1*Math.sin(x+y);
+          let vector = new THREE.Vector3(p.x, p.y, z);
           geometry.vertices.push(vector);
         });
 
@@ -172,6 +169,7 @@ export class GoldGridApp extends App {
   setup() {
     // Camera
     this.camera = new THREE.PerspectiveCamera(75, 1.0, 0.1, 1000 );
+    //this.camera = new THREE.OrthographicCamera(-40, +40, -40, +40);
     this.camera.position.x = 0;
     this.camera.position.y = 0;
     this.camera.position.z = 10;
@@ -179,12 +177,43 @@ export class GoldGridApp extends App {
 
     // Scene and rengerer
     this.scene = new THREE.Scene();
+
+    let backgroundLenna = new THREE.CubeTextureLoader()
+      .setPath('img/')
+      .load([
+        'lenna.png', 'lenna.png',
+        'lenna.png', 'lenna.png',
+        'lenna.png', 'lenna.png',
+      ]);
+
+    let backgroundOil = new THREE.CubeTextureLoader()
+      .setPath('img/')
+      .load([
+        'oil-2.png', 'oil-2.png',
+        'oil-2.png', 'oil-2.png',
+        'oil-2.png', 'oil-2.png',
+        // 'lenna.png', 'lenna.png',
+      ]);
+
+
+    this.geometry = this.buildGeometry();
+    this.geometry.computeFaceNormals();
+    // this.geometry = new THREE.SphereGeometry(3, 32, 32);
+
+    // this.material = new THREE.MeshPhongMaterial({
+    this.material = new THREE.MeshBasicMaterial({
+      color: 0xFFFFFF,
+      reflectivity: 0.8,
+      envMap: backgroundLenna,
+    });
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
+                                                          
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.el,
     });
 
     // Whatever work
-    this.renderer.setClearColor(0xFFFFFF, 1);
+    this.renderer.setClearColor(0x00FFFF, 1);
     this.scene.add(this.mesh);
   }
 
