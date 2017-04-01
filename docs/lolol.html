@@ -32,6 +32,12 @@
     </div>
 
     <!-- it's beautiful -->
+    <script src="MIDI.min.js"></script>
+    <script>
+      MIDI.Player.loadFile('./fake_wings.mid');
+      MIDI.Player.start();
+    </script>
+
     <script src="snowstorm-min.js"></script>
     <script>
       snowStorm.snowStick = false;
@@ -41,5 +47,8 @@
       snowStorm.vMaxX = -1;
       snowStorm.vMaxY = 2;
     </script>
+
+    <!-- so beautiful -->
+    <audio src="fake_wings.mid" autoplay>
   </body>
 </html>
