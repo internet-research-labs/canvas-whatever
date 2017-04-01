@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>A+</title>
+    <link href="https://fonts.googleapis.com/css?family=Amiri" rel="stylesheet">
+    <style>
+    body {
+      background-color: black;
+    }
+    #block {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 800px;
+      height: 300px;
+      border: solid 3px white;
+      margin-left: -400px;
+      margin-top: -150px;
+      padding: .5em;
+      color: white;
+      font-size: 30pt;
+      font-family: "Amirir", "Times New Roman", serif;
+      font-weight: 200;
+    }
+    </style>
+  </head>
+  <body>
+
+    <div id="block">
+      私はもう一度あなたに会うことはもうありません
+      One more last I'll never see you again ∎<br>
+    </div>
+
+    <!-- it's beautiful -->
+    <script src="snowstorm-min.js"></script>
+    <script>
+      snowStorm.snowStick = false;
+      snowStorm.freezeOnBlur = false;
+      snowStorm.followMouse = false;
+      snowStorm.usePositionFixed = true;
+      snowStorm.vMaxX = -1;
+      snowStorm.vMaxY = 2;
+    </script>
+  </body>
+</html>
