@@ -34,8 +34,9 @@
     <!-- it's beautiful -->
     <script src="MIDI.min.js"></script>
     <script>
-      MIDI.Player.loadFile('./fake_wings.mid');
-      MIDI.Player.start();
+      MIDI.Player.loadFile('./fake_wings.mid', function () {
+        MIDI.Player.start();
+      });
     </script>
 
     <script src="snowstorm-min.js"></script>
