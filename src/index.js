@@ -11,6 +11,7 @@ import TriGridApp from './app/TriGridApp.js';
 import TriOverlapApp from './app/TriOverlapApp.js';
 import TriangleClipGridApp from './app/TriangleClipGridApp.js';
 import WaveApp from './app/WaveApp.js';
+import WillApp from './app/WillApp.js';
 import YeahYeahApp from './app/YeahYeahApp.js';
 import {FlatApp, GoldGridApp} from './app/GoldGridApp.js';
 
@@ -38,6 +39,7 @@ export {
   TriOverlapApp,
   TriangleClipGridApp,
   WaveApp,
+  WillApp,
   YeahYeahApp,
 
   // Objects
