@@ -1,5 +1,3 @@
-import {waterfall} from 'async';
-
 export class Subtitle {
   constructor(text, style) {
     style = style || {};
@@ -12,7 +10,7 @@ export class Subtitle {
     this.left = style.left || "0px";
 
 
-    // 
+    //
     this.domElement = this._createDomElement();
   }
 
