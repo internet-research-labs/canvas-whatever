@@ -45,6 +45,7 @@
     <h3>Faceboard.js</h3>
     <canvas width=900 height=900 class="width-triangles" id="face-app-01"></canvas>
 
+    <canvas width=777 height=777 id="will-app"></canvas>
     <h3>Black X6</h3>
     <!-- ...-->
     <canvas width=900 height=900 class="width-triangles" id="gold-mesh-01"></canvas>
@@ -87,7 +88,7 @@
     });
 
     var smileParams = {
-      "faceSize": 30.0, 
+      "faceSize": 30.0,
       "eyeSize": 4.0,
       "eyeSpacing": 25.0,
       "eyeDistance": 5.0,
@@ -190,6 +191,16 @@
         backgroundImage: "img/solar.jpg",
       });
       app.loop();
+
+    ~function() {
+      var app = new svv.WillApp({
+        el: document.getElementById("will-app"),
+        x: 70,
+        y: 70,
+      });
+      app.setup();
+      app.update();
+      app.draw();
     }();
     </script>
 

@@ -4,3 +4,4 @@ node_modules
 ignore-img
 dist
 *.tgz
+npm-debug.log
