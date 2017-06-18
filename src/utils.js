@@ -20,3 +20,7 @@ export function makeArray3(height, width, depth) {
 export function rgb(r, g, b) {
   return "rgb(" + r + ", " + g + ", " + b + ")";
 }
+
+export function random(lower, upper) {
+  return lower + Math.random() * (upper-lower);
+}

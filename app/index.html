@@ -42,6 +42,9 @@
     <meta charset="UTF-8">
   </head>
   <body>
+    <h3>Faceboard.js</h3>
+    <canvas width=900 height=900 class="width-triangles" id="face-app-01"></canvas>
+
     <h3>Black X6</h3>
     <!-- ...-->
     <canvas width=900 height=900 class="width-triangles" id="gold-mesh-01"></canvas>
@@ -58,8 +61,7 @@
     <div id="container"></div>
     <div id="ayyy"></div>
 
-    <!-- React Jazz -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.min.js"></script>
+    <!-- React Jazz --> <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.min.js"></script>
     <!-- THREE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
@@ -177,6 +179,16 @@
       });
       // app.update();
       // app.draw();
+      app.loop();
+    }();
+
+    console.log(svv);
+
+    ~function() {
+      var app = new svv.FaceApp({
+        el: document.getElementById("face-app-01"),
+        backgroundImage: "img/solar.jpg",
+      });
       app.loop();
     }();
     </script>
