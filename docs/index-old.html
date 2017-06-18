@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang='ja'>
+  <head>
+    <style>
+      html, body {
+        font-family: sans-serif;
+        font-size: 20pt;
+          margin: 0;
+      }
+      #ok {
+        height: 300px;
+        width: 300px;
+      }
+      #whatever {
+        display: inline-block;
+      }
+      canvas, canvas.lines {
+        width: 300px;
+      }
+      #welkommen {
+        position: fixed;
+        left: -1000px;
+        display: none;
+      }
+
+      .peach-violet {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#db9474+0,5689a0+66,6b7699+100 */
+        background: #db9474; /* Old browsers */
+        background: -moz-linear-gradient(top,  #db9474 0%, #5689a0 66%, #6b7699 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #db9474 0%,#5689a0 66%,#6b7699 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #db9474 0%,#5689a0 66%,#6b7699 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#db9474', endColorstr='#6b7699',GradientType=0 ); /* IE6-9 */
+      }
+
+      #cover-time {
+        font-size: 80%;
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        color: gray;
+      }
+
+      .svv-project {
+        margin: 0 auto;
+        max-width: 1000px;
+      }
+
+      #you-wont-believe-it h3 span {
+        font-style: italic;
+          border-bottom: solid 2px black;
+      }
+
+      .width-triangles {
+        width: 100%;
+      }
+    </style>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div id='welkommen'>
+      <p>私は焼くよ、彼は思った、とすべての大陸の土地の上に灰に散在します。私が使用するために置かれます。ほんの少し ビットが、灰は灰であり、彼らは土地に追加します。</p>
+      <p>彼は、今、鉄の重量、客観的、客観的なように、小石のように、弾丸のように、迅速に時間のすべてを落ちません 悲しいか幸せか何かが、唯一、彼は今ではすべてが、消えていたことを良いことを行うことができます希望 知っているだけで、自分自身のために良いことです。</p>
+      <p>私は雰囲気を打つとき、私は流星のように燃えます。</p>
+    </div>
+    <div id="cover-time">
+      <time datetime="2017-01-15" id="someone-made-them"></time> 秒
+    </div>
+    <!-- circles -->
+    <section id="you-wont-believe-it">
+      <h3><span id="yeah">du wuerdst nicht glauben, was ich gesehen habe</span></h3>
+      <canvas width=1800 height=399 class="width-triangles" id="triangles-stretched-01"></canvas>
+      <!-- <canvas width=1800 height=299 class="width-triangles" id="triangles-stretched-02"></canvas> -->
+      <!-- <canvas width=1800 height=299 class="width-triangles" id="triangles-stretched-03"></canvas> -->
+    </section>
+    <section class="svv-project">
+      <h3>Misc</h3>
+      <div>
+        <canvas width=800 height=800 class="circles" id="circle-grid-1"></canvas>
+        <canvas width=800 height=800 class="circles" id="circle-grid-2"></canvas>
+        <canvas width=800 height=800 class="circles" id="circle-grid-3"></canvas>
+        <canvas width=800 height=800 class="circles" id="circle-grid-4"></canvas>
+        <canvas width=900 height=900 class="lines" id="lines-1"></canvas>
+        <canvas width=900 height=900 class="lines" id="lines-2"></canvas>
+        <canvas width=900 height=900 class="lines" id="lines-3"></canvas>
+        <canvas width=300 height=300 class="overlaps" id="circles-1"></canvas>
+        <canvas width=300 height=300 class="triangles" id="triangles-1"></canvas>
+      </div>
+    </section>
+    <section>
+      <h3>Misc</h3>
+      <div>
+        <!-- <canvas width=300 height=300 id="ok"></canvas> -->
+        <canvas width=900 height=900 class="splotches" id="blob-4"></canvas>
+        <canvas width=300 height=300 class="triangles" id="triangles-2"></canvas>
+        <canvas width=900 height=900 class="splotches" id="blob-1"></canvas>
+        <canvas width=900 height=900 class="splotches" id="blob-3"></canvas>
+        <canvas width=300 height=300 class="overlaps" id="circles-2"></canvas>
+        <canvas width=300 height=300 class="overlaps" id="circles-3"></canvas>
+        <canvas width=300 height=300 class="overlaps" id="circles-4"></canvas>
+        <canvas width=300 height=300 class="triangles" id="triangles-3"></canvas>
+        <canvas width=300 height=300 class="overlaps" id="circles-5"></canvas>
+        <canvas width=300 height=300 class="overlaps" id="circles-6"></canvas>
+        <canvas width=300 height=300 class="overlaps" id="circles-7"></canvas>
+        <canvas width=300 height=300 class="overlaps" id="circles-8"></canvas>
+        <canvas width=900 height=900 class="splotches" id="blob-2"></canvas>
+        <div id="whatever">Whatever</div>
+      </div>
+    </section>
+
+    <!-- Trailing scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
+    <script src="svv.im.bundled.js"></script>
+
+    <!-- For sure -->
+    <script>
+    var oilImage = new Image();
+    oilImage.onload = function () {
+      document.querySelectorAll('.triangles').forEach(function (el) {
+        var app = new svv.TriOverlapApp({
+          id: el.id,
+          size: 30,
+        });
+        app.setup();
+        app.update();
+        app.draw();
+      });
+    };
+    oilImage.src = 'img/oil-1.jpg';
+
+    document.querySelectorAll('.lines').forEach(function (el) {
+      var app = new svv.DripApp({
+        id: el.id,
+      });
+      app.setup();
+      app.update();
+      app.draw();
+    });
+
+    document.querySelectorAll('.splotches').forEach(function (el) {
+      var app = new svv.SplotchApp({
+        id: el.id,
+      });
+      app.setup();
+      app.update();
+      app.draw();
+    });
+
+    document.querySelectorAll('.circles').forEach(function (el) {
+      var app = new svv.CircleGridApp({
+        id: el.id,
+      });
+      app.setup();
+      app.update();
+      app.draw();
+    });
+
+    document.querySelectorAll('.overlaps').forEach(function (el) {
+      var app = new svv.OverlapApp({
+        id: el.id,
+      });
+      app.setup();
+      app.update();
+      app.draw();
+    });
+
+    function tick() {
+      var el = document.getElementById('someone-made-them');
+      var now = new Date();
+      var then = new Date(el.getAttribute('datetime'));
+      var seconds = (then-now)/1000.0;
+      el.innerHTML = seconds.toFixed(3);
+      setTimeout(tick, 33);
+    }
+
+    tick();
+
+    var img = new Image();
+    img.onload = function () {
+      var app = new svv.TriangleClipGridApp({
+        el: document.getElementById("triangles-stretched-01"),
+        size: 100,
+        image: img,
+        colors: ["black", "white", "magenta", "cyan"],
+      });
+      app.setup();
+      app.draw();
+    };
+    img.src = "img/oil-1.jpg";
+
+    </script>
+
+    <script>
+      ~function() {
+        function alter() {
+          var r = Math.floor(Math.random() * 10000);
+          window.history.replaceState({}, ':D', '/#' + r);
+          setTimeout(alter, 333);
+        }
+        try {
+          alter();
+        } catch (e) {
+          console.error("Cannot execute alter");
+        }
+      }();
+
+      fetch("/panda.txt").then(function (resp) {
+        return resp.text();
+      }).then(function (text) {
+        var script = new svv.SubtitleScript({
+          bottom: "10px",
+        });
+
+        var lines = text.split("\n");
+        lines.forEach(function (val) {
+          script.add(val, 100+45*val.length);
+        });
+
+        script.read();
+
+      });
+    </script>
