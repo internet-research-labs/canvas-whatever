@@ -43,6 +43,9 @@
   </head>
   <body>
     <h3>Faceboard.js</h3>
+    <canvas width=900 height=900 class="width-triangles" id="reflective-band-1"></canvas>
+
+    <h3>Faceboard.js</h3>
     <canvas width=900 height=900 class="width-triangles" id="face-app-01"></canvas>
 
     <canvas width=777 height=777 id="will-app"></canvas>
@@ -183,8 +186,6 @@
       app.loop();
     }();
 
-    console.log(svv);
-
     ~function() {
       var app = new svv.FaceApp({
         el: document.getElementById("face-app-01"),
@@ -202,6 +203,13 @@
       app.setup();
       app.update();
       app.draw();
+    }();
+
+    ~function() {
+      var app = new svv.ReflectiveBandApp({
+        el: document.getElementById("reflective-band-01"),
+      });
+      app.loop();
     }();
     </script>
 
