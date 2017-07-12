@@ -42,7 +42,7 @@
     <meta charset="UTF-8">
   </head>
   <body>
-    <h3>Faceboard.js</h3>
+    <h3>Reflective Bands</h3>
     <canvas width=900 height=900 class="width-triangles" id="reflective-band-1"></canvas>
 
     <h3>Faceboard.js</h3>
@@ -207,9 +207,12 @@
 
     ~function() {
       var app = new svv.ReflectiveBandApp({
-        el: document.getElementById("reflective-band-01"),
+        el: document.getElementById("reflective-band-1"),
       });
-      app.loop();
+
+      app.setup();
+      app.update();
+      app.draw();
     }();
     </script>
 
