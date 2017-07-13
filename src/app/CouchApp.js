@@ -17,20 +17,25 @@ export default class CouchApp extends App {
   init() {
     var self = this;
 
+    // okay
+    console.log("!?!?", 1);
     self.ambientColor = [ 0xCF, 0xCF, 0xCF ];
     self.pointColor   = [ 0x66, 0x66, 0x66 ];
 
-    self.app.width      = 800;
-    self.app.height     = 600;
+    let w = this.el.parentElement.offsetWidth;
+    let h = this.el.parentElement.offsetHeight;
+
+    self.app.width      = w;
+    self.app.height     = h;
     self.app.view_angle = 15;
-    self.app.aspect     = self.app.width/self.app.height;
+    self.app.aspect     = w/h;
     self.app.near       = 0.1;
     self.app.far        = 10000;
     self.app.iterations = 0;
     self.app.time       = 0;
 
 
-    self.params   = { y : 0, speed : 10.0 };
+    self.params   = { y : 0, speed : 30.0 };
     self.scene    = new THREE.Scene();
     self.renderer = new THREE.WebGLRenderer({
       antialias : true,
@@ -71,9 +76,11 @@ export default class CouchApp extends App {
 
     this.couches = new Array();
 
-    this.pointLight   = new THREE.PointLight(0xDEFACE);
-    this.ambientLight = new THREE.AmbientLight(0x333333);
-    this.scene.add(this.pointLight);
+    this.pointLight1   = new THREE.PointLight(0x446666);
+    this.pointLight2   = new THREE.PointLight(0x664444);
+    this.ambientLight = new THREE.AmbientLight(0x999999);
+    this.scene.add(this.pointLight1);
+    this.scene.add(this.pointLight2);
     this.scene.add(this.ambientLight);
 
 
@@ -98,12 +105,15 @@ export default class CouchApp extends App {
   update() {
     this.app.time += .00005;
 
-    this.camera.persp.position.set(0, 25, 0);
+    this.camera.persp.position.set(0, 15, 0);
     this.camera.persp.up = new THREE.Vector3(0, 1, 0);
     this.camera.persp.lookAt(new THREE.Vector3(0, 0, 0));
 
-    this.pointLight.position.set(0, 25, 0);
-    this.pointLight.lookAt(new THREE.Vector3(0, 0, 0));
+    this.pointLight1.position.set(-20, 25, 0);
+    this.pointLight1.lookAt(new THREE.Vector3(0, 0, 0));
+
+    this.pointLight2.position.set(20, 25, 0);
+    this.pointLight2.lookAt(new THREE.Vector3(0, 0, 0));
 
 
     for (var i=0; i < this.couches.length; i++) {

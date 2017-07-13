@@ -7,7 +7,6 @@
       padding: 0;
     }
     .art-item {
-      background-color: #EFFACE;
       height: 500px;
       min-height: 500px;
       width: 100%;
@@ -20,12 +19,33 @@
       display: block;
       background-color: red;
       padding: 1em 0.5em 1em 3em;
+      padding: 0;
+      margin: 0;
     }
-    #soda-cans {
+
+    .forward {
+      z-index: 1;
+    }
+
+    .overlay-text {
+      font-size: 10em;
+      color: white;
+      font-family: sans-serif;
+      font-weight: bold;
+      text-transform: uppercase;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    #couches {
+      display: block;
       background-color: red;
-      height: 100px;
-      width: 100px;
-      border: solid 1px black;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      padding: 0;
+      margin: 0;
+      z-index: -1;
     }
 
     .gradient {
@@ -42,7 +62,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
-    <script src="svv.im.bundled.js"></script>
+    <script src="svv.im.bundled-okay.js"></script>
     <script src="vendor/OBJLoader.js"></script>
   </head>
   <!-- Bitch, I'm the killer whale -->
@@ -51,14 +71,19 @@
     <!-- A+ -->
     <section class="art-item">
       <!-- ... -->
-      <canvas height=100 width=100 id="soda-cans">
-      </canvas>
+      <canvas height=100 width=100 id="couches"></canvas>
+      <center><h1 class="overlay-text">YEAH HOE</h1></center>
+      <center><h1 class="overlay-text">YEAH HOE</h1></center>
+      <center><h1 class="overlay-text">YEAH HOE</h1></center>
+      <center><h1 class="overlay-text">YEAH HOE</h1></center>
+      <center><h1 class="overlay-text">YEAH HOE</h1></center>
+      <center><h1 class="overlay-text">YEAH HOE</h1></center>
 
       <!-- ... -->
+      <!--
       <section class="buy gradient">
         SOLD OUT
 
-        <!-- -->
         <form>
           <select>
             <option>...</select>
@@ -67,10 +92,13 @@
           <input type="submit">
         </form>
       </section>
+      -->
 
     </section>
     <script>
-    var app = new svv.CouchApp({id: "soda-cans"});
+    var app = new svv.CouchApp({
+      id: "couches",
+    });
     app.init();
     app.loop();
     </script>
