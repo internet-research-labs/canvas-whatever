@@ -177,7 +177,7 @@ export class Couch extends App {
     var zr = Math.random() * 1.0 - 0.5;
 
     self.position     = { x : x, y : y, z : z };
-    self.velocity     = { x : -4.0, y : 0.0, z : 0.0 };
+    self.velocity     = { x : -12.0, y : 0.0, z : 0.0 };
     self.acceleration = { x : 0.0, y : 0.0, z : 0.0 };
 
     self.rotation     = { x : 0.0, y : 0.0, z : 0.0 };
@@ -185,7 +185,7 @@ export class Couch extends App {
 
     self.time_step    = 0.005 * Math.random() + 0.005;
 
-    self.color    = [ 0, 0, 0 ];
+    self.color = [ 0, 0, 0 ];
 
     self.init();
 

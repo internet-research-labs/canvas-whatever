@@ -900,7 +900,7 @@ var svv =
 	    var zr = Math.random() * 1.0 - 0.5;
 
 	    self.position = { x: x, y: y, z: z };
-	    self.velocity = { x: -4.0, y: 0.0, z: 0.0 };
+	    self.velocity = { x: -12.0, y: 0.0, z: 0.0 };
 	    self.acceleration = { x: 0.0, y: 0.0, z: 0.0 };
 
 	    self.rotation = { x: 0.0, y: 0.0, z: 0.0 };

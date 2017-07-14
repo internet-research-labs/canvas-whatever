@@ -5,8 +5,11 @@
     html, body {
       margin: 0;
       padding: 0;
+      font-family: sans-serif;
+      font-size:  16pt;
     }
     .art-item {
+      position: absolute;
       height: 500px;
       min-height: 500px;
       width: 100%;
@@ -27,14 +30,21 @@
       z-index: 1;
     }
 
+    .overlay {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 10;
+    }
     .overlay-text {
-      font-size: 10em;
-      color: white;
+      font-size: 300%;
+      color: rgba(0, 0, 0, 0.05);
       font-family: sans-serif;
       font-weight: bold;
       text-transform: uppercase;
-        margin-top: 0;
-        margin-bottom: 0;
+      margin-top: 0;
+      margin-bottom: 0;
     }
 
     #couches {
@@ -69,18 +79,22 @@
   <body>
 
     <!-- A+ -->
+    <h3>I thought that we talked about this a while ago</h3>
     <section class="art-item">
       <!-- ... -->
       <canvas height=100 width=100 id="couches"></canvas>
-      <center><h1 class="overlay-text">YEAH HOE</h1></center>
-      <center><h1 class="overlay-text">YEAH HOE</h1></center>
-      <center><h1 class="overlay-text">YEAH HOE</h1></center>
-      <center><h1 class="overlay-text">YEAH HOE</h1></center>
-      <center><h1 class="overlay-text">YEAH HOE</h1></center>
-      <center><h1 class="overlay-text">YEAH HOE</h1></center>
+      <div class="overlay">
+        <center><h1 class="overlay-text">YEAH HOE</h1></center>
+        <center><h1 class="overlay-text">YEAH HOE</h1></center>
+        <center><h1 class="overlay-text">YEAH HOE</h1></center>
+        <center><h1 class="overlay-text">YEAH HOE</h1></center>
+        <center><h1 class="overlay-text">YEAH HOE</h1></center>
+        <center><h1 class="overlay-text">YEAH HOE</h1></center>
+        <center><h1 class="overlay-text">YEAH HOE</h1></center>
+        <center><h1 class="overlay-text">YEAH HOE</h1></center>
+      </div>
 
       <!-- ... -->
-      <!--
       <section class="buy gradient">
         SOLD OUT
 
@@ -92,7 +106,6 @@
           <input type="submit">
         </form>
       </section>
-      -->
 
     </section>
     <script>
