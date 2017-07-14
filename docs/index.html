@@ -135,6 +135,18 @@
       };
       img.src = 'img/oil-1.jpg';
     }();
+    ~function () {
+      fetch('panda.txt', {'method': 'get'}).then(function (resp) {
+        return resp.text();
+      }).then(function (text) {
+        var script = new svv.SubtitleScript();
+        var split = text.split("\n").forEach(function (v) {
+          script.add(v, 40 + v.length*60);
+        });
+        script.read();
+      });
+
+    }();
     </script>
   </body>
 </html>
