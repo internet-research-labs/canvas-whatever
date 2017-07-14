@@ -9,7 +9,7 @@
       font-size:  16pt;
     }
     .art-item {
-      position: absolute;
+      position: relative;
       height: 500px;
       min-height: 500px;
       width: 100%;
@@ -47,9 +47,10 @@
       margin-bottom: 0;
     }
 
-    #couches {
+    #triangles-what-you-thought,
+    #couches
+    {
       display: block;
-      background-color: red;
       width: 100%;
       position: absolute;
       left: 0;
@@ -108,12 +109,32 @@
       </section>
 
     </section>
+    <section class="art-item">
+      <canvas height=480  width=2000 id="triangles-what-you-thought"></canvas>
+    </section>
     <script>
-    var app = new svv.CouchApp({
-      id: "couches",
-    });
-    app.init();
-    app.loop();
+    ~function () {
+      var app = new svv.CouchApp({
+        id: "couches",
+      });
+      app.init();
+      app.loop();
+    }();
+    ~function () {
+      var img = new Image();
+      img.onload = function () {
+        var app = new svv.TriangleClipGridApp({
+          el: document.getElementById("triangles-what-you-thought"),
+          colors: ['black', 'white', 'silver', 'cyan', 'magenta'],
+          image: img,
+          size: 80,
+        });
+        app.setup();
+        app.update();
+        app.draw();
+      };
+      img.src = 'img/oil-1.jpg';
+    }();
     </script>
   </body>
 </html>
