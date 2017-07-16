@@ -47,51 +47,56 @@ class Ribbon {
   constructor(center, direction) {
 
     this.center = [0, 0, 0];
-    this.direction = normalize([0, 1, -1]);
-    this.position = [.3, 0, 0];
+    this.direction = normalize([1, 1, 0]);
+    this.position = [0, 0, 0];
 
     this.width = 1; 
 
     this.vertices = [];
     this.faces = [];
 
+    // this.disturbVertices();
+  }
 
-    let d = Math.PI/40;
-    let incr = 0.01;
+  getPoints() {
+    let points = [];
+    let h = 0.003;
 
-    let h = 0.5;
+    let theta = 0;
+    let delta = Math.PI/20;
 
-    let distance = 1;
+    let [x, y, z] = [4, 0, 0];
 
-    for (let i=0; i < 30; i++) {
-
-      // Bottom part of faces
-      let x = scale(normalize([this.position[0], this.position[1], 0]), distance);
-      this.vertices.push([x[0], x[1], this.position[2]-0.4]);
-      this.vertices.push([x[0], x[1], this.position[2]+0.4]);
-
-      let p = [
-        this.position[0] - h*this.direction[0],
-        this.position[1] + h*this.direction[1],
-        this.position[2] + 0,
-      ];
-
-      // Top part of faces
-      x = scale(normalize([p[0], p[1], 0]), distance);
-      this.vertices.push([x[0], x[1], p[2]-0.4]);
-      this.vertices.push([x[0], x[1], p[2]+0.4]);
-
-      this.position = p;
-
-      // Hittin' off licks in the lambo
-      this.faces.push([4*i+0, 4*i+1, 4*i+2]);
-      this.faces.push([4*i+1, 4*i+2, 4*i+3]);
-
-      //
-      distance += 0.1;
+    let f = function(t) {
+      return [4*Math.cos(t), 4*Math.sin(t)];
     }
 
-    // this.disturbVertices();
+    points.push([x, y, z]);
+
+    for (let i=1; i < 40; i++) {
+
+      let s = 4;
+
+      let p0 = f(theta);
+      let p1 = f(theta+delta);
+
+      let [dx, dy] = [p1[0]-p0[0], p1[1]-p0[1]];
+      let dz = 0;
+
+      console.log(dx, dy);
+
+      x = x + dx;
+      y = y + dy;
+      z = z + dz;
+
+      console.log(x, y, z);
+
+      points.push([x, y, z]);
+
+      theta += delta;
+    }
+
+    return points;
   }
 
   disturbVertices() {
@@ -173,12 +178,27 @@ export default class RibbonApp extends App {
 
     let ribbon = new Ribbon(0, 0, 0);
 
-    this.ribbon = new THREE.LineSegments(
-      new THREE.WireframeGeometry(toGeometry(ribbon.vertices, ribbon.faces)),
-    );
+//  this.ribbon = new THREE.LineSegments(
+//    new THREE.WireframeGeometry(toGeometry(ribbon.vertices, ribbon.faces)),
+//  );
 
-    console.log(this.ribbon);
-    this.scene.add(this.ribbon);
+    let ribbonPoints = ribbon.getPoints();
+
+    ribbonPoints.forEach(function (v) {
+      let geo = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+      let lines = new THREE.LineSegments(new THREE.WireframeGeometry(geo));
+      lines.position.x = v[0];
+      lines.position.y = v[1];
+      lines.position.z = v[2];
+      lines.rotation.x = Math.random();
+      lines.rotation.y = Math.random();
+      lines.rotation.z = Math.random();
+      this.scene.add(lines);
+
+    }.bind(this));
+
+    // console.log(this.ribbon);
+    // this.scene.add(this.ribbon);
   }
 
   update() {
@@ -187,9 +207,11 @@ export default class RibbonApp extends App {
     this.lines.rotation.y -= 0.05;
     this.lines.rotation.z += 0.02;
 
+    /*
     this.ribbon.rotation.x -= 0.05;
     this.ribbon.rotation.y -= 0.01;
     this.ribbon.rotation.z += 0.02;
+    */
   }
 
   draw() {
