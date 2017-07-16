@@ -37,9 +37,9 @@ function cross(u, v) {
 
 function sub(x, y) {
   return [
-    y[0] - x[0],
-    y[1] - x[1],
-    y[2] - x[2],
+    x[0] - y[0],
+    x[1] - y[1],
+    x[2] - y[2],
   ];
 }
 
@@ -78,45 +78,53 @@ class Ribbon {
 
   getPoints() {
     let points = [];
+    let slopes = [];
     let h = 0.003;
 
     let theta = 0;
     let delta = Math.PI/20;
 
-    let [x, y, z] = scale(normalize([4, 0, 0]), 4);
+    let distance = 1;
+    let [x, y, z] = scale(normalize([4, 0, 0]), distance);
+    let [x0, y0, z0] = [0, 0, 0];
     let [dx, dy, dz] = this.direction.slice();
 
     console.log(x*x+y*y+z*z);
 
+
     let f = function(t) {
-      return [4*Math.cos(t), 4*Math.sin(t)];
+      return [distance*Math.cos(t), distance*Math.sin(t)];
     }
 
     // Push initial
     points.push([x, y, z]);
+    slopes.push([dx, dy, z]);
 
-    for (let i=1; i < 10; i++) {
-
-      let s = 4;
+    for (let i=1; i < 230; i++) {
 
       let p0 = f(theta);
       let p1 = f(theta+delta);
 
-      [dx, dy, dz] = [0, 1, 0];
+      [x0, y0, z0] = [x, y, z];
 
       // Update step
       x = x + dx;
       y = y + dy;
       z = z + dz;
 
-      [x, y, z] = scale(normalize([x, y, z]), 4);
+      [x, y, z] = scale(normalize([x, y, z]), distance);
+
+      let randomness = scale(normalize([Math.random(), Math.random(), Math.random()]), 0.05);
+      [dx, dy, dz] = sub([x, y, z], [x0, y0, z0]);
+      [dx, dy, dz] = scale(normalize(sub([dx, dy, dz], randomness)), 0.3);
 
       // Push
       points.push([x, y, z]);
-
+      slopes.push([dx, dy, dz]);
 
       // Move
       theta += delta;
+      distance += 0.037;
     }
 
     return points;
