@@ -42,15 +42,16 @@
     <meta charset="UTF-8">
   </head>
   <body>
-    <h3>Faceboard.js</h3>
-    <canvas width=900 height=900 class="width-triangles" id="reflective-band-1"></canvas>
+    <h3>I just wanted me to be the one you think about</h3>
+    <canvas width=900 height=900 class="width-triangles" id="thinking-about-you-thinking-about-me"></canvas>
 
     <h3>Faceboard.js</h3>
     <canvas width=900 height=900 class="width-triangles" id="face-app-01"></canvas>
 
+    <h2>FUck yuou thought? This is that will app</h2>
     <canvas width=777 height=777 id="will-app"></canvas>
+
     <h3>Black X6</h3>
-    <!-- ...-->
     <canvas width=900 height=900 class="width-triangles" id="gold-mesh-01"></canvas>
 
     <h3>Yea...</h3>
@@ -206,9 +207,10 @@
     }();
 
     ~function() {
-      var app = new svv.ReflectiveBandApp({
-        el: document.getElementById("reflective-band-01"),
+      var app = new svv.RibbonApp({
+        id: "thinking-about-you-thinking-about-me",
       });
+      app.setup();
       app.loop();
     }();
     </script>

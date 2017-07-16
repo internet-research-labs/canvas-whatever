@@ -2,8 +2,8 @@ module.exports = {
   context: __dirname + "/src",
   entry: './index.js',
   output: {
-    path: __dirname + '/docs',
-    filename: 'svv.im.bundled-okay.js',
+    path: __dirname + '/dist',
+    filename: 'svv.im.bundled.js',
     libraryTarget: 'var',
     library: 'svv',
   },

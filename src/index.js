@@ -5,6 +5,7 @@ import CubeApp from './app/CubeApp.js';
 import DripApp from './app/DripApp.js';
 import FaceApp from './app/FaceApp.js';
 import OverlapApp from './app/OverlapApp.js';
+import RibbonApp from './app/RibbonApp.js';
 import SmileApp from './app/SmileApp.js';
 import SplotchApp from './app/SplotchApp.js';
 import TriGridApp from './app/TriGridApp.js';
@@ -12,7 +13,6 @@ import TriOverlapApp from './app/TriOverlapApp.js';
 import TriangleClipGridApp from './app/TriangleClipGridApp.js';
 import WaveApp from './app/WaveApp.js';
 import WillApp from './app/WillApp.js';
-import YeahYeahApp from './app/YeahYeahApp.js';
 import {FlatApp, GoldGridApp} from './app/GoldGridApp.js';
 
 // ...
@@ -33,13 +33,13 @@ export {
   FlatApp,
   GoldGridApp,
   OverlapApp,
+  RibbonApp,
   SmileApp,
   SplotchApp,
   TriOverlapApp,
   TriangleClipGridApp,
   WaveApp,
   WillApp,
-  YeahYeahApp,
 
   // Objects
   TriangleMesh,
