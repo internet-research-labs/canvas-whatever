@@ -25,48 +25,70 @@ function sub(x, y) {
   ];
 }
 
+function scale(v, s) {
+  return [
+    v[0]*s,
+    v[1]*s,
+    v[2]*s,
+  ];
+}
+
+function normalize(v) {
+  let n = v[0]*v[0]+v[1]*v[1]+v[2]*v[2];
+  return [
+    v[0]/n,
+    v[1]/n,
+    v[2]/n,
+  ];
+}
+
 
 class Ribbon {
   constructor(center, direction) {
 
     this.center = [0, 0, 0];
-    this.direction = [.707, .707, 0];
-    this.position = [1, 0, 0];
+    this.direction = normalize([0, 1, -1]);
+    this.position = [.3, 0, 0];
 
     this.width = 1; 
 
     this.vertices = [];
     this.faces = [];
 
-    let theta = 0;
 
     let d = Math.PI/40;
     let incr = 0.01;
 
-    let h = 0.1;
+    let h = 0.5;
 
-    for (let i=0; i < 300; i++) {
-      theta += d;
+    let distance = 1;
+
+    for (let i=0; i < 30; i++) {
 
       // Bottom part of faces
-      this.vertices.push([this.position[0], this.position[1], this.position[2]-0.1]);
-      this.vertices.push([this.position[0], this.position[1], this.position[2]+0.1]);
+      let x = scale(normalize([this.position[0], this.position[1], 0]), distance);
+      this.vertices.push([x[0], x[1], this.position[2]-0.4]);
+      this.vertices.push([x[0], x[1], this.position[2]+0.4]);
 
       let p = [
-        this.position[0] - h*Math.sin(theta),
-        this.position[1] + h*Math.cos(theta),
+        this.position[0] - h*this.direction[0],
+        this.position[1] + h*this.direction[1],
         this.position[2] + 0,
       ];
 
       // Top part of faces
-      this.vertices.push([p[0], p[1], p[2]-0.1]);
-      this.vertices.push([p[0], p[1], p[2]+0.1]);
+      x = scale(normalize([p[0], p[1], 0]), distance);
+      this.vertices.push([x[0], x[1], p[2]-0.4]);
+      this.vertices.push([x[0], x[1], p[2]+0.4]);
 
       this.position = p;
 
-      //
+      // Hittin' off licks in the lambo
       this.faces.push([4*i+0, 4*i+1, 4*i+2]);
       this.faces.push([4*i+1, 4*i+2, 4*i+3]);
+
+      //
+      distance += 0.1;
     }
 
     // this.disturbVertices();
