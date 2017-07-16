@@ -17,6 +17,24 @@ function toGeometry(vertices, faces) {
 }
 
 
+/**
+ * Project u onto v
+ */
+function proj(u, v) {
+  let s = 1;
+  v = normalize(v);
+  return scale(v, s);
+}
+
+function cross(u, v) {
+  return [
+    u[1]*v[2] - u[2]*v[1],
+    u[2]*v[0] - u[0]*v[2],
+    u[0]*v[1] - u[1]*v[0],
+  ];
+}
+
+
 function sub(x, y) {
   return [
     y[0] - x[0],
@@ -34,7 +52,7 @@ function scale(v, s) {
 }
 
 function normalize(v) {
-  let n = v[0]*v[0]+v[1]*v[1]+v[2]*v[2];
+  let n = Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]);
   return [
     v[0]/n,
     v[1]/n,
@@ -65,34 +83,39 @@ class Ribbon {
     let theta = 0;
     let delta = Math.PI/20;
 
-    let [x, y, z] = [4, 0, 0];
+    let [x, y, z] = scale(normalize([4, 0, 0]), 4);
+    let [dx, dy, dz] = this.direction.slice();
+
+    console.log(x*x+y*y+z*z);
 
     let f = function(t) {
       return [4*Math.cos(t), 4*Math.sin(t)];
     }
 
+    // Push initial
     points.push([x, y, z]);
 
-    for (let i=1; i < 40; i++) {
+    for (let i=1; i < 10; i++) {
 
       let s = 4;
 
       let p0 = f(theta);
       let p1 = f(theta+delta);
 
-      let [dx, dy] = [p1[0]-p0[0], p1[1]-p0[1]];
-      let dz = 0;
+      [dx, dy, dz] = [0, 1, 0];
 
-      console.log(dx, dy);
-
+      // Update step
       x = x + dx;
       y = y + dy;
       z = z + dz;
 
-      console.log(x, y, z);
+      [x, y, z] = scale(normalize([x, y, z]), 4);
 
+      // Push
       points.push([x, y, z]);
 
+
+      // Move
       theta += delta;
     }
 
