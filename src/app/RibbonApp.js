@@ -82,7 +82,7 @@ class Ribbon {
     let h = 0.003;
 
     let theta = 0;
-    let delta = Math.PI/20;
+    let delta = Math.PI/90;
 
     let distance = 1;
     let [x, y, z] = scale(normalize([4, 0, 0]), distance);
@@ -124,7 +124,7 @@ class Ribbon {
 
       // Move
       theta += delta;
-      distance += 0.037;
+      distance = 2 + Math.cos(0.5*theta);
     }
 
     return points;
@@ -216,7 +216,7 @@ export default class RibbonApp extends App {
     let ribbonPoints = ribbon.getPoints();
 
     ribbonPoints.forEach(function (v) {
-      let geo = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+      let geo = new THREE.BoxGeometry(0.05, 0.05, 0.05);
       let lines = new THREE.LineSegments(new THREE.WireframeGeometry(geo));
       lines.position.x = v[0];
       lines.position.y = v[1];
@@ -230,6 +230,8 @@ export default class RibbonApp extends App {
 
     // console.log(this.ribbon);
     // this.scene.add(this.ribbon);
+    //
+    this.t = 0;
   }
 
   update() {
@@ -237,6 +239,17 @@ export default class RibbonApp extends App {
     this.lines.rotation.x += 0.01;
     this.lines.rotation.y -= 0.05;
     this.lines.rotation.z += 0.02;
+
+    this.t += 0.01;
+
+    this.camera.x = Math.cos
+    this.camera.position.set(
+      40*Math.sin(this.t),
+      0,
+      40*Math.cos(this.t),
+    );
+
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     /*
     this.ribbon.rotation.x -= 0.05;
