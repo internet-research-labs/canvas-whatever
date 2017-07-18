@@ -1,5 +1,7 @@
 import App from './App.js';
+import Rib from '../Ribbon.js';
 import * as THREE from 'THREE';
+import {normalize, scale, sub, add, cross} from '../math3.js';
 
 
 function toGeometry(vertices, faces) {
@@ -16,62 +18,6 @@ function toGeometry(vertices, faces) {
   return geo;
 }
 
-
-/**
- * Project u onto v
- */
-function proj(u, v) {
-  let s = 1;
-  v = normalize(v);
-  return scale(v, s);
-}
-
-function cross(u, v) {
-  return [
-    u[1]*v[2] - u[2]*v[1],
-    u[2]*v[0] - u[0]*v[2],
-    u[0]*v[1] - u[1]*v[0],
-  ];
-}
-
-
-function add(x, y) {
-  return [
-    x[0] + y[0],
-    x[1] + y[1],
-    x[2] + y[2],
-  ];
-}
-
-function sub(x, y) {
-  return [
-    x[0] - y[0],
-    x[1] - y[1],
-    x[2] - y[2],
-  ];
-}
-
-function scale(v, s) {
-  return [
-    v[0]*s,
-    v[1]*s,
-    v[2]*s,
-  ];
-}
-
-function normalize(v) {
-  let n = Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]);
-
-  if (n == 0) {
-    return [0, 0, 0];
-  }
-
-  return [
-    v[0]/n,
-    v[1]/n,
-    v[2]/n,
-  ];
-}
 
 
 class Ribbon {
@@ -257,6 +203,19 @@ export default class RibbonApp extends App {
       this.scene.add(this.getDot(v[0], v[1], v[2]));
     }.bind(this));
 
+
+    let points = 90;
+    let delta = Math.PI/points;
+    let r = new Rib();
+
+    for (let i=0; i < points; i++) {
+      let x = Math.cos(i*delta);
+      let z = Math.sin(i*delta);
+      r.addPoint([x, 0, z], [0, 1, 0]);
+    }
+
+    console.log(r.build());
+
     this.t = 0;
   }
 
@@ -278,9 +237,9 @@ export default class RibbonApp extends App {
 
     this.camera.x = Math.cos
     this.camera.position.set(
-      40*Math.sin(this.t),
-      0,
-      40*Math.cos(this.t),
+      30*Math.sin(-0.7*this.t),
+      30*Math.cos(+0.7*this.t),
+      30*Math.cos(2.+0.7*this.t),
     );
 
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
