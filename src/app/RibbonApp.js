@@ -35,6 +35,14 @@ function cross(u, v) {
 }
 
 
+function add(x, y) {
+  return [
+    x[0] + y[0],
+    x[1] + y[1],
+    x[2] + y[2],
+  ];
+}
+
 function sub(x, y) {
   return [
     x[0] - y[0],
@@ -53,6 +61,11 @@ function scale(v, s) {
 
 function normalize(v) {
   let n = Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]);
+
+  if (n == 0) {
+    return [0, 0, 0];
+  }
+
   return [
     v[0]/n,
     v[1]/n,
@@ -73,10 +86,12 @@ class Ribbon {
     this.vertices = [];
     this.faces = [];
 
+    this.points = [];
+    this.slopes = [];
     // this.disturbVertices();
   }
 
-  getPoints() {
+  computePoints() {
     let points = [];
     let slopes = [];
     let h = 0.003;
@@ -89,16 +104,13 @@ class Ribbon {
     let [x0, y0, z0] = [0, 0, 0];
     let [dx, dy, dz] = this.direction.slice();
 
-    console.log(x*x+y*y+z*z);
-
-
     let f = function(t) {
       return [distance*Math.cos(t), distance*Math.sin(t)];
     }
 
     // Push initial
     points.push([x, y, z]);
-    slopes.push([dx, dy, z]);
+    slopes.push([dx, dy, dz]);
 
     for (let i=1; i < 230; i++) {
 
@@ -127,7 +139,8 @@ class Ribbon {
       distance = 2 + Math.cos(0.5*theta);
     }
 
-    return points;
+    this.points = points;
+    this.slopes = slopes;
   }
 
   disturbVertices() {
@@ -209,29 +222,50 @@ export default class RibbonApp extends App {
 
     let ribbon = new Ribbon(0, 0, 0);
 
-//  this.ribbon = new THREE.LineSegments(
-//    new THREE.WireframeGeometry(toGeometry(ribbon.vertices, ribbon.faces)),
-//  );
+    ribbon.computePoints();
 
-    let ribbonPoints = ribbon.getPoints();
+    if (ribbon.points.length != ribbon.slopes.length) {
+      throw "Fuck this";
+    }
 
-    ribbonPoints.forEach(function (v) {
-      let geo = new THREE.BoxGeometry(0.05, 0.05, 0.05);
-      let lines = new THREE.LineSegments(new THREE.WireframeGeometry(geo));
-      lines.position.x = v[0];
-      lines.position.y = v[1];
-      lines.position.z = v[2];
-      lines.rotation.x = Math.random();
-      lines.rotation.y = Math.random();
-      lines.rotation.z = Math.random();
-      this.scene.add(lines);
 
+    // ... Just be sad, w/e
+    let ribbonLength = ribbon.points.length;
+
+    for (let i=0; i < ribbonLength; i++) {
+      let [x, y, z] = ribbon.points[i];
+      let [dx, dy, dz] = ribbon.slopes[i];
+
+      let v = sub(
+        normalize([x, y, z]),
+        normalize(ribbon.center),
+      );
+
+      let u = normalize(ribbon.slopes[i]);
+      let w = cross(u, v);
+
+      let [a, b, c] = add([x, y, z], scale(w, +0.1));
+      let [d, e, f] = add([x, y, z], scale(w, -0.1));
+
+      this.scene.add(this.getDot(x, y, z));
+      this.scene.add(this.getDot(a, b, c, 0x00AAAA));
+      this.scene.add(this.getDot(d, e, f, 0x00AAAA));
+    }
+
+    // Draw some dots
+    ribbon.points.forEach(function (v) {
+      this.scene.add(this.getDot(v[0], v[1], v[2]));
     }.bind(this));
 
-    // console.log(this.ribbon);
-    // this.scene.add(this.ribbon);
-    //
     this.t = 0;
+  }
+
+  getDot(x, y, z, color) {
+    color = color || 0x000000;
+    let dotGeometry = new THREE.Geometry();
+    dotGeometry.vertices.push(new THREE.Vector3(x, y, z));
+    let dotMaterial = new THREE.PointsMaterial( { size: 2, sizeAttenuation: false, color: color} );
+    return new THREE.Points(dotGeometry, dotMaterial);
   }
 
   update() {
