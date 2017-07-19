@@ -81,7 +81,8 @@ class Ribbon {
 
       // Move
       theta += delta;
-      distance = 2 + Math.cos(0.5*theta);
+      // distance = 2 + Math.cos(0.5*theta);
+      distance += 0.015;
     }
 
     this.points = points;
@@ -174,7 +175,11 @@ export default class RibbonApp extends App {
     }
 
 
-    // ... Just be sad, w/e
+    let points = 120;
+    let delta = 2*Math.PI/points;
+
+    let r = new Rib();
+
     let ribbonLength = ribbon.points.length;
 
     for (let i=0; i < ribbonLength; i++) {
@@ -192,39 +197,16 @@ export default class RibbonApp extends App {
       let [a, b, c] = add([x, y, z], scale(w, +0.1));
       let [d, e, f] = add([x, y, z], scale(w, -0.1));
 
-      // this.scene.add(this.getDot(x, y, z));
-      // this.scene.add(this.getDot(a, b, c, 0x00AAAA));
-      // this.scene.add(this.getDot(d, e, f, 0x00AAAA));
+      r.addPoint([x, y, z], w);
     }
 
-    // Draw some dots
-    ribbon.points.forEach(function (v) {
-      // this.scene.add(this.getDot(v[0], v[1], v[2]));
-    }.bind(this));
-
-
-    let points = 120;
-    let delta = 2*Math.PI/points;
-
-    let r = new Rib();
-
-    // r.init([1, 0, 0]);
-    //
-    for (let i=0; i <= points; i++) {
-      let t = i*delta;
-      let x = Math.cos(i*delta);
-      let z = Math.sin(i*delta);
-
-      r.addPoint([x, 0, z], [Math.sin(t), Math.cos(t), 0]);
-    }
-
-    // this.scene.add(new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.BoxGeometry(3, 3, 3))));
-    let g = r.build();
-    let m = new THREE.LineSegments(new THREE.WireframeGeometry(g));
-
-    this.scene.add(m);
+    this.scene.add(this.toLineSegments(r.build()));
 
     this.t = 0;
+  }
+
+  toLineSegments(g) {
+    return new THREE.LineSegments(new THREE.WireframeGeometry(g));
   }
 
   getDot(x, y, z, color) {
@@ -246,8 +228,8 @@ export default class RibbonApp extends App {
     this.camera.x = Math.cos
     this.camera.position.set(
       30*Math.sin(-0.7*this.t),
+      0,
       30*Math.cos(+0.7*this.t),
-      30*Math.cos(2.+0.7*this.t),
     );
 
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
