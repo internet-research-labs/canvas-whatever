@@ -215,7 +215,7 @@ export default class RibbonApp extends App {
       let x = Math.cos(i*delta);
       let z = Math.sin(i*delta);
 
-      r.addPoint([x, 0, z], [Math.sin(4*t), Math.cos(4*t), 0]);
+      r.addPoint([x, 0, z], [Math.sin(t), Math.cos(t), 0]);
     }
 
     // this.scene.add(new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.BoxGeometry(3, 3, 3))));
