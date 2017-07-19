@@ -19,7 +19,6 @@ function toGeometry(vertices, faces) {
 }
 
 
-
 class Ribbon {
   constructor(center, direction) {
 
@@ -193,28 +192,36 @@ export default class RibbonApp extends App {
       let [a, b, c] = add([x, y, z], scale(w, +0.1));
       let [d, e, f] = add([x, y, z], scale(w, -0.1));
 
-      this.scene.add(this.getDot(x, y, z));
-      this.scene.add(this.getDot(a, b, c, 0x00AAAA));
-      this.scene.add(this.getDot(d, e, f, 0x00AAAA));
+      // this.scene.add(this.getDot(x, y, z));
+      // this.scene.add(this.getDot(a, b, c, 0x00AAAA));
+      // this.scene.add(this.getDot(d, e, f, 0x00AAAA));
     }
 
     // Draw some dots
     ribbon.points.forEach(function (v) {
-      this.scene.add(this.getDot(v[0], v[1], v[2]));
+      // this.scene.add(this.getDot(v[0], v[1], v[2]));
     }.bind(this));
 
 
-    let points = 90;
-    let delta = Math.PI/points;
+    let points = 10;
+    let delta = 2*Math.PI/points;
+
     let r = new Rib();
 
-    for (let i=0; i < points; i++) {
+    r.init([1, 0, 0]);
+
+    for (let i=1; i <= points; i++) {
       let x = Math.cos(i*delta);
       let z = Math.sin(i*delta);
+
       r.addPoint([x, 0, z], [0, 1, 0]);
     }
 
-    console.log(r.build());
+    // this.scene.add(new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.BoxGeometry(3, 3, 3))));
+    let g = r.build();
+    let m = new THREE.LineSegments(new THREE.WireframeGeometry(g));
+
+    this.scene.add(m);
 
     this.t = 0;
   }
