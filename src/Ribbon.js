@@ -11,23 +11,21 @@ export default class Rib {
     this.pieces = [];
     this.slopes = [];
     this.normals = [];
+    this.directionals = [];
   }
 
   init(p) {
-    this.pieces.push(p.slice());
+    // this.pieces.push(p.slice());
     return this;
   }
 
   /**
    * Add position and normal
    */
-  addPoint(p, n) {
-    let last = this.pieces[this.pieces.length-1];
-    let slope = sub(p, last);
-
+  addPoint(p, c) {
     this.pieces.push(p.slice());
-    this.slopes.push(slope);
-    this.normals.push(n.slice());
+    // this.slopes.push(slope);
+    this.directionals.push(c.slice());
 
     return this;
   }
@@ -42,23 +40,27 @@ export default class Rib {
   build() {
     let g = new THREE.Geometry();
 
-    for (let i=0; i < this.pieces.length-1; i++) {
+    for (let i=0; i < this.pieces.length; i++) {
+
       // Get bounding points
       let p0 = this.pieces[i];
-      let p1 = this.pieces[i+1];
+      // let p1 = this.pieces[i+1];
 
-      let d = normalize(sub(p1, p0));
-      let n = normalize(this.normals[i]);
-      let c = scale(normalize(cross(d, n)), 0.25);
+      // let d = normalize(sub(p1, p0));
+      // let n = normalize(this.di[i]);
+      // let c = scale(normalize(cross(d, n)), 0.25);
+      let c = this.directionals[i];
+      c = scale(normalize(c), 0.25);
 
       g.vertices.push(this.toVector3(add(p0, scale(c, 1))));
       g.vertices.push(this.toVector3(add(p0, scale(c, -1))));
-      g.vertices.push(this.toVector3(add(p1, scale(c, 1))));
-      g.vertices.push(this.toVector3(add(p1, scale(c, -1))));
-
-      g.faces.push(new THREE.Face3(4*i, 4*i+1, 4*i+2));
-      g.faces.push(new THREE.Face3(4*i+1, 4*i+2, 4*i+3));
     }
+
+    for (let i=0; 2*i+3 < g.vertices.length; i+=1) {
+      g.faces.push(new THREE.Face3(2*i, 2*i+1, 2*i+2));
+      g.faces.push(new THREE.Face3(2*i+1, 2*i+2, 2*i+3));
+    }
+
     return g;
   }
 }

@@ -203,18 +203,19 @@ export default class RibbonApp extends App {
     }.bind(this));
 
 
-    let points = 10;
+    let points = 120;
     let delta = 2*Math.PI/points;
 
     let r = new Rib();
 
-    r.init([1, 0, 0]);
-
-    for (let i=1; i <= points; i++) {
+    // r.init([1, 0, 0]);
+    //
+    for (let i=0; i <= points; i++) {
+      let t = i*delta;
       let x = Math.cos(i*delta);
       let z = Math.sin(i*delta);
 
-      r.addPoint([x, 0, z], [0, 1, 0]);
+      r.addPoint([x, 0, z], [Math.sin(4*t), Math.cos(4*t), 0]);
     }
 
     // this.scene.add(new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.BoxGeometry(3, 3, 3))));
