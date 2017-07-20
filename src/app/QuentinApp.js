@@ -53,6 +53,7 @@ export default class QuentinApp extends QuentinLike {
     this.renderer.setClearColor(new THREE.Color(0xFFEEFF));
 
     this.loadObj();
+    this.app.time = 0;
   }
 
   loadObj() {
@@ -71,8 +72,20 @@ export default class QuentinApp extends QuentinLike {
   }
 
   update() {
-    this.camera.position.set(-18, 12, 0);
+    this.app.time += .01;
+    let t = this.app.time;
+    let x = 20*Math.cos(1.5*t);
+    let y = -10;
+    let z = 20*Math.sin(t);
+
+    this.camera.position.set(x, y, z);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+    this.pointLight1.position.set(-20, 25, 0);
+    this.pointLight1.lookAt(new THREE.Vector3(0, 0, 0));
+
+    this.pointLight2.position.set(20, 25, 0);
+    this.pointLight2.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
   draw() {
