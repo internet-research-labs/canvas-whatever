@@ -67,10 +67,10 @@ export default class CouchApp extends App {
     // self.camera.dest     = new THREE.Vector3(0, 0, 0);
     //// self.camera.position = new THREE.Vector3(0, 0, 3);
 
-    var manager = new THREE.LoadingManager();
+    let manager = new THREE.LoadingManager();
     manager.onProgress = function () { };
 
-    var loader = new THREE.OBJLoader(manager);
+    let loader = new THREE.OBJLoader(manager);
 
     this.renderer.setSize(this.app.width, this.app.height);
 

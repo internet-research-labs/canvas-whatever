@@ -42,8 +42,6 @@
     <meta charset="UTF-8">
   </head>
   <body>
-    <h3>Faceboard.js</h3>
-    <canvas width=900 height=900 class="width-triangles" id="reflective-band-1"></canvas>
     <!--
       <h3>i only came here to let you go</h3>
       <h3>i wish you'd tell me that i was wrong</h3>
@@ -59,6 +57,9 @@
       <h3>it used to be bad... but now it's good</h3>
       <h3>would it make a difference if i forgot about us</h3>
     -->
+
+    <h3>i'm sorry because i thought bad things never happened to you</h3>
+    <canvas width=600 height=600 class="width-triangles" id="it-wasnt-a-big-deal-tbh"></canvas>
 
     <h3>I can't tell if it was you that I was thinking about all this time</h3>
     <canvas width=600 height=600 class="width-triangles" id="thinking-about-you-thinking-about-me"></canvas>
@@ -88,6 +89,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.min.js"></script>
     <!-- THREE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
+    <script src="vendor/OBJLoader.js"></script>
     <!-- dat gui -->
     <script src="dat.gui.min.js"></script>
     <!-- Rando -->
@@ -227,6 +229,14 @@
     ~function() {
       var app = new svv.RibbonApp({
         id: "thinking-about-you-thinking-about-me",
+      });
+      app.setup();
+      app.loop();
+    }();
+
+    ~function() {
+      var app = new svv.QuentinApp({
+        id: "it-wasnt-a-big-deal-tbh",
       });
       app.setup();
       app.loop();

@@ -4,6 +4,7 @@ import CouchApp from './app/CouchApp.js';
 import CubeApp from './app/CubeApp.js';
 import DripApp from './app/DripApp.js';
 import FaceApp from './app/FaceApp.js';
+import QuentinApp from './app/QuentinApp.js';
 import OverlapApp from './app/OverlapApp.js';
 import RibbonApp from './app/RibbonApp.js';
 import SmileApp from './app/SmileApp.js';
@@ -32,6 +33,7 @@ export {
   FaceApp,
   FlatApp,
   GoldGridApp,
+  QuentinApp,
   OverlapApp,
   RibbonApp,
   SmileApp,
