@@ -54,6 +54,21 @@ export default class QuentinApp extends QuentinLike {
 
     this.loadObj();
     this.app.time = 0;
+
+    let mat = new THREE.MeshPhongMaterial({color: 0xEEFFFF});
+
+    for (let i=0; i < 5; i++) {
+      for (let j=0; j < 10; j++) {
+        let x = 2*(i-2);
+        let y = 0;
+        let z = -3*j-1;
+
+        let box = new THREE.BoxGeometry(1.5, 2, 2);
+        let mesh = new THREE.Mesh(box, mat)
+        mesh.position.set(x, y, z);
+        this.scene.add(mesh);
+      }
+    }
   }
 
   loadObj() {
@@ -74,9 +89,9 @@ export default class QuentinApp extends QuentinLike {
   update() {
     this.app.time += .01;
     let t = this.app.time;
-    let x = 20*Math.cos(1.5*t);
-    let y = -10;
-    let z = 20*Math.sin(t);
+    let x = 0;
+    let y = 0;
+    let z = 40;
 
     this.camera.position.set(x, y, z);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
