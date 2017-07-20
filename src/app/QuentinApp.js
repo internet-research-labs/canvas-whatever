@@ -1,5 +1,6 @@
 import App from './App.js';
 import QuentinLike from '../app-utils/Quentin.js';
+import {add, scale} from '../math3.js';
 import * as THREE from 'THREE';
 
 export default class QuentinApp extends QuentinLike {
@@ -43,7 +44,7 @@ export default class QuentinApp extends QuentinLike {
     // Lights
     this.pointLight1 = new THREE.PointLight(0x446666);
     this.pointLight2 = new THREE.PointLight(0x664444);
-    this.ambientLight = new THREE.AmbientLight(0x999999);
+    this.ambientLight = new THREE.AmbientLight(0xBBBBBB);
 
     this.scene.add(this.pointLight1);
     this.scene.add(this.pointLight2);
@@ -69,6 +70,20 @@ export default class QuentinApp extends QuentinLike {
         this.scene.add(mesh);
       }
     }
+
+    this.cameraTrack = this.quentin(
+      this.camera.position,
+      scale(this.camera.position, 0.75),
+    );
+
+    this.camera.position.set(0, 0, 40);
+
+    let p = this.getPlane([0, 0, 0]);
+
+    this.scene.add(this.getDot(p[0]));
+    this.scene.add(this.getDot(p[1]));
+    this.scene.add(this.getDot(p[2]));
+    this.scene.add(this.getDot(p[3]));
   }
 
   loadObj() {
@@ -86,6 +101,14 @@ export default class QuentinApp extends QuentinLike {
     }.bind(this));
   }
 
+  getDot([x, y, z], color) {
+    color = color || 0x000000;
+    let dotGeometry = new THREE.Geometry();
+    dotGeometry.vertices.push(new THREE.Vector3(x, y, z));
+    let dotMaterial = new THREE.PointsMaterial( { size: 3, sizeAttenuation: false, color: color} );
+    return new THREE.Points(dotGeometry, dotMaterial);
+  }
+
   update() {
     this.app.time += .01;
     let t = this.app.time;
@@ -97,7 +120,7 @@ export default class QuentinApp extends QuentinLike {
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     this.pointLight1.position.set(-20, 25, 0);
-    this.pointLight1.lookAt(new THREE.Vector3(0, 0, 0));
+    this.pointLight1.lookAt(new THREE.Vector2(0, 0, 0));
 
     this.pointLight2.position.set(20, 25, 0);
     this.pointLight2.lookAt(new THREE.Vector3(0, 0, 0));
