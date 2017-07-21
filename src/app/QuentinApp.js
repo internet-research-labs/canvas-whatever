@@ -105,7 +105,7 @@ export default class QuentinApp extends QuentinLike {
   }
 
   loadObj() {
-    this.obj_file = 'obj/trees/AS12_7.obj';
+    this.obj_file = 'obj/trees/AS12_6.obj';
     let manager = new THREE.LoadingManager();
     manager.onProgress = function () { };
     let loader = new THREE.OBJLoader(manager);
