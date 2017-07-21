@@ -31,18 +31,12 @@ export default class QuentinLike extends App {
 
   }
 
-  getPlane(q) {
-    let p = [
-      this.camera.position.x,
-      this.camera.position.y,
-      this.camera.position.z,
-    ];
-
+  getPlane(fov, p, q) {
     let d = sub(q, p);
     let x = Math.sqrt(d[0]*d[0] + d[1]*d[1] + d[2]*d[2]);
 
-    let theta = this.camera.fov * Math.PI / 180;
-    let b = 2*x*Math.tan(theta/2)/2.0;
+    let theta = fov * Math.PI / 180;
+    let b = 2*x*Math.tan(theta/2)/2.0 - 0.02;
 
     return [
       [q[0]-b, q[1]-b, q[2]],
@@ -50,5 +44,24 @@ export default class QuentinLike extends App {
       [q[0]-b, q[1]+b, q[2]],
       [q[0]+b, q[1]+b, q[2]],
     ];
+  }
+
+  getPlaneWidth(fov, p, q) {
+    let d = sub(q, p);
+    let x = Math.sqrt(d[0]*d[0] + d[1]*d[1] + d[2]*d[2]);
+
+    let theta = fov * Math.PI / 180;
+    let b = 2*x*Math.tan(theta/2);
+
+    return b;
+  }
+
+  getFov(backwall, p, q) {
+    let d = sub(q, p);
+    let x = Math.sqrt(d[0]*d[0] + d[1]*d[1] + d[2]*d[2]);
+
+    let theta = 2*Math.atan(backwall/2.0/x) * 180 / Math.PI;
+
+    return theta;
   }
 }

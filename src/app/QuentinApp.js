@@ -64,7 +64,7 @@ export default class QuentinApp extends QuentinLike {
         let y = 0;
         let z = -3*j-1;
 
-        let box = new THREE.BoxGeometry(1.5, 2, 2);
+        let box = new THREE.BoxGeometry(1.5, 2+j, 2);
         let mesh = new THREE.Mesh(box, mat)
         mesh.position.set(x, y, z);
         this.scene.add(mesh);
@@ -78,7 +78,25 @@ export default class QuentinApp extends QuentinLike {
 
     this.camera.position.set(0, 0, 40);
 
-    let p = this.getPlane([0, 0, 0]);
+    let camera_pos = [
+      this.camera.position.x,
+      this.camera.position.y,
+      this.camera.position.z,
+    ];
+
+    let p = this.getPlane(
+      this.camera.fov,
+      camera_pos,
+      [0, 0, 0],
+    );
+
+    this.backwall = this.getPlaneWidth(
+      this.camera.fov,
+      camera_pos,
+      [0, 0, 0],
+    );
+
+    this.view_angle = this.getFov(this.backwall, camera_pos, [0, 0, 0]);
 
     this.scene.add(this.getDot(p[0]));
     this.scene.add(this.getDot(p[1]));
@@ -111,13 +129,24 @@ export default class QuentinApp extends QuentinLike {
 
   update() {
     this.app.time += .01;
-    let t = this.app.time;
+    let t = this.app.time/3.0 % 1.0;
+
     let x = 0;
     let y = 0;
     let z = 40;
 
+    let p = [0, 0, 40];
+    let q = [0, 0, 1.5];
+
+    let a = 15;
+    let b = 15;
+
+    [x, y, z] = add(scale(p, 1-t), scale(q, t))
+
     this.camera.position.set(x, y, z);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+    this.camera.fov = this.getFov(this.backwall, [x, y, z], [0, 0, 0]);
+    this.camera.updateProjectionMatrix();
 
     this.pointLight1.position.set(-20, 25, 0);
     this.pointLight1.lookAt(new THREE.Vector2(0, 0, 0));
