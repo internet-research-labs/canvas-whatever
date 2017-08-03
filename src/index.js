@@ -2,6 +2,7 @@ import CircleApp from './app/CircleApp.js';
 import CircleGridApp from './app/CircleGridApp.js';
 import CouchApp from './app/CouchApp.js';
 import CubeApp from './app/CubeApp.js';
+import DontYouThinkApp from './app/DontYouThinkApp.js';
 import DripApp from './app/DripApp.js';
 import FaceApp from './app/FaceApp.js';
 import QuentinApp from './app/QuentinApp.js';
@@ -29,6 +30,7 @@ export {
   CircleGridApp,
   CouchApp,
   CubeApp,
+  DontYouThinkApp,
   DripApp,
   FaceApp,
   FlatApp,

@@ -59,6 +59,9 @@
       <h3>would it make a difference if i forgot about us</h3>
     -->
 
+    <h3>don't think too much - it makes you worse to be around</h3>
+    <canvas width=600 height=600 class="width-triangles" id="dont-think-too-much-tbh"></canvas>
+
     <h3>i'm sorry because i thought bad things never happened to you</h3>
     <canvas width=600 height=600 class="width-triangles" id="it-wasnt-a-big-deal-tbh"></canvas>
 
@@ -208,6 +211,8 @@
       app.loop();
     }();
 
+    /*
+
     ~function() {
       var app = new svv.FaceApp({
         el: document.getElementById("face-app-01"),
@@ -238,6 +243,16 @@
     ~function() {
       var app = new svv.QuentinApp({
         id: "it-wasnt-a-big-deal-tbh",
+      });
+      app.setup();
+      app.loop();
+    }();
+
+    //*/
+
+    ~function() {
+      var app = new svv.DontYouThinkApp({
+        id: "dont-think-too-much-tbh",
       });
       app.setup();
       app.loop();
