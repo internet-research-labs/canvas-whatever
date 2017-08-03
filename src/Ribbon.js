@@ -57,10 +57,22 @@ export default class Rib {
     }
 
     for (let i=0; 2*i+3 < g.vertices.length; i+=1) {
-      g.faces.push(new THREE.Face3(2*i, 2*i+1, 2*i+2));
-      g.faces.push(new THREE.Face3(2*i+1, 2*i+2, 2*i+3));
+
+      let n1 = this.getNormal(g.vertices[2*i+0], g.vertices[2*i+1], g.vertices[2*i+2]);
+      let n2 = this.getNormal(g.vertices[2*i+3], g.vertices[2*i+2], g.vertices[2*i+1]);
+
+      console.log(n1, n2);
+
+      g.faces.push(new THREE.Face3(2*i+0, 2*i+1, 2*i+2, n1));
+      g.faces.push(new THREE.Face3(2*i+3, 2*i+2, 2*i+1, n2));
     }
 
     return g;
+  }
+
+  getNormal(a, b, c) {
+      let p = new THREE.Vector3().subVectors(b, a);
+      let q = new THREE.Vector3().subVectors(c, a);
+      return new THREE.Vector3().crossVectors(p, q).normalize();
   }
 }
