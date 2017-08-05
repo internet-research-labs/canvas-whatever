@@ -58,6 +58,10 @@
       <h3>it used to be bad... but now it's good</h3>
       <h3>would it make a difference if i forgot about us</h3>
     -->
+        id: "i-forgot-i-used-to-think-a-lot-about-you",
+
+    <h3>i forgot i used to think a lot about you</h3>
+    <canvas width=600 height=600 class="width-triangles" id="i-forgot-i-used-to-think-a-lot-about-you"></canvas>
 
     <h3>don't think too much - it makes you worse to be around</h3>
     <canvas width=600 height=600 class="width-triangles" id="dont-think-too-much-tbh"></canvas>
@@ -248,11 +252,19 @@
       app.loop();
     }();
 
-    //*/
-
     ~function() {
       var app = new svv.DontYouThinkApp({
         id: "dont-think-too-much-tbh",
+      });
+      app.setup();
+      app.loop();
+    }();
+
+    //*/
+
+    ~function() {
+      var app = new svv.GrassApp({
+        id: "i-forgot-i-used-to-think-a-lot-about-you",
       });
       app.setup();
       app.loop();
