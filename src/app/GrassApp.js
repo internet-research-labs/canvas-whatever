@@ -92,10 +92,12 @@ export default class GrassApp extends QuentinLike {
       shading: THREE.SmoothShading,
       side: THREE.DoubleSide,
     });
+    mat = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
     this.field = []
 
     let g = new Grass();
     let geo = g.getGeo();
+    console.log(">>", geo);
     this.scene.add(new THREE.Mesh(geo, mat));
   }
 
@@ -117,6 +119,12 @@ export default class GrassApp extends QuentinLike {
 
   update() {
     this.app.time += .01;
+    let t = this.app.time;
+    let x = 20*Math.sin(t);
+    let y = 8;
+    let z = 20*Math.cos(t);
+    this.camera.position.set(x, y, z);
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
   draw() {
