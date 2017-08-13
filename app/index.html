@@ -60,6 +60,9 @@
     -->
         id: "i-forgot-i-used-to-think-a-lot-about-you",
 
+    <h3>sometimes the hard part is starting over again</h3>
+    <canvas width=600 height=600 class="width-triangles" id="sometimes-the-hard-part-is-starting-over-again"></canvas>
+
     <h3>i forgot i used to think a lot about you</h3>
     <canvas width=600 height=600 class="width-triangles" id="i-forgot-i-used-to-think-a-lot-about-you"></canvas>
 
@@ -180,6 +183,8 @@
       script.read();
 
     });
+
+    /*
     ~function() {
 
       var img = new Image();
@@ -195,6 +200,7 @@
       };
       img.src = "img/oil-1.jpg";
     }();
+
 
     ~function() {
       var app = new svv.FlatApp({
@@ -215,7 +221,6 @@
       app.loop();
     }();
 
-    /*
 
     ~function() {
       var app = new svv.FaceApp({
@@ -265,6 +270,14 @@
     ~function() {
       var app = new svv.GrassApp({
         id: "i-forgot-i-used-to-think-a-lot-about-you",
+      });
+      app.setup();
+      app.loop();
+    }();
+
+    ~function() {
+      var app = new svv.GeodeApp({
+        id: "sometimes-the-hard-part-is-starting-over-again",
       });
       app.setup();
       app.loop();

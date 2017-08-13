@@ -33,8 +33,9 @@ export class RegularTriangle {
       var u = this.x + rad * Math.cos(t + theta);
       var v = this.y + rad * Math.sin(t + theta);
 
-      u = Math.round(u);
-      v = Math.round(v);
+      // XXX: Add this if you dont want aliasing in canvas
+      // u = Math.round(u);
+      // v = Math.round(v);
 
       points.push({
         'x': u,
