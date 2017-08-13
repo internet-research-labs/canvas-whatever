@@ -47,8 +47,8 @@ export default class TriangleMesh {
     }
 
     return {
-      'x': Math.round(x),
-      'y': Math.round(y),
+      'x': x,
+      'y': y,
     };
   };
 
@@ -67,8 +67,8 @@ export default class TriangleMesh {
     }
 
     return {
-      'x': Math.round(x),
-      'y': Math.round(y),
+      'x': x,
+      'y': y,
     };
   };
 

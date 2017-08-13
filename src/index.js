@@ -5,6 +5,7 @@ import CubeApp from './app/CubeApp.js';
 import DontYouThinkApp from './app/DontYouThinkApp.js';
 import DripApp from './app/DripApp.js';
 import FaceApp from './app/FaceApp.js';
+import GeodeApp from './app/GeodeApp.js';
 import GrassApp from './app/GrassApp.js';
 import QuentinApp from './app/QuentinApp.js';
 import OverlapApp from './app/OverlapApp.js';
@@ -35,6 +36,7 @@ export {
   DripApp,
   FaceApp,
   FlatApp,
+  GeodeApp,
   GoldGridApp,
   GrassApp,
   QuentinApp,
