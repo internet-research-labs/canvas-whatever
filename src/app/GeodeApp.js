@@ -101,7 +101,11 @@ export default class GeodeApp extends QuentinLike {
 
     this.view_angle = this.getFov(this.backwall, camera_pos, [0, 0, 0]);
 
-    this.surface = new TriangleSurface(undefined, 0.3);
+    this.surface = new TriangleSurface(
+      // function (x, y) { return {x: x, y: Math.cos(y)}; },
+      function (x, y) { return Math.cos(x)*Math.sin(y); },
+      0.3
+    );
     this.scene.add(new THREE.Mesh(this.surface.build(), mat));
   }
 
