@@ -65,11 +65,12 @@ export default class GeodeApp extends QuentinLike {
     this.app.time = 0;
 
     let mat = new THREE.MeshPhongMaterial({
-      color: 0x2194CE,
+      // color: 0x2194CE,
+      color: 0x222222,
       emissive: 0x0,
-      specular: 0x111111,
+      specular: 0x222222,
       reflectivity: 0.2,
-      shininess: 30,
+      shininess: 20,
       shading: THREE.SmoothShading,
       side: THREE.DoubleSide,
     });
@@ -102,9 +103,13 @@ export default class GeodeApp extends QuentinLike {
     this.view_angle = this.getFov(this.backwall, camera_pos, [0, 0, 0]);
 
     this.surface = new TriangleSurface(
-      // function (x, y) { return {x: x, y: Math.cos(y)}; },
-      function (x, y) { return Math.cos(x)*Math.sin(y); },
-      0.3
+      function (x, y) {
+        let u = Math.sin(x);
+        let v = Math.cos(y);
+        return Math.cos(1.2*Math.sqrt(x*x+y*y)) + 0.5*Math.sin(x);
+        return Math.random();
+      },
+      0.15
     );
     this.scene.add(new THREE.Mesh(this.surface.build(), mat));
   }
