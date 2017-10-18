@@ -78,7 +78,13 @@ export default class GrassApp extends QuentinLike {
 
     // Add visible components
     this.addFloor();
-    this.addGrass();
+    this.addGrass(0, 0, 0);
+
+    for (let i=0; i < 100; i++) {
+      let x = 2*Math.random();
+      let z = 2*Math.random();
+      this.addGrass(x, 0, z);
+    }
 
     this.force = new THREE.Vector3(0, 0, 1);
     this.dest = this.force.clone();
@@ -93,6 +99,9 @@ export default class GrassApp extends QuentinLike {
     this.camera.lookAt(new THREE.Vector3(0, 0, 4));
   }
 
+  /**
+   * Create the Force ArrowHelper and Update
+   */
   addForceArrow() {
     this.forceArrow = new THREE.ArrowHelper(
       this.force,
@@ -100,11 +109,13 @@ export default class GrassApp extends QuentinLike {
       norm(this.force),
       0x000000,
     );
-    console.log("???");
     this.scene.add(this.forceArrow);
     this.updateForceArrow();
   }
 
+  /**
+   * Update Force ArrowHelper
+   */
   updateForceArrow() {
     this.dest = this.force.clone();
     this.dest.multiplyScalar(-1);
@@ -116,7 +127,10 @@ export default class GrassApp extends QuentinLike {
 
   }
 
-  addGrass() {
+  /**
+   * Add a piece of  grass
+   */
+  addGrass(x, y, z) {
     let mat = new THREE.MeshPhongMaterial({
       color: 0x044000,
       emissive: 0x0,
@@ -129,9 +143,8 @@ export default class GrassApp extends QuentinLike {
     mat = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
     this.field = []
 
-    let g = new Grass();
+    let g = new Grass(x, y, z);
     let geo = g.getGeo();
-    console.log(">>", geo);
     this.scene.add(new THREE.Mesh(geo, mat));
   }
 
