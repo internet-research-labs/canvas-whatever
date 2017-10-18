@@ -80,7 +80,7 @@ export default class GrassApp extends QuentinLike {
     this.addFloor();
     this.addGrass(0, 0, 0);
 
-    for (let i=0; i < 100; i++) {
+    for (let i=0; i < 200; i++) {
       let x = 2*Math.random();
       let z = 2*Math.random();
       this.addGrass(x, 0, z);

@@ -11,11 +11,16 @@ function vec([x, y, z]) {
 }
 
 export default class Grass {
+
+  /**
+   * Dynamic Locations
+   */
   constructor(x, y, z) {
     this.up = [0, 1, 0];
     this.root = [x, y, z];
 
     this.segments = [];
+    this.force = [0, 0, 0];
 
     this.NUM_SEGMENTS = 20;
     this.LENGTH_SEGMENT = 0.5;
@@ -64,6 +69,20 @@ export default class Grass {
     return geo;
   }
 
+  /**
+   */
+  updateWind(x, y, z) {
+    this.wind[0] = x;
+    this.wind[1] = y;
+    this.wind[2] = z;
+  }
+
+  /**
+   * Update Geometry from origin and wind
+   */
+  updateGeometry() {
+  }
+
   getGeo2() {
     let geo = new THREE.Geometry();
     let [x, y, z] = this.root;
@@ -85,7 +104,6 @@ export default class Grass {
     }
 
     for (let i=0; i < this.NUM_SEGMENTS-1; i++) {
-      console.log("...");
       let n = vec(this.segments[0].normal);
       geo.faces.push(new THREE.Face3(2*i+0, 2*i+1, 2*i+2, n));
       geo.faces.push(new THREE.Face3(2*i+3, 2*i+2, 2*i+1, n));
