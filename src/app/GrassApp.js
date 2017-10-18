@@ -9,6 +9,10 @@ import Ribbon from '../Ribbon.js';
 // Generative objects
 import Grass from '../obj/Grass.js';
 
+function norm(v) {
+  return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+}
+
 
 export default class GrassApp extends QuentinLike {
   constructor(params) {
@@ -71,15 +75,45 @@ export default class GrassApp extends QuentinLike {
     // Helper setup functions
     this.setupTrack();
 
+
     // Add visible components
     this.addFloor();
     this.addGrass();
+
+    this.force = new THREE.Vector3(0, 0, 1);
+    this.dest = this.force.clone();
+    this.dest.multiplyScalar(-1);
+    this.addForceArrow();
+    this.updateForce(2.0);
   }
 
   // Setup a camera track... but in this case actually do nothing
   setupTrack() {
     this.camera.position.set(0, 10, 40);
     this.camera.lookAt(new THREE.Vector3(0, 0, 4));
+  }
+
+  addForceArrow() {
+    this.forceArrow = new THREE.ArrowHelper(
+      this.force,
+      this.dest,
+      norm(this.force),
+      0x000000,
+    );
+    console.log("???");
+    this.scene.add(this.forceArrow);
+    this.updateForceArrow();
+  }
+
+  updateForceArrow() {
+    this.dest = this.force.clone();
+    this.dest.multiplyScalar(-1);
+    this.forceArrow.setLength(norm(this.force));
+    this.forceArrow.position.x = this.force.x;
+    this.forceArrow.position.y = this.force.y;
+    this.forceArrow.position.z = this.force.z;
+    this.forceArrow.position.multiplyScalar(-1);
+
   }
 
   addGrass() {
@@ -117,14 +151,22 @@ export default class GrassApp extends QuentinLike {
     }
   }
 
-  update() {
+  update(params) {
     this.app.time += .01;
     let t = this.app.time;
+    t = 20;
     let x = 20*Math.sin(t);
     let y = 8;
     let z = 20*Math.cos(t);
     this.camera.position.set(x, y, z);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+    this.updateForce(params.force);
+  }
+
+  updateForce(n) {
+    this.force.normalize();
+    this.force.multiplyScalar(n);
+    this.updateForceArrow();
   }
 
   draw() {
