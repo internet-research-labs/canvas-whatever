@@ -60,6 +60,10 @@
       <h3>would it make a difference if i forgot about us</h3>
     -->
         id: "i-forgot-i-used-to-think-a-lot-about-you",
+        <pre>game</pre>
+
+    <h3>but it's cool // i forgot who you were</h3>
+    <canvas width=600 height=600 class="width-triangles" id="i-forgot-i-used-to-think-a-lot-about-you"></canvas>
 
     <h3>sometimes the hard part is starting over again</h3>
     <canvas width=600 height=600 class="width-triangles" id="sometimes-the-hard-part-is-starting-over-again"></canvas>
@@ -154,7 +158,12 @@
     </script>
 
     <script>
+    var forceParams = {
+      "force": 1.0
+    };
+
     window.addEventListener('load', function () {
+
     var gui = new dat.GUI();
       gui.add(smileParams, "faceSize", 0, 100);
       gui.add(smileParams, "eyeSize", 0, 30);
@@ -164,10 +173,8 @@
       gui.add(smileParams, "mouthWidth", 0, 30);
       gui.add(smileParams, "mouthCrookedFactor", -10, 10);
       gui.add(smileParams, "color");
+      gui.add(forceParams, "force", 0.0, 5.0);
     });
-    </script>
-
-    <script>
 
     fetch("/panda.txt").then(function (resp) {
       return resp.text();
@@ -185,101 +192,25 @@
 
     });
 
-    /*
-    ~function() {
-
-      var img = new Image();
-      img.onload = function () {
-        var app = new svv.TriangleClipGridApp({
-          el: document.getElementById("triangles-stretched-01"),
-          size: 100,
-          image: img,
-          colors: ["black", "white", "magenta", "cyan"],
-        });
-        app.setup();
-        app.draw();
-      };
-      img.src = "img/oil-1.jpg";
-    }();
-
-
-    ~function() {
-      var app = new svv.FlatApp({
-        el: document.getElementById("flat-mesh-01"),
-        dx: 5,
-        dy: 5,
-      });
-      app.update();
-      app.draw();
-    }();
-
-    ~function() {
-      var app = new svv.GoldGridApp({
-        el: document.getElementById("gold-mesh-01"),
-      });
-      // app.update();
-      // app.draw();
-      app.loop();
-    }();
-
-
-    ~function() {
-      var app = new svv.FaceApp({
-        el: document.getElementById("face-app-01"),
-        backgroundImage: "img/solar.jpg",
-      });
-      app.loop();
-    }();
-
-    ~function() {
-      var app = new svv.WillApp({
-        el: document.getElementById("will-app"),
-        x: 70,
-        y: 70,
-      });
-      app.setup();
-      app.update();
-      app.draw();
-    }();
-
-    ~function() {
-      var app = new svv.RibbonApp({
-        id: "thinking-about-you-thinking-about-me",
-      });
-      app.setup();
-      app.loop();
-    }();
-
-    ~function() {
-      var app = new svv.QuentinApp({
-        id: "it-wasnt-a-big-deal-tbh",
-      });
-      app.setup();
-      app.loop();
-    }();
-
-    ~function() {
-      var app = new svv.DontYouThinkApp({
-        id: "dont-think-too-much-tbh",
-      });
-      app.setup();
-      app.loop();
-    }();
-
-    //*/
-
     ~function() {
       var app = new svv.GrassApp({
         id: "i-forgot-i-used-to-think-a-lot-about-you",
       });
       app.setup();
-      app.loop();
+
+      console.log(">>", forceParams);
+      ~function loloop() {
+        requestAnimationFrame(loloop);
+        app.update(forceParams);
+        app.draw();
+      }();
     }();
 
     ~function() {
       var app = new svv.GeodeApp({
         id: "sometimes-the-hard-part-is-starting-over-again",
       });
+
       app.setup();
       app.loop();
     }();
