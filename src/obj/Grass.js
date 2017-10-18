@@ -11,9 +11,9 @@ function vec([x, y, z]) {
 }
 
 export default class Grass {
-  constructor() {
+  constructor(x, y, z) {
     this.up = [0, 1, 0];
-    this.root = [0, 0, 0];
+    this.root = [x, y, z];
 
     this.segments = [];
 
