@@ -68,7 +68,7 @@ export default class GrassApp extends QuentinLike {
     this.scene.add(this.ambientLight);
 
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setClearColor(new THREE.Color(0xDDDDDD));
+    this.renderer.setClearColor(0xDDDDDD);
 
     this.app.time = 0;
 
@@ -83,7 +83,7 @@ export default class GrassApp extends QuentinLike {
     for (let i=0; i < 200; i++) {
       let x = 2*Math.random();
       let z = 2*Math.random();
-      this.addGrass(x, 0, z);
+      this.addGrass(x, 0, z, Math.random()*0.05);
     }
 
     this.force = new THREE.Vector3(0, 0, 1);
@@ -130,7 +130,7 @@ export default class GrassApp extends QuentinLike {
   /**
    * Add a piece of  grass
    */
-  addGrass(x, y, z) {
+  addGrass(x, y, z, theta) {
     let mat = new THREE.MeshPhongMaterial({
       color: 0x044000,
       emissive: 0x0,
@@ -143,7 +143,7 @@ export default class GrassApp extends QuentinLike {
     mat = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
     this.field = []
 
-    let g = new Grass(x, y, z);
+    let g = new Grass(x, y, z, theta);
     let geo = g.getGeo();
     this.scene.add(new THREE.Mesh(geo, mat));
   }

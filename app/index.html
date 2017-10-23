@@ -37,6 +37,7 @@
         background: -webkit-linear-gradient(top,  #db9474 0%,#5689a0 66%,#6b7699 100%); /* Chrome10-25,Safari5.1-6 */
         background: linear-gradient(to bottom,  #db9474 0%,#5689a0 66%,#6b7699 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#db9474', endColorstr='#6b7699',GradientType=0 ); /* IE6-9 */
+      }
     </style>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta charset="UTF-8">
@@ -62,8 +63,13 @@
         id: "i-forgot-i-used-to-think-a-lot-about-you",
         <pre>game</pre>
 
-    <h3>but it's cool // i forgot who you were</h3>
+      <!-- <h3>but it's cool // i forgot who you were</h3> -->
+
+    <h3>dia</h3>
     <canvas width=600 height=600 class="width-triangles" id="i-forgot-i-used-to-think-a-lot-about-you"></canvas>
+
+    <h3>diag 1</h3>
+    <canvas width=600 height=600 class="width-triangles" id="diagonal-cuts-1"></canvas>
 
     <h3>sometimes the hard part is starting over again</h3>
     <canvas width=600 height=600 class="width-triangles" id="sometimes-the-hard-part-is-starting-over-again"></canvas>
@@ -209,6 +215,15 @@
     ~function() {
       var app = new svv.GeodeApp({
         id: "sometimes-the-hard-part-is-starting-over-again",
+      });
+
+      app.setup();
+      app.loop();
+    }();
+
+    ~function() {
+      var app = new svv.Diagonal01App({
+        id: "diagonal-cuts-1",
       });
 
       app.setup();
