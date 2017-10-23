@@ -10,14 +10,35 @@ function vec([x, y, z]) {
   return new THREE.Vector3(x, y, z);
 }
 
+export class WindyGrass {
+  constructor(x, y, z, wind) {
+    this.up = [0, 1, 0];
+    this.root = [x, y, z];
+    this.updateWind(wind || [1, 0, 0]);
+    this.updateGeometry();
+  }
+
+  getTheta() {
+    return 0.0;
+  }
+
+  updateWind(wind) {
+    this.wind = wind || [1, 0, 0];
+  }
+
+  updateGeometry() {
+  }
+}
+
 export default class Grass {
 
   /**
    * Dynamic Locations
    */
-  constructor(x, y, z) {
+  constructor(x, y, z, theta) {
     this.up = [0, 1, 0];
     this.root = [x, y, z];
+    this.theta = theta || 0.0;
 
     this.segments = [];
     this.force = [0, 0, 0];
@@ -27,7 +48,7 @@ export default class Grass {
     this.HEIGHT_SEGMENT = 0.08;
     this.WIDTH_SEGMENT = 0.1;
 
-    let d = Math.PI/4./20.;
+    let d = this.theta;
 
     // Add segments and give it a slight bend
     for (let i=0; i <= this.NUM_SEGMENTS; i++) {
@@ -38,6 +59,9 @@ export default class Grass {
         'normal': normalize([a, b, 0]),
       });
     }
+  }
+
+  updateTheta(theta) {
   }
 
   /**
