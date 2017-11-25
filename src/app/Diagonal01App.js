@@ -1,6 +1,7 @@
 import App from './App.js';
 import QuentinLike from '../app-utils/Quentin.js';
 import {add, scale} from '../math3.js';
+import {LinearCameraTrack} from '../track.js';
 import * as THREE from 'THREE';
 
 export default class Diagonal01App extends QuentinLike {
@@ -71,6 +72,11 @@ export default class Diagonal01App extends QuentinLike {
       }
     }
 
+    this.track = new LinearCameraTrack(
+      [0, 0, 40],
+      [0, 0, 1.5],
+    );
+
     this.cameraTrack = this.quentin(
       this.camera.position,
       scale(this.camera.position, 0.75),
@@ -105,7 +111,7 @@ export default class Diagonal01App extends QuentinLike {
   }
 
   loadObj() {
-    this.obj_file = 'obj/trees/AS12_6.obj';
+    this.obj_file = 'obj/skull.obj';
     let manager = new THREE.LoadingManager();
     manager.onProgress = function () { };
     let loader = new THREE.OBJLoader(manager);
@@ -141,7 +147,8 @@ export default class Diagonal01App extends QuentinLike {
     let a = 15;
     let b = 15;
 
-    [x, y, z] = add(scale(p, 1-t), scale(q, t))
+    let cameraState = this.track.at(t);
+    [x, y, z] = cameraState.position;
 
     this.camera.position.set(x, y, z);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
