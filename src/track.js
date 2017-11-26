@@ -21,12 +21,30 @@ export class CameraSequence {
     return this;
   }
 
-  camera(t)  {
-    return 1.0;
+  /**
+   * Return ...
+   */
+  getIndex(t) {
+    for (let i=0; i < this.stops.length; i++) {
+      if (t < this.stops[i]) {
+        return i-1;
+      }
+    }
+    return this.stops.length-1;
+  }
+
+  /**
+   * Return Camera Position
+   */
+  at(t) {
+    let offset = this.stops[this.getIndex(t)];
+    return this.tracks[this.getIndex(t)].at(t-offset);
   }
 }
 
-
+/**
+ * Camera Track
+ */
 class CameraTrack {
   constructor() {
   }
