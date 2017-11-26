@@ -1,7 +1,7 @@
 import App from './App.js';
 import QuentinLike from '../app-utils/Quentin.js';
 import {add, scale} from '../math3.js';
-import {LinearCameraTrack} from '../track.js';
+import {CameraSequence, LinearCameraTrack} from '../track.js';
 import * as THREE from 'THREE';
 
 export default class Diagonal01App extends QuentinLike {
@@ -72,9 +72,14 @@ export default class Diagonal01App extends QuentinLike {
       }
     }
 
-    this.track = new LinearCameraTrack(
-      [0, 0, 40],
-      [0, 0, 1.5],
+    this.sequencer = new CameraSequence();
+    this.sequencer.add(
+      new LinearCameraTrack([0, 0, 40], [0, 0, 1.5]),
+      5.0,
+    );
+    this.sequencer.add(
+      new LinearCameraTrack([0, 0, 1.5], [0, 0, 40]),
+      5.0,
     );
 
     this.cameraTrack = this.quentin(
@@ -135,7 +140,7 @@ export default class Diagonal01App extends QuentinLike {
 
   update() {
     this.app.time += .01;
-    let t = this.app.time/3.0 % 1.0;
+    let t = this.app.time/3.0 % 10.0;
 
     let x = 0;
     let y = 0;
@@ -147,7 +152,7 @@ export default class Diagonal01App extends QuentinLike {
     let a = 15;
     let b = 15;
 
-    let cameraState = this.track.at(t);
+    let cameraState = this.sequencer.at(t);
     [x, y, z] = cameraState.position;
 
     this.camera.position.set(x, y, z);
