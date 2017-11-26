@@ -37,6 +37,7 @@ export class CameraSequence {
    * Return Camera Position
    */
   at(t) {
+    console.log("t="+t);
     let offset = this.stops[this.getIndex(t)];
     return this.tracks[this.getIndex(t)].at(t-offset);
   }
@@ -67,7 +68,7 @@ export class LinearCameraTrack {
 
   at(t) {
     return new CameraState(
-      line(this.start, this.end, t/this.duration),
+      line(this.start, this.end, t),
       this.up,
       undefined,
     );

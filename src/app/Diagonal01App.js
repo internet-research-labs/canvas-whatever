@@ -74,12 +74,12 @@ export default class Diagonal01App extends QuentinLike {
 
     this.sequencer = new CameraSequence();
     this.sequencer.add(
-      new LinearCameraTrack([0, 0, 40], [0, 0, 1.5]),
-      5.0,
+      new LinearCameraTrack([0, 0, 40], [0, 0, 20]),
+      1.0,
     );
     this.sequencer.add(
-      new LinearCameraTrack([0, 0, 1.5], [0, 0, 40]),
-      5.0,
+      new LinearCameraTrack([0, 0, 20], [0, 0, 40]),
+      1.0,
     );
 
     this.cameraTrack = this.quentin(
@@ -140,7 +140,7 @@ export default class Diagonal01App extends QuentinLike {
 
   update() {
     this.app.time += .01;
-    let t = this.app.time/3.0 % 10.0;
+    let t = this.app.time/3.0 % 2.0;
 
     let x = 0;
     let y = 0;
@@ -157,8 +157,8 @@ export default class Diagonal01App extends QuentinLike {
 
     this.camera.position.set(x, y, z);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-    this.camera.fov = this.getFov(this.backwall, [x, y, z], [0, 0, 0]);
-    this.camera.updateProjectionMatrix();
+    // this.camera.fov = this.getFov(this.backwall, [x, y, z], [0, 0, 0]);
+    // this.camera.updateProjectionMatrix();
 
     this.pointLight1.position.set(-20, 25, 0);
     this.pointLight1.lookAt(new THREE.Vector2(0, 0, 0));
