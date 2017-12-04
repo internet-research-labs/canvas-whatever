@@ -3,6 +3,7 @@ module.exports = {
   entry: './index.js',
   output: {
     path: __dirname + '/dist',
+    publicPath: "assets/",
     filename: 'svv.im.bundled.js',
     libraryTarget: 'var',
     library: 'svv',
