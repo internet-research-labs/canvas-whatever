@@ -8,6 +8,7 @@ import DripApp from './app/DripApp.js';
 import FaceApp from './app/FaceApp.js';
 import GeodeApp from './app/GeodeApp.js';
 import GrassApp from './app/GrassApp.js';
+import GraveyardApp from './app/GraveyardApp.js';
 import QuentinApp from './app/QuentinApp.js';
 import OverlapApp from './app/OverlapApp.js';
 import RibbonApp from './app/RibbonApp.js';
@@ -41,6 +42,7 @@ export {
   GeodeApp,
   GoldGridApp,
   GrassApp,
+  GraveyardApp,
   QuentinApp,
   OverlapApp,
   RibbonApp,
