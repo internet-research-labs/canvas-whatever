@@ -77,9 +77,9 @@ export default class GraveyardApp extends QuentinLike {
     // Add visible components
     this.addFloor();
 
-    for (let i=0; i < 800; i++) {
-      let x = 10*Math.random()-5;
-      let z = 10*Math.random()-5;
+    for (let i=0; i < 1600; i++) {
+      let x = 15*(Math.random()-0.5);
+      let z = 15*(Math.random()-0.5);
       this.addGrass(x, 0, z, Math.random()*0.05);
     }
 

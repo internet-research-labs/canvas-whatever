@@ -115,6 +115,7 @@
     <!-- THREE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
     <script src="vendor/OBJLoader.js"></script>
+    <script src="/stats.min.js"></script>
     <!-- dat gui -->
     <script src="dat.gui.min.js"></script>
     <!-- Rando -->
@@ -216,6 +217,11 @@
     }();
 
     ~function() {
+
+      var stats = new Stats();
+      stats.showPanel( 1 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+      document.body.appendChild( stats.dom );
+
       var app = new svv.GraveyardApp({
         id: "lost-in-elysian-fields",
       });
@@ -224,9 +230,11 @@
       console.log(">:D");
 
       ~function loloop() {
-        requestAnimationFrame(loloop);
+        stats.begin();
         app.update(forceParams);
         app.draw();
+        stats.end();
+        requestAnimationFrame(loloop);
       }();
     }();
 
@@ -250,6 +258,7 @@
     }();
     //*/
     </script>
+
 
 
   </body>
