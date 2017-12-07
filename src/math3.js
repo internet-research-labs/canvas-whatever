@@ -1,3 +1,8 @@
+
+export function norm(v) {
+  return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+}
+
 /**
  * Project u onto v
  */
