@@ -8,6 +8,7 @@ import Ribbon from '../Ribbon.js';
 
 // Generative objects
 import Grass from '../obj/Grass.js';
+import {GrassyField} from '../obj/GrassyField.js';
 
 function norm(v) {
   return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
@@ -78,8 +79,8 @@ export default class GraveyardApp extends QuentinLike {
     this.addFloor();
 
     for (let i=0; i < 1600; i++) {
-      let x = 15*(Math.random()-0.5);
-      let z = 15*(Math.random()-0.5);
+      let x = 15*(Math.random()-0.5)+10;
+      let z = 15*(Math.random()-0.5)+10;
       this.addGrass(x, 0, z, Math.random()*0.05);
     }
 
@@ -153,7 +154,7 @@ export default class GraveyardApp extends QuentinLike {
     let geometry = new THREE.BoxGeometry(4, 8, 1);
     let material = new THREE.MeshBasicMaterial({color: 0x999999});
     let cube = new THREE.Mesh(geometry, material);
-    cube.position.x = 0;
+    cube.position.x = 10;
     cube.position.y = 4;
     cube.position.z = 0;
     this.scene.add(cube);
@@ -177,10 +178,10 @@ export default class GraveyardApp extends QuentinLike {
 
   update(params) {
     this.app.time += .01;
-    let t = this.app.time/3.0;
-    let x = 80*Math.sin(t);
+    let t = 3;
+    let x = 70;
     let y = 30;
-    let z = 80*Math.cos(t);
+    let z = -100;
     this.camera.position.set(x, y, z);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
     this.updateForce(params.force);

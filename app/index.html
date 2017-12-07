@@ -207,13 +207,8 @@
         id: "i-forgot-i-used-to-think-a-lot-about-you",
       });
       app.setup();
-
-      console.log(">>", forceParams);
-      ~function loloop() {
-        requestAnimationFrame(loloop);
-        app.update(forceParams);
-        app.draw();
-      }();
+      app.update(forceParams);
+      app.draw();
     }();
 
     ~function() {
@@ -226,8 +221,6 @@
         id: "lost-in-elysian-fields",
       });
       app.setup();
-
-      console.log(">:D");
 
       ~function loloop() {
         stats.begin();
