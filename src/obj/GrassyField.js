@@ -26,8 +26,10 @@ function rotateyMesh(xs, rot) {
   }
 
   for (let i=0; i < xs.length; i += 3) {
-    xs[i+0] = xs[i+0]*Math.cos(rot)-xs[i+2]*Math.sin(rot);
-    xs[i+2] = xs[i+0]*Math.sin(rot)+xs[i+2]*Math.cos(rot);
+    let x = xs[i+0];
+    let z = xs[i+2];
+    xs[i+0] = x*Math.cos(rot)-z*Math.sin(rot);
+    xs[i+2] = x*Math.sin(rot)+z*Math.cos(rot);
   }
 }
 
@@ -51,8 +53,8 @@ export class GrassyField {
         x,
         0,
         z,
-        0.05*Math.random()-0.05,
-        0,
+        0.09*(Math.random()-0.5),
+        2*Math.PI*(Math.random()-0.5),
       );
     }
   }
@@ -66,15 +68,17 @@ export class GrassyField {
    * Return geometry matrix for a blade of grass
    */
   blade(x, y, z, theta, rot) {
-    let [v, n] = this._blade(theta, rot);
-    rotateyMesh(v, 2*Math.PI*Math.random());
-    rotateyMesh(n, 2*Math.PI*Math.random());
+    let [v, n] = this._blade(theta);
+
+    rotateyMesh(v, rot);
     translate(v, [x, y, z]);
+    rotateyMesh(n, rot);
+
     extend(this.vertices, v);
     extend(this.normals, n);
   }
 
-  _blade(theta, rot) {
+  _blade(theta) {
     let x = 0;
     let y = 0;
     let z = 0;
@@ -82,8 +86,8 @@ export class GrassyField {
     // Params
     let NUM_SEGMENTS = 20;
     let SEGMENT_LENGTH = 0.5;
-    let HEIGHT_SEGMENT = 0.08+0.005*Math.random();
-    let WIDTH_SEGMENT = 0.0;
+    let HEIGHT_SEGMENT = 0.08+0.009*Math.random();
+    let WIDTH_SEGMENT = 0.1;
 
     // Build segments
     let segments = []
@@ -103,10 +107,10 @@ export class GrassyField {
       let [dx, dy, dz] = segments[i].delta;
       let s = (NUM_SEGMENTS-i+1)/NUM_SEGMENTS;
 
-      let a = [x+0.13*s, y, z];
-      let b = [x-0.13*s, y, z];
-      let c = [x+dx+0.13*s, y+dy, z+dz];
-      let d = [x+dx-0.13*s, y+dy, z+dz];
+      let a = [x+WIDTH_SEGMENT*s, y, z];
+      let b = [x-WIDTH_SEGMENT*s, y, z];
+      let c = [x+dx+WIDTH_SEGMENT*s, y+dy, z+dz];
+      let d = [x+dx-WIDTH_SEGMENT*s, y+dy, z+dz];
  
       // Face 1
       extend(vertices, a);
