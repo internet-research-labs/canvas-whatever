@@ -30,6 +30,9 @@
         left: -1000px;
         display: none;
       }
+      #dont-touch-me {
+        width: 100%;
+      }
       .peach-violet {
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#db9474+0,5689a0+66,6b7699+100 */
         background: #db9474; /* Old browsers */
@@ -68,8 +71,12 @@
 
 
     <h3>no big deal part 2/infinity</h3>
+    <canvas width=1200 height=600 class="width-triangles" id="dont-touch-me"></canvas>
+
+    <h3>...</h3>
+
+
     <canvas width=600 height=600 class="width-triangles" id="i-forgot-i-used-to-think-a-lot-about-you"></canvas>
-    <canvas width=600 height=600 class="width-triangles" id="lost-in-elysian-fields"></canvas>
     <canvas width=600 height=600 class="width-triangles" id="diagonal-cuts-1"></canvas>
 
     <!-- <h3>sometimes the hard part is starting over again</h3> -->
@@ -218,7 +225,7 @@
       document.body.appendChild( stats.dom );
 
       var app = new svv.GraveyardApp({
-        id: "lost-in-elysian-fields",
+        id: "dont-touch-me",
       });
       app.setup();
 
