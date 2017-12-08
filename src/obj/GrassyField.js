@@ -49,13 +49,16 @@ export class GrassyField {
     for (let i=0; i < count; i++) {
       let x = width*(Math.random()-0.5);
       let z = height*(Math.random()-0.5);
-      this.addBlade(
+      let [v, n] = this.blade(
         x,
         0,
         z,
         0.09*(Math.random()-0.5),
         2*Math.PI*(Math.random()-0.5),
       );
+
+      extend(this.vertices, v);
+      extend(this.normals, n);
     }
   }
 
@@ -74,8 +77,7 @@ export class GrassyField {
     translate(v, [x, y, z]);
     rotateyMesh(n, rot);
 
-    extend(this.vertices, v);
-    extend(this.normals, n);
+    return [v, n];
   }
 
   _blade(theta) {
@@ -85,8 +87,7 @@ export class GrassyField {
 
     // Params
     let NUM_SEGMENTS = 20;
-    let SEGMENT_LENGTH = 0.5;
-    let HEIGHT_SEGMENT = 0.08+0.009*Math.random();
+    let HEIGHT_SEGMENT = (0.08+0.009*Math.random());
     let WIDTH_SEGMENT = 0.1;
 
     // Build segments
