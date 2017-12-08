@@ -159,7 +159,7 @@ export default class GraveyardApp extends QuentinLike {
 
   addGrassyField() {
     let mat = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
-    this.field = new GrassyField(5, 5, 80, 0.1);
+    this.field = new GrassyField(20, 20, 20000, 0.1);
     this.fieldMesh = new THREE.Mesh(
       this.field.geometry(),
       mat,
@@ -196,9 +196,9 @@ export default class GraveyardApp extends QuentinLike {
   update(params) {
     this.app.time += .01;
     let t = this.app.time/3.0;
-    let x =  29*Math.cos(t);
-    let z = -29*Math.sin(t);
-    let y =  10;
+    let x =  99*Math.cos(t);
+    let z = -99*Math.sin(t);
+    let y =  30;
     this.camera.position.set(x, y, z);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
     // this.updateForce(params.force);
