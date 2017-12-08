@@ -201,6 +201,7 @@ export default class GraveyardApp extends QuentinLike {
   update(params) {
     this.app.time += .01;
     let t = this.app.time/4.0;
+    t = 25;
     let r = 120;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
