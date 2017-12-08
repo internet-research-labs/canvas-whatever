@@ -11,6 +11,26 @@ function extend(xs, ys) {
   });
 }
 
+function translate(xs, [x, y, z]) {
+  for (let i=0; i < xs.length; i += 3) {
+    xs[i+0] += x;
+    xs[i+1] += y;
+    xs[i+2] += z;
+  }
+}
+
+
+function rotateyMesh(xs, rot) {
+  if (xs.length % 3 != 0) {
+    throw "whatever";
+  }
+
+  for (let i=0; i < xs.length; i += 3) {
+    xs[i+0] = xs[i+0]*Math.cos(rot)-xs[i+2]*Math.sin(rot);
+    xs[i+2] = xs[i+0]*Math.sin(rot)+xs[i+2]*Math.cos(rot);
+  }
+}
+
 
 export class GrassyField {
   constructor(width, height, count, variations) {
@@ -46,6 +66,19 @@ export class GrassyField {
    * Return geometry matrix for a blade of grass
    */
   blade(x, y, z, theta, rot) {
+    let [v, n] = this._blade(theta, rot);
+    rotateyMesh(v, 2*Math.PI*Math.random());
+    rotateyMesh(n, 2*Math.PI*Math.random());
+    translate(v, [x, y, z]);
+    extend(this.vertices, v);
+    extend(this.normals, n);
+  }
+
+  _blade(theta, rot) {
+    let x = 0;
+    let y = 0;
+    let z = 0;
+
     // Params
     let NUM_SEGMENTS = 20;
     let SEGMENT_LENGTH = 0.5;
@@ -55,6 +88,7 @@ export class GrassyField {
     // Build segments
     let segments = []
     let vertices = [];
+    let normals = [];
 
     for (let i=0; i <= NUM_SEGMENTS; i++) {
       let t = theta*i;
@@ -75,28 +109,30 @@ export class GrassyField {
       let d = [x+dx-0.13*s, y+dy, z+dz];
  
       // Face 1
-      extend(this.vertices, a);
-      extend(this.vertices, b);
-      extend(this.vertices, c);
+      extend(vertices, a);
+      extend(vertices, b);
+      extend(vertices, c);
 
       // Face 2
-      extend(this.vertices, d);
-      extend(this.vertices, c);
-      extend(this.vertices, b);
+      extend(vertices, d);
+      extend(vertices, c);
+      extend(vertices, b);
 
       // Normals
       let n = segments[i].normal;
-      extend(this.normals, n);
-      extend(this.normals, n);
-      extend(this.normals, n);
-      extend(this.normals, n);
-      extend(this.normals, n);
-      extend(this.normals, n);
+      extend(normals, n);
+      extend(normals, n);
+      extend(normals, n);
+      extend(normals, n);
+      extend(normals, n);
+      extend(normals, n);
 
       x += dx;
       y += dy;
       z += dz;
     }
+
+    return [vertices, normals];
   }
 
   /**
