@@ -46,7 +46,7 @@ export default class Grass {
     this.NUM_SEGMENTS = 20;
     this.LENGTH_SEGMENT = 0.5;
     this.HEIGHT_SEGMENT = 0.08+Math.random()*0.02;
-    this.WIDTH_SEGMENT = 0.1;
+    this.WIDTH_SEGMENT = 0.0;
 
     let d = this.theta;
 
@@ -76,8 +76,8 @@ export default class Grass {
       let [dx, dy, dz] = this.segments[i].delta;
       let s = (this.NUM_SEGMENTS-i+1)/this.NUM_SEGMENTS;
 
-      geo.vertices.push(vec([x+0.1*s, y, z]));
-      geo.vertices.push(vec([x-0.1*s, y, z]));
+      geo.vertices.push(vec([x+0.13*s, y, z]));
+      geo.vertices.push(vec([x-0.13*s, y, z]));
 
       x += dx;
       y += dy;
