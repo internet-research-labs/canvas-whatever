@@ -69,6 +69,7 @@ export default class GraveyardApp extends QuentinLike {
     this.scene.add(this.pointLight1);
     this.scene.add(this.pointLight2);
     this.scene.add(this.ambientLight);
+    this.scene.fog = new THREE.FogExp2(0x999999, 0.0045);
 
     this.renderer.setSize(this.width, this.height);
     this.renderer.setClearColor(0xDDDDDD);
@@ -143,7 +144,7 @@ export default class GraveyardApp extends QuentinLike {
     
     this.field = new GrassyField(
         60,
-        30,
+        25,
         20000,
         20000,
       );
@@ -176,10 +177,10 @@ export default class GraveyardApp extends QuentinLike {
   getPhong() {
     return new THREE.MeshPhongMaterial({
       color: 0x004444,
-      emissive: 0x004422,
+      emissive: 0x114433,
       specular: 0x7700DD,
       reflectivity: 20,
-      shininess: 40,
+      shininess: 15,
       shading: THREE.SmoothShading,
       side: THREE.DoubleSide,
     });
@@ -203,11 +204,7 @@ export default class GraveyardApp extends QuentinLike {
 
   update(params) {
     this.app.time += 0.1;
-    let t = this.app.time/10.0;
-    // t = Math.PI/4;
-    // t = 0;
-    // t = -Math.PI/2;
-    // t = Math.PI;
+    let t = this.app.time/9.0;
     let r = 120;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
