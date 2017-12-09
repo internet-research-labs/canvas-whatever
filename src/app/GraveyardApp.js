@@ -15,6 +15,10 @@ function norm(v) {
   return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
 }
 
+function stringToHex(str) {
+  return parseInt(str.substring(1), 16);
+}
+
 export default class GraveyardApp extends QuentinLike {
   constructor(params) {
     super(params);
@@ -129,18 +133,15 @@ export default class GraveyardApp extends QuentinLike {
   }
 
   addGrassyField() {
-    let mat = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
-    mat = this.getPhong();
-    
     this.field = new GrassyField(
         130,
         10,
-        40,
+        8000,
         300,
       );
     this.fieldMesh = new THREE.Mesh(
       this.field.geometry(),
-      mat,
+      this.grassMaterial,
     );
     this.scene.add(this.fieldMesh);
   }
@@ -164,16 +165,17 @@ export default class GraveyardApp extends QuentinLike {
     this.scene.add(cube);
   }
 
-  getPhong() {
-    return new THREE.MeshPhongMaterial({
-      color: 0x004444,
-      emissive: 0x114433,
-      specular: 0x4B0082,
-      reflectivity: 20,
-      shininess: 15,
+  setPhong({color, emissive, specular, shininess, reflectivity}) {
+    this.grassMaterial = new THREE.MeshPhongMaterial({
+      color: stringToHex(color),
+      emissive: stringToHex(emissive),
+      specular: stringToHex(specular),
+      shininess: shininess,
+      reflectivity: reflectivity,
       shading: THREE.SmoothShading,
       side: THREE.DoubleSide,
     });
+    this.fieldMesh.material = this.grassMaterial;
   }
 
   // Just draw a simple floor
@@ -194,6 +196,7 @@ export default class GraveyardApp extends QuentinLike {
 
   update(params) {
     let t = getElapsedTime()/10.0;
+    // t = -Math.PI/2;
     let r = 90;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
