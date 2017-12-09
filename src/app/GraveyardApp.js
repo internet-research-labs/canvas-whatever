@@ -30,7 +30,7 @@ export default class GraveyardApp extends QuentinLike {
     this.app.view_angle = 15;
     this.app.aspect     = this.width/this.height;
     this.app.near       = 0.1;
-    this.app.far        = 10000;
+    this.app.far        = 100;
     this.app.iterations = 0;
     this.app.time       = 0;
 
@@ -52,16 +52,20 @@ export default class GraveyardApp extends QuentinLike {
     );
 
     // Lights
-    this.pointLight1 = new THREE.PointLight(0xDDDDDD, 2, 800);
-    this.pointLight2 = new THREE.PointLight(0xDDDDDD, 2, 800);
-    this.ambientLight = new THREE.AmbientLight(0xBBBBBB);
+    this.ambientLight = new THREE.AmbientLight(0xCCCCCC);
+    this.directionalLight = new THREE.DirectionalLight(0x333333, 0.5);
+    this.pointLight1 = new THREE.PointLight(0x333333, 2, 800);
+    this.pointLight2 = new THREE.PointLight(0x333333, 2, 800);
 
-    this.pointLight1.position.set(-10, 10, 0);
-    this.pointLight2.position.set(-10, 10, 0);
+    this.directionalLight.position.set(0, 0, -1);
+    this.pointLight1.position.set(0, 10, -10);
+    this.pointLight2.position.set(0, 10, -10);
 
+    this.directionalLight.lookAt(new THREE.Vector3(0, 0, 0));
     this.pointLight1.lookAt(new THREE.Vector3(0, 0, 0));
     this.pointLight2.lookAt(new THREE.Vector3(0, 0, 0));
 
+    this.scene.add(this.directionalLight);
     this.scene.add(this.pointLight1);
     this.scene.add(this.pointLight2);
     this.scene.add(this.ambientLight);
@@ -84,10 +88,9 @@ export default class GraveyardApp extends QuentinLike {
       // this.addGrass(x, 0, z, Math.random()*0.05);
     }
 
-    for (let i=-3; i < 2; i++) {
+    for (let i=-3; i <= 3; i++) {
       let x = 8*i;
       this.addTombstone(x, 0);
-      this.addTombstone(x+8, -35);
     }
 
     this.addGrassyField();
@@ -102,8 +105,8 @@ export default class GraveyardApp extends QuentinLike {
 
   // Setup a camera track... but in this case actually do nothing
   setupTrack() {
-    this.camera.position.set(0, 10, 40);
-    this.camera.lookAt(new THREE.Vector3(0, 0, 4));
+    this.camera.position.set(0, 30, 80);
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
   /**
@@ -134,36 +137,15 @@ export default class GraveyardApp extends QuentinLike {
 
   }
 
-  /**
-   * Add a piece of  grass
-   */
-  addGrass(x, y, z, theta) {
-    let mat = new THREE.MeshPhongMaterial({
-      color: 0x044000,
-      emissive: 0x0,
-      specular: 0xCCCCCC,
-      reflectivity: 0.2,
-      shininess: 30,
-      shading: THREE.SmoothShading,
-      side: THREE.DoubleSide,
-    });
-    mat = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
-    this.field = []
-
-    let g = new Grass(x, y, z, theta);
-    let geo = g.getGeo();
-    let mesh = new THREE.Mesh(geo, mat);
-    mesh.rotation.y += Math.random();
-    this.scene.add(mesh);
-  }
-
   addGrassyField() {
     let mat = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
+    mat = this.getPhong();
+    
     this.field = new GrassyField(
-        90,
-        90,
-        80000,
-        1,
+        60,
+        30,
+        20000,
+        20000,
       );
     this.fieldMesh = new THREE.Mesh(
       this.field.geometry(),
@@ -174,12 +156,33 @@ export default class GraveyardApp extends QuentinLike {
 
   addTombstone(x, z) {
     let geometry = new THREE.BoxGeometry(4, 8, 1);
-    let material = new THREE.MeshBasicMaterial({color: 0x999999});
+    let material =  new THREE.MeshPhongMaterial({
+      color: 0x333333,
+      emissive: 0x777777,
+      specular: 0x000000,
+      reflectivity: 0,
+      shininess: 0,
+      shading: THREE.SmoothShading,
+      side: THREE.DoubleSide,
+    });
     let cube = new THREE.Mesh(geometry, material);
-    cube.position.x = 10+x;
-    cube.position.y = 4;
-    cube.position.z = 0+z;
+    cube.position.x = x;
+    cube.position.y = 4;;
+    cube.position.z = z;
+    // cube.rotation.y = Math.PI/4;
     this.scene.add(cube);
+  }
+
+  getPhong() {
+    return new THREE.MeshPhongMaterial({
+      color: 0x004444,
+      emissive: 0x004422,
+      specular: 0x7700DD,
+      reflectivity: 20,
+      shininess: 40,
+      shading: THREE.SmoothShading,
+      side: THREE.DoubleSide,
+    });
   }
 
   // Just draw a simple floor
@@ -199,15 +202,21 @@ export default class GraveyardApp extends QuentinLike {
   }
 
   update(params) {
-    this.app.time += .01;
-    let t = this.app.time/4.0;
-    t = 25;
+    this.app.time += 0.1;
+    let t = this.app.time/10.0;
+    // t = Math.PI/4;
+    // t = 0;
+    // t = -Math.PI/2;
+    // t = Math.PI;
     let r = 120;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
-    let y =  r/3;
-    this.camera.position.set(x, y, z);
-    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+    let y =  40;
+
+    this.directionalLight.position.set(10, 10, 10);
+    this.pointLight1.position.set(x, y, z);
+    this.pointLight2.position.set(-x, y, -z);
+    // this.camera.position.set(x, y, z);
     // this.updateForce(params.force);
   }
 
