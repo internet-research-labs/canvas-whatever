@@ -46,22 +46,23 @@ export class GrassyField {
     this.vertices = [];
     this.normals = [];
 
-    for (let i=0; i < count; i++) {
-      let x = width*(Math.random()-0.5);
-      let z = height*(Math.random()-0.5);
+    for (let i=0; i < variations; i++) {
       let bend = Math.PI/30*(Math.random());
       let rot = 2*Math.PI*(Math.random()-0.5);
 
-      let [v, n] = this.blade(x, 0, z, bend, rot);
+      this.blades.push(this.blade(0, 0, 0, bend, rot));
+    }
 
+    for (let i=0; i < count; i++) {
+      let j = Math.floor(this.blades.length*Math.random());
+      let x = width*(Math.random()-0.5);
+      let z = height*(Math.random()-0.5);
+      let [v, n] = this.blades[j];
+      v = v.slice();
+      translate(v, [x, 0, z]);
       extend(this.vertices, v);
       extend(this.normals, n);
     }
-  }
-
-  bufferTriangle(p, q, r) {
-    let vertices = [];
-    let normals = [];
   }
 
   /**
