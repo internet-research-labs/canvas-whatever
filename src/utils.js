@@ -1,6 +1,6 @@
 export function select(list) {
   return list[Math.floor(Math.random() * list.length)];
-}
+};
 
 /**
  * Make 3 dimensional multi array
@@ -15,12 +15,21 @@ export function makeArray3(height, width, depth) {
     }
   }
   return array3;
-}
+};
 
 export function rgb(r, g, b) {
   return "rgb(" + r + ", " + g + ", " + b + ")";
-}
+};
 
 export function random(lower, upper) {
   return lower + Math.random() * (upper-lower);
-}
+};
+
+let getElapsedTime = (function() {
+  let start = +new Date();
+  return function () {
+    return (new Date() - start)/1000.;
+  }
+}());
+
+export {getElapsedTime};
