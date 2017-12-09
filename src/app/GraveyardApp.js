@@ -70,25 +70,15 @@ export default class GraveyardApp extends QuentinLike {
     this.scene.add(this.pointLight1);
     this.scene.add(this.pointLight2);
     this.scene.add(this.ambientLight);
-    // this.scene.fog = new THREE.FogExp2(0x999999, 0.0045);
 
     this.renderer.setSize(this.width, this.height);
     this.renderer.setClearColor(0xDDDDDD);
 
-    this.app.time = 0;
-
     // Helper setup functions
     this.setupTrack();
 
-
     // Add visible components
     this.addFloor();
-
-    for (let i=0; i < 1600; i++) {
-      let x = 15*(Math.random()-0.5)+10;
-      let z = 15*(Math.random()-0.5)+10;
-      // this.addGrass(x, 0, z, Math.random()*0.05);
-    }
 
     for (let i=-8; i <= 8; i++) {
       let x = 8*i;
@@ -96,7 +86,6 @@ export default class GraveyardApp extends QuentinLike {
     }
 
     this.addGrassyField();
-
 
     this.force = new THREE.Vector3(0, 0, 1);
     this.dest = this.force.clone();
