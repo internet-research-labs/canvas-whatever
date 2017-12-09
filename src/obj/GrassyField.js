@@ -49,7 +49,7 @@ export class GrassyField {
     for (let i=0; i < count; i++) {
       let x = width*(Math.random()-0.5);
       let z = height*(Math.random()-0.5);
-      let bend = Math.PI/20*(Math.random());
+      let bend = Math.PI/30*(Math.random());
       let rot = 2*Math.PI*(Math.random()-0.5);
 
       let [v, n] = this.blade(x, 0, z, bend, rot);

@@ -30,7 +30,7 @@ export default class GraveyardApp extends QuentinLike {
     this.app.view_angle = 15;
     this.app.aspect     = this.width/this.height;
     this.app.near       = 0.1;
-    this.app.far        = 100;
+    this.app.far        = 1000;
     this.app.iterations = 0;
     this.app.time       = 0;
 
@@ -69,7 +69,7 @@ export default class GraveyardApp extends QuentinLike {
     this.scene.add(this.pointLight1);
     this.scene.add(this.pointLight2);
     this.scene.add(this.ambientLight);
-    this.scene.fog = new THREE.FogExp2(0x999999, 0.0045);
+    // this.scene.fog = new THREE.FogExp2(0x999999, 0.0045);
 
     this.renderer.setSize(this.width, this.height);
     this.renderer.setClearColor(0xDDDDDD);
@@ -143,8 +143,8 @@ export default class GraveyardApp extends QuentinLike {
     mat = this.getPhong();
     
     this.field = new GrassyField(
-        60,
-        25,
+        130,
+        10,
         20000,
         20000,
       );
@@ -204,16 +204,19 @@ export default class GraveyardApp extends QuentinLike {
 
   update(params) {
     this.app.time += 0.1;
-    let t = this.app.time/9.0;
-    let r = 120;
+    let t = this.app.time/30.0;
+    let r = 90;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
     let y =  40;
 
-    this.directionalLight.position.set(10, 10, 10);
-    this.pointLight1.position.set(x, y, z);
-    this.pointLight2.position.set(-x, y, -z);
-    // this.camera.position.set(x, y, z);
+    let [a, b, c] = [r*Math.cos(t), 40, r*Math.sin(t)];
+
+    // this.directionalLight.position.set(10, 10, 10);
+    // this.pointLight1.position.set(x, y, z);
+    // this.pointLight2.position.set(-x, y, -z);
+    this.camera.position.set(a, b, c);
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
     // this.updateForce(params.force);
   }
 
