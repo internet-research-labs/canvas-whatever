@@ -1,6 +1,7 @@
 import App from './App.js';
 import QuentinLike from '../app-utils/Quentin.js';
 import {add, cross, sub, normalize, scale} from '../math3.js';
+import {getElapsedTime} from '../utils.js';
 import * as THREE from 'THREE';
 
 import RibbonPath from '../RibbonPath.js';
@@ -89,7 +90,7 @@ export default class GraveyardApp extends QuentinLike {
       // this.addGrass(x, 0, z, Math.random()*0.05);
     }
 
-    for (let i=-3; i <= 3; i++) {
+    for (let i=-8; i <= 8; i++) {
       let x = 8*i;
       this.addTombstone(x, 0);
     }
@@ -145,8 +146,8 @@ export default class GraveyardApp extends QuentinLike {
     this.field = new GrassyField(
         130,
         10,
-        20000,
-        20000,
+        40000,
+        40000,
       );
     this.fieldMesh = new THREE.Mesh(
       this.field.geometry(),
@@ -203,8 +204,7 @@ export default class GraveyardApp extends QuentinLike {
   }
 
   update(params) {
-    this.app.time += 0.1;
-    let t = this.app.time/30.0;
+    let t = getElapsedTime()/10.0;
     let r = 90;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
