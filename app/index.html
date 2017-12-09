@@ -77,7 +77,6 @@
 
     <h3>...</h3>
 
-
     <canvas width=600 height=600 class="width-triangles" id="i-forgot-i-used-to-think-a-lot-about-you"></canvas>
     <canvas width=600 height=600 class="width-triangles" id="diagonal-cuts-1"></canvas>
 
@@ -181,18 +180,37 @@
       "force": 1.0
     };
 
+    var grassParams = {
+      "color": "#333333",
+      "emissive": "#777777",
+      "specular": "#000000",
+      "shininess": 0.0,
+      "reflectivity": 0.0,
+    };
+
     window.addEventListener('load', function () {
 
-    var gui = new dat.GUI();
-      gui.add(smileParams, "faceSize", 0, 100);
-      gui.add(smileParams, "eyeSize", 0, 30);
-      gui.add(smileParams, "eyeSpacing", 0, 100);
-      gui.add(smileParams, "eyeDistance", 0, 30);
-      gui.add(smileParams, "mouthDistance", 0, 30);
-      gui.add(smileParams, "mouthWidth", 0, 30);
-      gui.add(smileParams, "mouthCrookedFactor", -10, 10);
-      gui.add(smileParams, "color");
-      gui.add(forceParams, "force", 0.0, 5.0);
+      var gui = new dat.GUI({load: JSON});
+      gui.remember(smileParams);
+      gui.remember(forceParams);
+      gui.remember(grassParams);
+      
+      var faceFolder = gui.addFolder("Face");
+      faceFolder.add(smileParams, "faceSize", 0, 100);
+      faceFolder.add(smileParams, "eyeSize", 0, 30);
+      faceFolder.add(smileParams, "eyeSpacing", 0, 100);
+      faceFolder.add(smileParams, "eyeDistance", 0, 30);
+      faceFolder.add(smileParams, "mouthDistance", 0, 30);
+      faceFolder.add(smileParams, "mouthWidth", 0, 30);
+      faceFolder.add(smileParams, "mouthCrookedFactor", -10, 10);
+      faceFolder.addColor(smileParams, "color");
+
+      var grassFolder = gui.addFolder("Grass");
+      grassFolder.addColor(grassParams, "color");
+      grassFolder.addColor(grassParams, "emissive");
+      grassFolder.addColor(grassParams, "specular");
+      grassFolder.add(grassParams, "shininess", 0, 200);
+      grassFolder.add(grassParams, "reflectivity", 0, 200);
     });
 
     fetch("/panda.txt").then(function (resp) {

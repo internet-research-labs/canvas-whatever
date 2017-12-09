@@ -85,13 +85,13 @@ export default class GraveyardApp extends QuentinLike {
       this.addTombstone(x, 0);
     }
 
+    let start = getElapsedTime();
     this.addGrassyField();
+    console.log("Create grassy field time:", getElapsedTime()-start);
 
     this.force = new THREE.Vector3(0, 0, 1);
     this.dest = this.force.clone();
     this.dest.multiplyScalar(-1);
-    // this.addForceArrow();
-    // this.updateForce(2.0);
   }
 
   // Setup a camera track... but in this case actually do nothing
@@ -135,7 +135,7 @@ export default class GraveyardApp extends QuentinLike {
     this.field = new GrassyField(
         130,
         10,
-        40000,
+        40,
         300,
       );
     this.fieldMesh = new THREE.Mesh(
@@ -168,7 +168,7 @@ export default class GraveyardApp extends QuentinLike {
     return new THREE.MeshPhongMaterial({
       color: 0x004444,
       emissive: 0x114433,
-      specular: 0x7700DD,
+      specular: 0x4B0082,
       reflectivity: 20,
       shininess: 15,
       shading: THREE.SmoothShading,
