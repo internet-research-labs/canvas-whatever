@@ -1,5 +1,6 @@
 import Grass from '../obj/Grass.js';
 import {add, cross, sub, normalize, scale} from '../math3.js';
+import {getElapsedTime} from '../utils.js';
 
 function magnitude(vec, s) {
   return scale(normalize(vec), s);
@@ -53,6 +54,7 @@ export class GrassyField {
       this.blades.push(this.blade(0, 0, 0, bend, rot));
     }
 
+    let bladeStart = getElapsedTime();
     for (let i=0; i < count; i++) {
       let j = Math.floor(this.blades.length*Math.random());
       let x = width*(Math.random()-0.5);
@@ -63,6 +65,7 @@ export class GrassyField {
       extend(this.vertices, v);
       extend(this.normals, n);
     }
+    console.log("Extend array time:", getElapsedTime()-bladeStart);
   }
 
   /**
@@ -141,11 +144,15 @@ export class GrassyField {
 
   geometry() {
     this.geo = new THREE.BufferGeometry();
+
+    let start = getElapsedTime();
     let v = Float32Array.from(this.vertices);
+
     this.geo.addAttribute('position', new THREE.BufferAttribute(v, 3));
 
     let n = Float32Array.from(this.normals);
     this.geo.addAttribute('normal', new THREE.BufferAttribute(n, 3));
+    console.log("Copy array time:", getElapsedTime()-start);
     return this.geo;
   }
 }
