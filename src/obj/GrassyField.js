@@ -28,8 +28,8 @@ function rotateyMesh(xs, rot) {
   for (let i=0; i < xs.length; i += 3) {
     let x = xs[i+0];
     let z = xs[i+2];
-    xs[i+0] = x*Math.cos(rot)-z*Math.sin(rot);
-    xs[i+2] = x*Math.sin(rot)+z*Math.cos(rot);
+    xs[i+0] = x*Math.cos(rot)+z*Math.sin(rot);
+    xs[i+2] = -x*Math.sin(rot)+z*Math.cos(rot);
   }
 }
 
@@ -49,13 +49,10 @@ export class GrassyField {
     for (let i=0; i < count; i++) {
       let x = width*(Math.random()-0.5);
       let z = height*(Math.random()-0.5);
-      let [v, n] = this.blade(
-        x,
-        0,
-        z,
-        0.09*(Math.random()-0.5),
-        2*Math.PI*(Math.random()-0.5),
-      );
+      let bend = Math.PI/31*(Math.random()-0.5);
+      let rot = 2*Math.PI*(Math.random()-0.5);
+
+      let [v, n] = this.blade(x, 0, z, bend, rot);
 
       extend(this.vertices, v);
       extend(this.normals, n);
@@ -87,8 +84,8 @@ export class GrassyField {
 
     // Params
     let NUM_SEGMENTS = 20;
-    let HEIGHT_SEGMENT = (0.08+0.009*Math.random());
-    let WIDTH_SEGMENT = 0.1;
+    let HEIGHT_SEGMENT = (0.08+0.03*Math.random());
+    let WIDTH_SEGMENT = 0.10;
 
     // Build segments
     let segments = []
@@ -97,10 +94,11 @@ export class GrassyField {
 
     for (let i=0; i <= NUM_SEGMENTS; i++) {
       let t = theta*i;
-      let [a, b] = [Math.cos(t), Math.sin(t)];
+      let [x, y, z] = [0, Math.cos(t), Math.sin(t)];
+      let [a, b, c] = cross([1, 0, 0], [x, y, z]);
       segments.push({
-        'delta': magnitude([0, a, b], HEIGHT_SEGMENT),
-        'normal': normalize([a, b, 0]),
+        'delta': magnitude([x, y, z], HEIGHT_SEGMENT),
+        'normal': normalize([a, b, c]),
       });
     }
 
@@ -114,14 +112,14 @@ export class GrassyField {
       let d = [x+dx-WIDTH_SEGMENT*s, y+dy, z+dz];
  
       // Face 1
-      extend(vertices, a);
       extend(vertices, b);
+      extend(vertices, a);
       extend(vertices, c);
 
       // Face 2
-      extend(vertices, d);
-      extend(vertices, c);
       extend(vertices, b);
+      extend(vertices, c);
+      extend(vertices, d);
 
       // Normals
       let n = segments[i].normal;
@@ -138,13 +136,6 @@ export class GrassyField {
     }
 
     return [vertices, normals];
-  }
-
-  /**
-   * Add a blade of grass to the field
-   */
-  addBlade(x, y, z, theta, rot) {
-    let geo = this.blade(x, y, z, theta, rot);
   }
 
   geometry() {
