@@ -136,7 +136,7 @@ export default class GraveyardApp extends QuentinLike {
         130,
         10,
         40000,
-        40000,
+        300,
       );
     this.fieldMesh = new THREE.Mesh(
       this.field.geometry(),
