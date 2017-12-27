@@ -10,6 +10,7 @@ import Ribbon from '../Ribbon.js';
 // Generative objects
 import Grass from '../obj/Grass.js';
 import {GrassyField} from '../obj/GrassyField.js';
+import {Land} from  '../obj/Land.js';
 
 function norm(v) {
   return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
@@ -180,18 +181,24 @@ export default class GraveyardApp extends QuentinLike {
 
   // Just draw a simple floor
   addFloor() {
-    let mat = new THREE.LineBasicMaterial({color: 0xB7B7BA});
-    let VALS = 100;
-    for (let i=-VALS; i <= VALS; i++) {
-      let geo = new THREE.Geometry();
-      geo.vertices.push(new THREE.Vector3(i, 0, -40));
-      geo.vertices.push(new THREE.Vector3(i, 0, 40));
-      this.scene.add(new THREE.Line(geo, mat));
-      geo = new THREE.Geometry();
-      geo.vertices.push(new THREE.Vector3(-40, 0, i));
-      geo.vertices.push(new THREE.Vector3(40, 0, i));
-      this.scene.add(new THREE.Line(geo, mat));
-    }
+    let mat = new THREE.MeshPhongMaterial({
+      color: 0x33333,
+      // emissive: stringToHex(emissive),
+      specular: 0x333333,
+      // shininess: shininess,
+      // reflectivity: reflectivity,
+      shading: THREE.SmoothShading,
+      side: THREE.DoubleSide,
+    });
+
+    this.floor = new Land({
+      height: 20,
+      width: 20,
+    });
+
+    let geo = this.floor.getMesh();
+
+    this.scene.add(new THREE.Mesh(geo, mat));
   }
 
   update(params) {
