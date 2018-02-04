@@ -83,12 +83,14 @@ export default class GraveyardApp extends QuentinLike {
     this.setupTrack();
 
     // Add visible components
-    this.addFloor();
+    // this.addFloor();
 
+    /*
     for (let i=-8; i <= 8; i++) {
       let x = 8*i;
       this.addTombstone(x, 0);
     }
+    //*/
 
     let start = getElapsedTime();
     this.addGrassyField();
@@ -136,8 +138,8 @@ export default class GraveyardApp extends QuentinLike {
   addGrassyField() {
     this.field = new GrassyField(
         130,
-        10,
-        8000,
+        130,
+        80000,
         300,
       );
     this.fieldMesh = new THREE.Mesh(
@@ -203,6 +205,7 @@ export default class GraveyardApp extends QuentinLike {
 
   update(params) {
     let t = getElapsedTime()/10.0;
+    t = 1.4;
     // t = -Math.PI/2;
     let r = 90;
     let x = r*Math.cos(t);
@@ -211,12 +214,31 @@ export default class GraveyardApp extends QuentinLike {
 
     let [a, b, c] = [r*Math.cos(t), 40, r*Math.sin(t)];
 
-    // this.directionalLight.position.set(10, 10, 10);
-    // this.pointLight1.position.set(x, y, z);
-    // this.pointLight2.position.set(-x, y, -z);
+    // ...
     this.camera.position.set(a, b, c);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-    // this.updateForce(params.force);
+
+  }
+  setupCamera() {
+    this.camera = new THREE.PerspectiveCamera(
+      this.app.view_angle,
+      this.app.aspect,
+      this.app.near,
+      this.app.far
+    );
+  }
+
+  setSize(width, height) {
+    this.app.width = width;
+    this.app.height = height;
+    this.app.aspect = width/height;
+    this.setupCamera();
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(this.app.width, this.app.height);
+  }
+
+  resize(width, height) {
+    this.setSize(width, height);
   }
 
   updateForce(n) {
