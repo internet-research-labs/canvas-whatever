@@ -13,6 +13,7 @@ export class Land {
     this.seed = seed || 0;
 
     this.f = function (x, y) {
+      return 0;
       let a = x/8.0;
       let b = y/8.0;
       let m = Math.cos(a*a+b*b);
