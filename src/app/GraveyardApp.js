@@ -77,13 +77,14 @@ export default class GraveyardApp extends QuentinLike {
     this.scene.add(this.ambientLight);
 
     this.renderer.setSize(this.width, this.height);
+    this.renderer.setPixelRatio(.9);
     this.renderer.setClearColor(0xDDDDDD);
 
     // Helper setup functions
     this.setupTrack();
 
     // Add visible components
-    // this.addFloor();
+    this.addFloor();
 
     /*
     for (let i=-8; i <= 8; i++) {
@@ -135,12 +136,16 @@ export default class GraveyardApp extends QuentinLike {
 
   }
 
+  /**
+   * ...
+   */
   addGrassyField() {
     this.field = new GrassyField(
-        130,
-        130,
-        80000,
-        300,
+        30,
+        30,
+        8000,
+        30,
+        this.floor.f,
       );
     this.fieldMesh = new THREE.Mesh(
       this.field.geometry(),
@@ -185,17 +190,25 @@ export default class GraveyardApp extends QuentinLike {
   addFloor() {
     let mat = new THREE.MeshPhongMaterial({
       color: 0x33333,
-      // emissive: stringToHex(emissive),
-      specular: 0x333333,
-      // shininess: shininess,
-      // reflectivity: reflectivity,
+      emissive: 0x000000,
+      specular: 0x000000,
+      shininess: 0.0,
       shading: THREE.SmoothShading,
       side: THREE.DoubleSide,
     });
 
+    let _abc = function (x, y) {
+      return 1-(x*x+y*y)/128;
+      let a = x/12.0;
+      let b = y/12.0;
+      let m = Math.cos(a*a+b*b);
+      return m;
+    };
+
     this.floor = new Land({
       height: 20,
       width: 20,
+      floor: _abc,
     });
 
     let geo = this.floor.getMesh();
@@ -205,8 +218,6 @@ export default class GraveyardApp extends QuentinLike {
 
   update(params) {
     let t = getElapsedTime()/10.0;
-    t = 1.4;
-    // t = -Math.PI/2;
     let r = 90;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);

@@ -36,13 +36,16 @@ function rotateyMesh(xs, rot) {
 
 
 export class GrassyField {
-  constructor(width, height, count, variations) {
+  constructor(width, height, count, variations, floor) {
     this.width = width;
     this.height = height;
     this.density = 1.0;
     this.count = count || 100;
     this.variations = variations || 20;
     this.blades = [];
+    this.floor = floor || undefined;
+
+    console.log("x_x", this.floor);
 
     this.vertices = [];
     this.normals = [];
@@ -50,18 +53,19 @@ export class GrassyField {
     for (let i=0; i < variations; i++) {
       let bend = Math.PI/30*(Math.random());
       let rot = 2*Math.PI*(Math.random()-0.5);
-
       this.blades.push(this.blade(0, 0, 0, bend, rot));
     }
 
     let bladeStart = getElapsedTime();
+
     for (let i=0; i < count; i++) {
       let j = Math.floor(this.blades.length*Math.random());
       let x = width*(Math.random()-0.5);
+      let y = this.floor(x, z);
       let z = height*(Math.random()-0.5);
       let [v, n] = this.blades[j];
       v = v.slice();
-      translate(v, [x, 0, z]);
+      translate(v, [x, y, z]);
       extend(this.vertices, v);
       extend(this.normals, n);
     }
