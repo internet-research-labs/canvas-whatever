@@ -4,22 +4,10 @@ export class Land {
   /**
    * Create a Land
    */
-  constructor({height, width, x, y, roughness, seed}) {
+  constructor({height, width, floor}) {
     this.height = height;
     this.width = width;
-    this.x = x || 0;
-    this.y = y || 0;
-    this.roughness = roughness || 1.0;
-    this.seed = seed || 0;
-
-    this.f = function (x, y) {
-      return 0;
-      let a = x/8.0;
-      let b = y/8.0;
-      let m = Math.cos(a*a+b*b);
-      return m;
-    };
-
+    this.f = floor;
     this.surface = new TriangleSurface(this.f, 0.9, 20.0, 20.0);
   }
 
