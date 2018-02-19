@@ -13,6 +13,7 @@ import QuentinApp from './app/QuentinApp.js';
 import OverlapApp from './app/OverlapApp.js';
 import RibbonApp from './app/RibbonApp.js';
 import SmileApp from './app/SmileApp.js';
+import ShadyHillApp from './app/ShadyHillApp.js';
 import SplotchApp from './app/SplotchApp.js';
 import TriGridApp from './app/TriGridApp.js';
 import TriOverlapApp from './app/TriOverlapApp.js';
@@ -46,6 +47,7 @@ export {
   QuentinApp,
   OverlapApp,
   RibbonApp,
+  ShadyHillApp,
   SmileApp,
   SplotchApp,
   TriOverlapApp,
