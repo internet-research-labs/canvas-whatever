@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>everything feels really small</title>
+    <style>
+    #you-know {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: rgb(255, 68, 112);
+      width: 100%;
+      height: 100%;
+    }
+
+    #dont-touch-me {
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r83/three.min.js"></script>
+    <script src="/vendor/OBJLoader.js"></script>
+    <!-- React Jazz -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.min.js"></script>
+    <script src="assets/svv.im.bundled.js"></script>
+    <script src="dat.gui.min.js"></script>
+    <script src="/stats.min.js"></script>
+  </head>
+  <body>
+    <div id="you-know"><canvas id="dont-touch-me"></canvas></div>
+    <script>
+
+    function datGui() {
+      grassParams = {
+        "color": "#333333",
+        "emissive": "#777777",
+        "specular": "#000000",
+        "shininess": 0.0,
+        "reflectivity": 0.0,
+        "y": 40.0,
+      };
+
+      grassParams = {
+        color: "#29614a",
+        emissive: "#181010",
+        specular: "#000000",
+        shininess: 0,
+        reflectivity: 0,
+        "y": 40.0,
+      };
+
+      var gui = new dat.GUI({load: JSON});
+      gui.remember(grassParams);
+
+      var grassFolder = gui.addFolder("Grass");
+
+
+      grassFolder.addColor(grassParams, "color").onChange(update);
+      grassFolder.addColor(grassParams, "emissive").onChange(update);
+      grassFolder.addColor(grassParams, "specular").onChange(update);
+      grassFolder.add(grassParams, "shininess", 0, 200).onChange(update);
+      grassFolder.add(grassParams, "reflectivity", 0, 200).onChange(update);
+      grassFolder.add(grassParams, "y", 0, 100).onChange(update);
+
+      return grassParams;
+    }
+
+    var app = new svv.ShadyHillApp({
+      id: "dont-touch-me",
+    });
+
+
+    window.addEventListener('load', function (ev) {
+
+      var grassParams = datGui();
+      
+      app.setup();
+      app.update(grassParams);
+      app.setPhong(grassParams);
+      app.draw();
+
+      var stats = new Stats();
+
+      (function loloop() {
+        stats.begin();
+        app.update(grassParams);
+        app.draw();
+        stats.end();
+        requestAnimationFrame(loloop);
+      }());
+
+      window.addEventListener('resize', debounce(100, function (ev) {
+        app.resize(window.innerWidth, window.innerHeight);
+      }));
+
+      // Hoisting
+
+      function debounce(delay, f) {
+        var id = null;
+        return function () {
+          var self = this;
+          var args = arguments;
+          clearTimeout(id);
+          id = setTimeout(function () {
+            f.apply(self, args);
+          }, delay);
+        }
+      }
+
+    });
+
+    function update() {
+      app.setPhong(grassParams);
+    }
+
+    </script>
+  </body>
+</html>

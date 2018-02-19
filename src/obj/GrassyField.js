@@ -45,8 +45,6 @@ export class GrassyField {
     this.blades = [];
     this.floor = floor || undefined;
 
-    console.log("x_x", this.floor);
-
     this.vertices = [];
     this.normals = [];
 
@@ -58,17 +56,31 @@ export class GrassyField {
 
     let bladeStart = getElapsedTime();
 
-    for (let i=0; i < count; i++) {
-      let j = Math.floor(this.blades.length*Math.random());
-      let x = width*(Math.random()-0.5);
-      let y = this.floor(x, z);
-      let z = height*(Math.random()-0.5);
-      let [v, n] = this.blades[j];
-      v = v.slice();
-      translate(v, [x, y, z]);
-      extend(this.vertices, v);
-      extend(this.normals, n);
+
+    let X_SEGS = 300;
+    let Y_SEGS = 300;
+    let DX = this.width/X_SEGS;
+    let DY = this.height/Y_SEGS;
+
+    function stagger() {
+      let r = 2*Math.random()-1.0;
+      return r*DX/2.0;
     }
+
+    for (let i=0; i < X_SEGS; i++) {
+      for (let j=0; j < Y_SEGS; j++) {
+        let k = Math.floor(this.blades.length*Math.random());
+        let x = i*DX - this.width/2.0 + stagger();
+        let z = j*DY - this.width/2.0 + stagger();
+        let y = this.floor(x, z);
+        let [v, n] = this.blades[k];
+        v = v.slice();
+        translate(v, [x, y, z]);
+        extend(this.vertices, v);
+        extend(this.normals, n);
+      }
+    }
+
     console.log("Extend array time:", getElapsedTime()-bladeStart);
   }
 
