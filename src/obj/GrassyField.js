@@ -36,11 +36,10 @@ function rotateyMesh(xs, rot) {
 
 
 export class GrassyField {
-  constructor(width, height, count, variations, floor) {
+  constructor(width, height, density, variations, floor) {
     this.width = width;
     this.height = height;
-    this.density = 1.0;
-    this.count = count || 100;
+    this.density = density || 1.0;
     this.variations = variations || 20;
     this.blades = [];
     this.floor = floor || undefined;
@@ -57,8 +56,12 @@ export class GrassyField {
     let bladeStart = getElapsedTime();
 
 
-    let X_SEGS = 300;
-    let Y_SEGS = 300;
+    let X_SEGS = 90;
+    let Y_SEGS = 91;
+
+    X_SEGS = Math.floor(this.width*Math.sqrt(this.density));
+    Y_SEGS = Math.floor(this.height*Math.sqrt(this.density));
+
     let DX = this.width/X_SEGS;
     let DY = this.height/Y_SEGS;
 
@@ -103,7 +106,7 @@ export class GrassyField {
     let z = 0;
 
     // Params
-    let NUM_SEGMENTS = 20;
+    let NUM_SEGMENTS = 10;
     let HEIGHT_SEGMENT = (0.08+0.03*Math.random());
     let WIDTH_SEGMENT = 0.10;
 
