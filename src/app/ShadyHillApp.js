@@ -7,6 +7,8 @@ import * as THREE from 'THREE';
 import RibbonPath from '../RibbonPath.js';
 import Ribbon from '../Ribbon.js';
 
+import SimplexNoise from 'simplex-noise';
+
 // Generative objects
 import Grass from '../obj/Grass.js';
 import {GrassyField} from '../obj/GrassyField.js';
@@ -145,7 +147,7 @@ export default class ShadyHillApp extends QuentinLike {
     this.field = new GrassyField(
         90,
         90,
-        8000,
+        5.0,
         30,
         this.floor.f,
       );
@@ -219,16 +221,17 @@ export default class ShadyHillApp extends QuentinLike {
       side: THREE.DoubleSide,
     });
 
-    let _abc = function (x, y) {
-      let a = x/12.0;
-      let b = y/12.0;
-      let m = Math.cos(a*a+b*b)-0.7;
-      return m || 0.0;
-    };
+    let _abc = (function () {
+      let s = 80.0;
+      let simplex = new SimplexNoise("whatever");
+      return (x, y) => {
+        return 4.0*simplex.noise2D(x/s, y/s);
+      };
+    }());
 
     this.floor = new Land({
-      height: 20,
-      width: 20,
+      height: 50,
+      width: 50,
       floor: _abc,
     });
 
