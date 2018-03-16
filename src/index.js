@@ -14,6 +14,7 @@ import OverlapApp from './app/OverlapApp.js';
 import RibbonApp from './app/RibbonApp.js';
 import SmileApp from './app/SmileApp.js';
 import ShadyHillApp from './app/ShadyHillApp.js';
+import InstancedHillApp from './app/InstancedHillApp.js';
 import SplotchApp from './app/SplotchApp.js';
 import TriGridApp from './app/TriGridApp.js';
 import TriOverlapApp from './app/TriOverlapApp.js';
@@ -28,6 +29,7 @@ import LoadingCube from './LoadingCube.js';
 import TriangleClipGrid from './TriangleClipGrid.js';
 import TriangleMesh from './TriangleMesh.js';
 import {SubtitleScript, Subtitle} from './subtitles/Subtitles.js';
+
 
 export {
   // Apps
@@ -48,6 +50,7 @@ export {
   OverlapApp,
   RibbonApp,
   ShadyHillApp,
+  InstancedHillApp,
   SmileApp,
   SplotchApp,
   TriOverlapApp,

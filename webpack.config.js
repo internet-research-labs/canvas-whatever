@@ -11,6 +11,11 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.(frag|vert)?$/,
+        exclude: /node_modules/,
+        loader: 'webpack-glsl',
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel',
