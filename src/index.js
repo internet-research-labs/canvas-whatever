@@ -9,13 +9,14 @@ import FaceApp from './app/FaceApp.js';
 import GeodeApp from './app/GeodeApp.js';
 import GrassApp from './app/GrassApp.js';
 import GraveyardApp from './app/GraveyardApp.js';
-import QuentinApp from './app/QuentinApp.js';
-import OverlapApp from './app/OverlapApp.js';
-import RibbonApp from './app/RibbonApp.js';
-import SmileApp from './app/SmileApp.js';
-import ShadyHillApp from './app/ShadyHillApp.js';
 import InstancedHillApp from './app/InstancedHillApp.js';
+import OverlapApp from './app/OverlapApp.js';
+import QuentinApp from './app/QuentinApp.js';
+import RibbonApp from './app/RibbonApp.js';
+import ShadyHillApp from './app/ShadyHillApp.js';
+import SmileApp from './app/SmileApp.js';
 import SplotchApp from './app/SplotchApp.js';
+import StarfieldApp from './app/StarfieldApp.js';
 import TriGridApp from './app/TriGridApp.js';
 import TriOverlapApp from './app/TriOverlapApp.js';
 import TriangleClipGridApp from './app/TriangleClipGridApp.js';
@@ -46,13 +47,14 @@ export {
   GoldGridApp,
   GrassApp,
   GraveyardApp,
-  QuentinApp,
+  InstancedHillApp,
   OverlapApp,
+  QuentinApp,
   RibbonApp,
   ShadyHillApp,
-  InstancedHillApp,
   SmileApp,
   SplotchApp,
+  StarfieldApp,
   TriOverlapApp,
   TriangleClipGridApp,
   WaveApp,
