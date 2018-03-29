@@ -4,6 +4,8 @@ import {add, cross, sub, normalize, scale} from '../math3.js';
 import {getElapsedTime} from '../utils.js';
 import * as THREE from 'THREE';
 
+import {sky} from '../obj/StarrySky.js';
+
 import RibbonPath from '../RibbonPath.js';
 import Ribbon from '../Ribbon.js';
 
@@ -38,7 +40,7 @@ export default class StarfieldApp extends QuentinLike {
     this.app.view_angle = 15;
     this.app.aspect     = this.width/this.height;
     this.app.near       = 0.1;
-    this.app.far        = 1000;
+    this.app.far        = 2000;
     this.app.iterations = 0;
     this.app.time       = 0;
 
@@ -82,6 +84,11 @@ export default class StarfieldApp extends QuentinLike {
     this.renderer.setPixelRatio(1.2);
     this.renderer.setClearColor(0xFFFFFF);
 
+
+    // Sky
+    this.sky = sky();
+    this.scene.add(this.sky);
+
     // Helper setup functions
     this.setupTrack();
 
@@ -94,6 +101,7 @@ export default class StarfieldApp extends QuentinLike {
       this.addTombstone(x, 0);
     }
     //*/
+    //
 
     let start = getElapsedTime();
     this.addGrassyField();
