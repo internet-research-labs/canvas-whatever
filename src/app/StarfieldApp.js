@@ -265,13 +265,15 @@ export default class StarfieldApp extends QuentinLike {
   }
 
   update(params) {
-    let t = +new Date() / 100.0;
+    let t = +new Date() / 10000.0;
+    let f = Math.PI/4.0;
+    f = t;
     let r = 90;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
     let y =  params.y;
 
-    let [a, b, c] = [r*Math.cos(t), y, r*Math.sin(t)];
+    let [a, b, c] = [r*Math.cos(f), y, r*Math.sin(f)];
 
     //udebugger;
     // console.log(this.u.time.value);
@@ -279,6 +281,13 @@ export default class StarfieldApp extends QuentinLike {
     this.sky.material.uniforms.dir.value.x = 0.5*(Math.cos(t)+1);
     this.sky.material.uniforms.dir.value.y = 0.5*(Math.sin(t)+1);
     this.sky.material.uniforms.dir.value.z = 1.0;
+    this.sky.material.needsUpdate = true;
+
+    // Set to zero
+    this.sky.material.uniforms.dir.value.x = 0.0;
+    this.sky.material.uniforms.dir.value.y = 0.0;
+    this.sky.material.uniforms.dir.value.z = 0.0;
+    //*/
 
     // ...
     this.camera.position.set(a, b, c);
