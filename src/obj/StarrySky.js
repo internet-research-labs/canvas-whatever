@@ -3,7 +3,10 @@ let frag = require('./shaders/starry.frag');
 
 export function sky() {
   try {
-    let uniforms = {time: {value: 1.0}};
+    let uniforms = {
+      time: {value: 1.0},
+      dir: {value: new THREE.Vector3(0.0, 0.0, 1.0), type: 'v3'},
+    };
     let size = 10;
     let skyBox = new THREE.BoxGeometry(size, size, size);
     let skyMat = new THREE.ShaderMaterial({
