@@ -85,7 +85,10 @@ export default class StarfieldApp extends QuentinLike {
 
 
     // Sky
-    [this.sky, this.u] = sky();
+    this.sky = sky([
+      [3, 3, 3],
+      [4, 4, 4],
+    ]);
 
     this.scene.add(this.sky);
 
@@ -270,6 +273,7 @@ export default class StarfieldApp extends QuentinLike {
     let t = +new Date() / 1000.0 / 2.0;
     let f = Math.PI/4.0;
     let r = 90;
+    f = t/1000.0;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
     let y =  params.y;
