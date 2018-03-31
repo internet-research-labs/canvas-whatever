@@ -14,27 +14,29 @@ export function sky() {
   }
 } 
 function skyTexture() {
-  let width = Math.pow(2, 8);
-  let height = Math.pow(2, 8);
+  let len = 4;
+  let width = Math.pow(2, len);
+  let height = Math.pow(2, len);
   let size = width*height;
-  let data = new Uint8Array(3*size);
+  let data = new Uint8Array(4*size);
 
   for (let i=0; i < size; i++) {
-    data[3*i+0] = 55;
-    data[3*i+1] = 55;
-    data[3*i+2] = 55;
+    data[4*i+0] = Math.floor(Math.random()*255);
+    data[4*i+1] = Math.floor(Math.random()*255);
+    data[4*i+2] = Math.floor(Math.random()*255);
+    data[4*i+3] = 255;
   }
 
   let tex = new THREE.DataTexture(
     data,
     width,
     height,
-    THREE.RGBFormat,
+    THREE.RGBAFormat,
+    THREE.UnsignedByteType,
+    THREE.UVMapping,
   );
 
-  tex = new THREE.TextureLoader().load("img/beach-1.png");
-
-  console.log("~!!!", tex);
+  tex.needsUpdate = true;
 
   return tex;
 }
@@ -50,14 +52,17 @@ function skyMaterial() {
 
   console.log(">>", tex);
 
+  // mat.needsUpdate = true;
+  // return mat;
+
   let faceMaterials = [
-    new THREE.MeshLambertMaterial({map: skyTexture()}),
-    new THREE.MeshLambertMaterial({map: skyTexture()}),
-    new THREE.MeshLambertMaterial({map: skyTexture()}),
-    new THREE.MeshLambertMaterial({map: skyTexture()}),
-    new THREE.MeshLambertMaterial({map: skyTexture()}),
-    new THREE.MeshLambertMaterial({map: skyTexture()}),
+    new THREE.MeshBasicMaterial({map: skyTexture()}),
+    new THREE.MeshBasicMaterial({map: skyTexture()}),
+    new THREE.MeshBasicMaterial({map: skyTexture()}),
+    new THREE.MeshBasicMaterial({map: skyTexture()}),
+    new THREE.MeshBasicMaterial({map: skyTexture()}),
+    new THREE.MeshBasicMaterial({map: skyTexture()}),
   ];
 
-  return new THREE.MeshLambertMaterial({map: skyTexture()});
+  return faceMaterials;
 }

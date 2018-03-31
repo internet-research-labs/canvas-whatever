@@ -44,8 +44,6 @@ export class GrassyField {
     this.blades = [];
     this.floor = floor || undefined;
 
-    console.log(">>", floor(0, 0));
-
     this.vertices = [];
     this.normals = [];
 
@@ -78,7 +76,6 @@ export class GrassyField {
         let x = i*DX - this.width/2.0 + stagger();
         let z = j*DY - this.width/2.0 + stagger();
         let y = this.floor(x, z);
-        console.log("f(", [x, z], ") = ", y);
         let [v, n] = this.blades[k];
         v = v.slice();
         translate(v, [x, y, z]);

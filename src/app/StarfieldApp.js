@@ -153,9 +153,9 @@ export default class StarfieldApp extends QuentinLike {
    */
   addGrassyField() {
     this.field = new GrassyField(
-        10,
-        10,
-        5.0,
+        14,
+        14,
+        9.0,
         30,
         this.floor.f,
       );
@@ -267,7 +267,7 @@ export default class StarfieldApp extends QuentinLike {
   }
 
   update(params) {
-    let t = +new Date() / 10000.0;
+    let t = +new Date() / 1000.0 / 2.0;
     let f = Math.PI/4.0;
     let r = 90;
     let x = r*Math.cos(t);
@@ -294,7 +294,7 @@ export default class StarfieldApp extends QuentinLike {
     //*/
     //
     this.sky.rotation.x = (+2*t) % (2*Math.PI);
-    this.sky.rotation.y = (-5*t) % (2*Math.PI);
+    this.sky.rotation.y = (-2*t) % (2*Math.PI);
     this.sky.rotation.z = (-3*t) % (2*Math.PI);
 
     // ...
