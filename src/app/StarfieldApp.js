@@ -273,7 +273,7 @@ export default class StarfieldApp extends QuentinLike {
     let t = +new Date() / 1000.0 / 2.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/1000.0;
+    f = t/10.0;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
     let y =  params.y;
