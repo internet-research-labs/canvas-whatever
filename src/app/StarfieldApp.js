@@ -12,7 +12,6 @@ import Ribbon from '../Ribbon.js';
 import SimplexNoise from 'simplex-noise';
 
 // Generative objects
-import Grass from '../obj/Grass.js';
 import {GrassyField} from '../obj/GrassyField.js';
 import {Land} from  '../obj/Land.js';
 
@@ -174,7 +173,8 @@ export default class StarfieldApp extends QuentinLike {
       specular: stringToHex(specular),
       shininess: shininess,
       reflectivity: reflectivity,
-      shading: THREE.SmoothShading,
+      // shading: THREE.SmoothShading,
+      flatShading: true,
       side: THREE.DoubleSide,
     });
     this.fieldMesh.material = this.grassMaterial;
@@ -189,7 +189,8 @@ export default class StarfieldApp extends QuentinLike {
       specular: 0x000000,
       reflectivity: 0,
       shininess: 0,
-      shading: THREE.SmoothShading,
+      // shading: THREE.SmoothShading,
+      flatShading: true,
       side: THREE.DoubleSide,
     });
     let cube = new THREE.Mesh(geometry, material);
@@ -197,7 +198,7 @@ export default class StarfieldApp extends QuentinLike {
     cube.position.y = 4;;
     cube.position.z = z;
     // cube.rotation.y = Math.PI/4;
-    this.scene.add(cube);
+    // this.scene.add(cube);
   }
 
   loadObjs() {
@@ -206,7 +207,7 @@ export default class StarfieldApp extends QuentinLike {
     loader.load(
       'obj/Tombstone.obj',
       (obj) => {
-        scene.add(obj);
+        // scene.add(obj);
       },
       (xhr) => {
       },
@@ -226,7 +227,8 @@ export default class StarfieldApp extends QuentinLike {
       emissive: 0x000000,
       specular: 0x000000,
       shininess: 0.0,
-      shading: THREE.SmoothShading,
+      // shading: THREE.SmoothShading,
+      flatShading: true,
       side: THREE.DoubleSide,
     });
 
@@ -267,7 +269,6 @@ export default class StarfieldApp extends QuentinLike {
   update(params) {
     let t = +new Date() / 10000.0;
     let f = Math.PI/4.0;
-    f = t;
     let r = 90;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
@@ -277,17 +278,24 @@ export default class StarfieldApp extends QuentinLike {
 
     //udebugger;
     // console.log(this.u.time.value);
+    /*
     this.sky.material.uniforms.time.value = 0.5*(Math.cos(t)+1);
     this.sky.material.uniforms.dir.value.x = 0.5*(Math.cos(t)+1);
     this.sky.material.uniforms.dir.value.y = 0.5*(Math.sin(t)+1);
     this.sky.material.uniforms.dir.value.z = 1.0;
     this.sky.material.needsUpdate = true;
+    //*/
 
     // Set to zero
+    /*
     this.sky.material.uniforms.dir.value.x = 0.0;
     this.sky.material.uniforms.dir.value.y = 0.0;
     this.sky.material.uniforms.dir.value.z = 0.0;
     //*/
+    //
+    this.sky.rotation.x = (+2*t) % (2*Math.PI);
+    this.sky.rotation.y = (-5*t) % (2*Math.PI);
+    this.sky.rotation.z = (-3*t) % (2*Math.PI);
 
     // ...
     this.camera.position.set(a, b, c);
