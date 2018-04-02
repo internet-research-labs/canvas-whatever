@@ -8,7 +8,6 @@ export function sky(stars) {
     let skyBox = new THREE.CubeGeometry(size, size, size, 1, 1, 1);
     let skyMat = skyMaterial();
     let skyMesh = new THREE.Mesh(skyBox, skyMat);
-    skyMesh.position.y += 5;
     return skyMesh;
   } catch (err) {
     console.log("Fail", err);
@@ -71,11 +70,6 @@ function skyMaterial() {
   };
 
   let tex = skyTexture();
-
-  console.log(">>", tex);
-
-  // mat.needsUpdate = true;
-  // return mat;
 
   let faceMaterials = [
     new THREE.MeshBasicMaterial({map: skyTexture()}),

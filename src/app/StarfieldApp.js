@@ -85,12 +85,9 @@ export default class StarfieldApp extends QuentinLike {
 
 
     // Sky
-    this.sky = sky([
-      [3, 3, 3],
-      [4, 4, 4],
-    ]);
-
+    this.sky = this.getSky();
     this.scene.add(this.sky);
+
 
     // Helper setup functions
     this.setupTrack();
@@ -121,6 +118,52 @@ export default class StarfieldApp extends QuentinLike {
   setupTrack() {
     this.camera.position.set(0, 30, 80);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+  }
+
+  getPoints(points) {
+    let g = new THREE.Group();
+
+    points.forEach((v, i) => {
+      console.log("...whatever");
+    });
+
+    return g;
+  }
+
+
+  getSky() {
+    let g = new THREE.Group();
+
+    let stars = []; 
+
+    for (let i=0; i < 30; i++) {
+      let r = 5;
+      let t = Math.random()*Math.PI*2;
+      let x = r*Math.cos(t);
+      let y = r*Math.sin(t);
+      let z = 0;
+      stars.push([x, y, z]);
+    }
+
+    let size = 0.25;
+
+    stars.forEach((v, i) => {
+      let m = new THREE.Mesh(
+        new THREE.SphereGeometry(size, 32, 32),
+        new THREE.MeshBasicMaterial({color: 0x00FFFF}),
+      );
+      m.position.set(v[0], v[1], v[2]);
+      m.rotation.x = 2*Math.random()*Math.PI;
+      m.rotation.y = 2*Math.random()*Math.PI;
+      m.rotation.z = 2*Math.random()*Math.PI;
+      console.log(m);
+      g.add(m);
+    });
+
+    g.add(sky(stars));
+    g.position.y += 8.0;
+
+    return g;
   }
 
   /**
