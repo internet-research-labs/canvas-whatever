@@ -2,11 +2,14 @@ let vert = require('./shaders/starry.vert');
 let frag = require('./shaders/starry.frag');
 
 
+/**
+ * Return a sky object
+ */
 export function sky(stars) {
   try {
     let size = 3;
     let skyBox = new THREE.CubeGeometry(size, size, size, 1, 1, 1);
-    let skyMat = skyMaterial();
+    let skyMat = skyMaterial(stars);
     let skyMesh = new THREE.Mesh(skyBox, skyMat);
     return skyMesh;
   } catch (err) {
@@ -14,7 +17,10 @@ export function sky(stars) {
   }
 } 
 
-function skyTexture() {
+/**
+ * Return sky texture
+ */
+function skyTexture(stars) {
   let len = 4;
   let width = Math.pow(2, len);
   let height = Math.pow(2, len);
@@ -42,11 +48,13 @@ function skyTexture() {
     lis[i+3] = 255;
   }
 
-  for (let i=0; i < 30; i++) {
+  stars = stars || [];
+
+  stars.forEach(() => {
     let x = Math.floor(Math.random()*width);
     let y = Math.floor(Math.random()*width);
     setWhite(data, x, y);
-  }
+  });
 
   let tex = new THREE.DataTexture(
     data,
@@ -62,19 +70,21 @@ function skyTexture() {
   return tex;
 }
 
-function skyMaterial() {
+
+/**
+ * Return a sky material
+ */
+function skyMaterial(stars) {
 
   let uniforms = {
     time: {value: 1.0},
     dir: {value: new THREE.Vector3(0.0, 0.0, 1.0), type: 'v3'},
   };
 
-  let tex = skyTexture();
-
   let faceMaterials = [
     new THREE.MeshBasicMaterial({map: skyTexture()}),
     new THREE.MeshBasicMaterial({map: skyTexture()}),
-    new THREE.MeshBasicMaterial({map: skyTexture()}),
+    new THREE.MeshBasicMaterial({map: skyTexture(stars)}),
     new THREE.MeshBasicMaterial({map: skyTexture()}),
     new THREE.MeshBasicMaterial({map: skyTexture()}),
     new THREE.MeshBasicMaterial({map: skyTexture()}),
