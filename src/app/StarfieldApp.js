@@ -83,7 +83,6 @@ export default class StarfieldApp extends QuentinLike {
     this.renderer.setPixelRatio(1.2);
     this.renderer.setClearColor(0xFFFFFF);
 
-
     // Sky
     this.sky = this.getSky();
     this.scene.add(this.sky);
@@ -140,13 +139,36 @@ export default class StarfieldApp extends QuentinLike {
     let stars = []; 
 
     for (let i=0; i < 30; i++) {
-      let r = 5;
+      let r = 9;
       let t = Math.random()*Math.PI*2;
       let x = r*Math.cos(t);
       let y = r*Math.sin(t);
       let z = 0;
       stars.push([x, y, z]);
     }
+
+    let o = [];
+
+    function linf(v) {
+      return Math.max(
+        Math.abs(v[0]),
+        Math.abs(v[1]),
+        Math.abs(v[2]),
+      );
+    }
+
+    stars.forEach((v, i) => {
+      let n = linf(v);
+      let [x, y, z] = v;
+      x *= 3.0/n;
+      y *= 3.0/n;
+      z *= 3.0/n;
+      o.push([x, y, z]);
+    });
+
+    o.forEach((v) => {
+      stars.push(v);
+    });
 
     let size = 0.15;
 
@@ -326,7 +348,7 @@ export default class StarfieldApp extends QuentinLike {
   }
 
   update(params) {
-    let t = +new Date() / 1000.0 / 2.0;
+    let t = +new Date() / 3000.0 / 2.0;
     let f = Math.PI/4.0;
     let r = 90;
     f = t/10.0;

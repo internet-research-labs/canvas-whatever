@@ -7,7 +7,7 @@ let frag = require('./shaders/starry.frag');
  */
 export function sky(stars) {
   try {
-    let size = 3;
+    let size = 4;
     let skyBox = new THREE.CubeGeometry(size, size, size, 1, 1, 1);
     let skyMat = skyMaterial(stars);
     let skyMesh = new THREE.Mesh(skyBox, skyMat);

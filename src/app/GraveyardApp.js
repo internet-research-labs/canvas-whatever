@@ -8,18 +8,26 @@ import RibbonPath from '../RibbonPath.js';
 import Ribbon from '../Ribbon.js';
 
 // Generative objects
-import Grass from '../obj/Grass.js';
 import {GrassyField} from '../obj/GrassyField.js';
 import {Land} from  '../obj/Land.js';
 
+/**
+ * Return the norm of the vector
+ */
 function norm(v) {
   return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
 }
 
+/**
+ * ...
+ */
 function stringToHex(str) {
   return parseInt(str.substring(1), 16);
 }
 
+/**
+ * ...
+ */
 export default class GraveyardApp extends QuentinLike {
   constructor(params) {
     super(params);
@@ -77,7 +85,7 @@ export default class GraveyardApp extends QuentinLike {
     this.scene.add(this.ambientLight);
 
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setPixelRatio(.9);
+    this.renderer.setPixelRatio(1.5);
     this.renderer.setClearColor(0xDDDDDD);
 
     // Helper setup functions
@@ -86,13 +94,7 @@ export default class GraveyardApp extends QuentinLike {
     // Add visible components
     this.addFloor();
 
-    /*
-    for (let i=-8; i <= 8; i++) {
-      let x = 8*i;
-      this.addTombstone(x, 0);
-    }
-    //*/
-
+    // ...
     let start = getElapsedTime();
     this.addGrassyField();
     console.log("Create grassy field time:", getElapsedTime()-start);
@@ -108,9 +110,7 @@ export default class GraveyardApp extends QuentinLike {
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
-  /**
-   * Create the Force ArrowHelper and Update
-   */
+  // Update Force ArrowHelper
   addForceArrow() {
     this.forceArrow = new THREE.ArrowHelper(
       this.force,
@@ -122,9 +122,7 @@ export default class GraveyardApp extends QuentinLike {
     // this.updateForceArrow();
   }
 
-  /**
-   * Update Force ArrowHelper
-   */
+  // Update Force ArrowHelper
   updateForceArrow() {
     this.dest = this.force.clone();
     this.dest.multiplyScalar(-1);
@@ -133,17 +131,14 @@ export default class GraveyardApp extends QuentinLike {
     this.forceArrow.position.y = this.force.y;
     this.forceArrow.position.z = this.force.z;
     this.forceArrow.position.multiplyScalar(-1);
-
   }
 
-  /**
-   * ...
-   */
+  // ...
   addGrassyField() {
     this.field = new GrassyField(
         30,
         30,
-        8000,
+        9.0,
         30,
         this.floor.f,
       );
@@ -154,6 +149,7 @@ export default class GraveyardApp extends QuentinLike {
     this.scene.add(this.fieldMesh);
   }
 
+  // ...
   addTombstone(x, z) {
     let geometry = new THREE.BoxGeometry(4, 8, 1);
     let material =  new THREE.MeshPhongMaterial({
@@ -173,6 +169,7 @@ export default class GraveyardApp extends QuentinLike {
     this.scene.add(cube);
   }
 
+  // ...
   setPhong({color, emissive, specular, shininess, reflectivity}) {
     this.grassMaterial = new THREE.MeshPhongMaterial({
       color: stringToHex(color),
@@ -188,7 +185,7 @@ export default class GraveyardApp extends QuentinLike {
 
   // Just draw a simple floor
   addFloor() {
-    let mat = new THREE.MeshPhongMaterial({
+    let mat = new THREE.MeshBasicMaterial({
       color: 0x33333,
       emissive: 0x000000,
       specular: 0x000000,
