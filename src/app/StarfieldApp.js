@@ -104,7 +104,7 @@ export default class StarfieldApp extends QuentinLike {
 
     let start = getElapsedTime();
     this.addGrassyField();
-    console.log("Create grassy field time:", getElapsedTime()-start);
+    // console.log("Create grassy field time:", getElapsedTime()-start);
 
     this.force = new THREE.Vector3(0, 0, 1);
     this.dest = this.force.clone();
@@ -147,6 +147,10 @@ export default class StarfieldApp extends QuentinLike {
       stars.push([x, y, z]);
     }
 
+    stars = [
+      [4, 0, 0],
+    ];
+
     let o = [];
 
     function linf(v) {
@@ -164,10 +168,6 @@ export default class StarfieldApp extends QuentinLike {
       y *= 3.0/n;
       z *= 3.0/n;
       o.push([x, y, z]);
-    });
-
-    o.forEach((v) => {
-      stars.push(v);
     });
 
     let size = 0.15;

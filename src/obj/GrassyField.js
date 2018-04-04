@@ -84,7 +84,7 @@ export class GrassyField {
       }
     }
 
-    console.log("Extend array time:", getElapsedTime()-bladeStart);
+    // console.log("Extend array time:", getElapsedTime()-bladeStart);
   }
 
   /**
@@ -171,7 +171,7 @@ export class GrassyField {
 
     let n = Float32Array.from(this.normals);
     this.geo.addAttribute('normal', new THREE.BufferAttribute(n, 3));
-    console.log("Copy array time:", getElapsedTime()-start);
+    // console.log("Copy array time:", getElapsedTime()-start);
     return this.geo;
   }
 }
