@@ -30,6 +30,65 @@ export function sky(stars) {
   }
 } 
 
+
+/**
+ * Return information to determine which face the texture is on
+ */
+function sidetc(v) {
+  let norm = -1;
+  let sign = undefined;
+  let coord = -1;
+
+  for (let i=0; i < v.length; i++) {
+    let x = Math.abs(v[i]);
+    if (x > norm) {
+      norm = x;
+      sign = v[i] >= 0 ? 1 : -1;
+      coord = i;
+    }
+  }
+
+  return [norm, sign, coord];
+}
+
+/**
+ * Return uv-coord from the xyz-coord
+ */
+function remap([x, y, z], skyWidth, skyHeight) {
+  let [n, s, i] = sidetc([x, y, z]);
+  let [u, v] = [-1, -1];
+
+  if (s < 0) {
+    throw "Can't handle negatives... yet";
+  }
+
+  // X-coord dominant
+  switch (i) {
+  case 0:
+    if (s > 0) {
+      u = -z/n;
+      v = y/n;
+    }
+    break;
+  default:
+    throw "What the fuck";
+  }
+
+  console.log(i, s);
+
+  u = (u+1)/2.*skyWidth;
+  v = (v+1)/2.*skyHeight;
+
+  console.log("(" + x + ", " + y + ", " + z + ") => (" + u + ", " + v + ")");
+  // console.log("(x, y, z) = (" + x + ", " + y + ", " + z + ")");
+  // console.log("(u, v) = (" + u + ", " + v + ")");
+
+  u = Math.floor(u);
+  v = Math.floor(v);
+
+  return [u, v];
+}
+
 /**
  * Return sky texture
  */
@@ -37,6 +96,8 @@ function skyTexture(stars) {
   let len = 4;
   let width = Math.pow(2, len);
   let height = Math.pow(2, len);
+  width = 25;
+  height = 25;
   let size = width*height;
   let data = new Uint8Array(4*size);
 
@@ -44,12 +105,6 @@ function skyTexture(stars) {
     data[4*i+0] = 0;
     data[4*i+1] = 0;
     data[4*i+2] = 0;
-    data[4*i+3] = 255;
-
-    continue;
-    data[4*i+0] = Math.floor(Math.random()*255);
-    data[4*i+1] = Math.floor(Math.random()*255);
-    data[4*i+2] = Math.floor(Math.random()*255);
     data[4*i+3] = 255;
   }
 
@@ -63,10 +118,12 @@ function skyTexture(stars) {
 
   stars = stars || [];
 
-  stars.forEach(() => {
-    let x = Math.floor(Math.random()*width);
-    let y = Math.floor(Math.random()*width);
-    setWhite(data, x, y);
+  stars.forEach((v) => {
+    let [x, y] = remap(v, width, height);
+    console.log("->", x, y);
+    if (x >= 0 && y >= 0) {
+      setWhite(data, x, y);
+    }
   });
 
   let tex = new THREE.DataTexture(

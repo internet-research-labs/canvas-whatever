@@ -149,6 +149,8 @@ export default class StarfieldApp extends QuentinLike {
 
     stars = [
       [4, 0, 0],
+      [4, 3, 3],
+      [4, -3, 3],
     ];
 
     let o = [];
@@ -178,7 +180,7 @@ export default class StarfieldApp extends QuentinLike {
       let dir = origin.clone().multiplyScalar(-1);
       let len = dir.length();
       dir.normalize();
-      let h = new THREE.ArrowHelper(dir, origin, len, 0x333333);
+      let h = new THREE.ArrowHelper(dir, origin, len, 0xFF55FF);
 
       // Point
       let m = new THREE.Mesh(
@@ -373,14 +375,20 @@ export default class StarfieldApp extends QuentinLike {
     this.sky.material.uniforms.dir.value.x = 0.0;
     this.sky.material.uniforms.dir.value.y = 0.0;
     this.sky.material.uniforms.dir.value.z = 0.0;
-    //*/
     //
     this.sky.rotation.x = (+2*t) % (2*Math.PI);
     this.sky.rotation.y = (-2*t) % (2*Math.PI);
     this.sky.rotation.z = (-3*t) % (2*Math.PI);
+    //*/
+
+    this.sky.rotation.x = 0;
+    this.sky.rotation.y = 0;
+    this.sky.rotation.z = 0;
 
     // ...
-    this.camera.position.set(a, b, c);
+    this.camera.position.x = 90;
+    this.camera.position.y = 10;
+    this.camera.position.z = 50;
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   }
