@@ -150,6 +150,8 @@ export default class StarfieldApp extends QuentinLike {
     stars = [
       [4, 0, 0],
       [4, 3, 3],
+      [7, 6, 3],
+      [7, 3.3, -6],
       [4, -3, 3],
     ];
 
