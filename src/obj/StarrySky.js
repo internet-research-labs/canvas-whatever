@@ -89,23 +89,39 @@ function remap([x, y, z], skyWidth, skyHeight) {
   return [u, v];
 }
 
+
+function __blank_data(width, height) {
+  let size = width*height;
+  return new Uint8Array(4*size);
+}
+
+
+// {X,Y,Z}{-,+}-Faces for cube
+let X_POSITIVE = 0;
+let X_NEGATIVE = 1;
+let Y_POSITIVE = 2;
+let Y_NEGATIVE = 3;
+let Z_POSITIVE = 4;
+let Z_NEGATIVE = 5;
+
 /**
  * Return sky texture
  */
-function skyTexture(stars) {
-  let len = 4;
-  let width = Math.pow(2, len);
-  let height = Math.pow(2, len);
-  width = 25;
-  height = 25;
+function skyTextures(stars) {
+  let width = 25;
+  let height = 25;
   let size = width*height;
-  let data = new Uint8Array(4*size);
 
-  for (let i=0; i < size; i++) {
-    data[4*i+0] = 0;
-    data[4*i+1] = 0;
-    data[4*i+2] = 0;
-    data[4*i+3] = 255;
+  let data = [];
+
+  for (let j=0; j < 6; j++) {
+    data.push(__blank_data(width, height));
+    for (let i=0; i < size; i++) {
+      data[j][4*i+0] = 0;
+      data[j][4*i+1] = 0;
+      data[j][4*i+2] = 0;
+      data[j][4*i+3] = 255;
+    }
   }
 
   function setWhite(lis, x, y) {
@@ -122,22 +138,31 @@ function skyTexture(stars) {
     let [x, y] = remap(v, width, height);
     console.log("->", x, y);
     if (x >= 0 && y >= 0) {
-      setWhite(data, x, y);
+      setWhite(data[X_POSITIVE], x, y);
     }
   });
 
-  let tex = new THREE.DataTexture(
-    data,
-    width,
-    height,
-    THREE.RGBAFormat,
-    THREE.UnsignedByteType,
-    THREE.UVMapping,
-  );
+  function __texture(data) {
+    let tex = new THREE.DataTexture(
+      data,
+      width,
+      height,
+      THREE.RGBAFormat,
+      THREE.UnsignedByteType,
+      THREE.UVMapping,
+    );
+    tex.needsUpdate = true;
+    return tex;
+  }
 
-  tex.needsUpdate = true;
-
-  return tex;
+  return [
+    __texture(data[X_POSITIVE]),
+    t(),
+    t(),
+    t(),
+    t(),
+    t(),
+  ];
 }
 
 function t() {
@@ -179,9 +204,11 @@ function skyMaterial(stars) {
     dir: {value: new THREE.Vector3(0.0, 0.0, 1.0), type: 'v3'},
   };
 
+  let textures = skyTextures(stars);
+
   let faceMaterials = [
-    new THREE.MeshBasicMaterial({map: skyTexture(stars)}),
-    new THREE.MeshBasicMaterial({map: t()}),
+    new THREE.MeshBasicMaterial({map: textures[0]}),
+    new THREE.MeshBasicMaterial({map: textures[1]}),
     new THREE.MeshBasicMaterial({map: t()}),
     new THREE.MeshBasicMaterial({map: t()}),
     new THREE.MeshBasicMaterial({map: t()}),

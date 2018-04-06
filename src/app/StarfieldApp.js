@@ -352,7 +352,7 @@ export default class StarfieldApp extends QuentinLike {
   }
 
   update(params) {
-    let t = +new Date() / 3000.0 / 2.0;
+    let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
     f = t/10.0;
@@ -388,9 +388,7 @@ export default class StarfieldApp extends QuentinLike {
     this.sky.rotation.z = 0;
 
     // ...
-    this.camera.position.x = 90;
-    this.camera.position.y = 10;
-    this.camera.position.z = 50;
+    this.camera.position.set(a, b, c);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   }
