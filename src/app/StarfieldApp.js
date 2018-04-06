@@ -153,6 +153,12 @@ export default class StarfieldApp extends QuentinLike {
       [7, 6, 3],
       [7, 3.3, -6],
       [4, -3, 3],
+      //*/
+
+      [-4, 0, 0],
+      [-4, 3, 3],
+      [-7, 2, 3],
+      [-7, -6.9, 6.9],
     ];
 
     let o = [];

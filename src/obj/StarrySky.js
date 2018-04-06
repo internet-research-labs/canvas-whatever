@@ -57,36 +57,37 @@ function sidetc(v) {
 function remap([x, y, z], skyWidth, skyHeight) {
   let [n, s, i] = sidetc([x, y, z]);
   let [u, v] = [-1, -1];
+  let face = 0;
 
-  if (s < 0) {
-    throw "Can't handle negatives... yet";
-  }
-
-  // X-coord dominant
   switch (i) {
+  // X-coord dominant
   case 0:
     if (s > 0) {
       u = -z/n;
       v = y/n;
+      face = 0;
+    } else {
+      u = z/n;
+      v = y/n;
+      face = 1;
     }
+    break;
+  case 1:
+    console.log("Y-Face");
+    break
+  case 2:
+    console.log("Z-Face");
     break;
   default:
     throw "What the fuck";
   }
 
-  console.log(i, s);
-
   u = (u+1)/2.*skyWidth;
   v = (v+1)/2.*skyHeight;
 
-  console.log("(" + x + ", " + y + ", " + z + ") => (" + u + ", " + v + ")");
-  // console.log("(x, y, z) = (" + x + ", " + y + ", " + z + ")");
-  // console.log("(u, v) = (" + u + ", " + v + ")");
+  // console.log("(" + x + ", " + y + ", " + z + ") => (" + u + ", " + v + ")");
 
-  u = Math.floor(u);
-  v = Math.floor(v);
-
-  return [u, v];
+  return [Math.floor(u), Math.floor(v), face];
 }
 
 
@@ -135,10 +136,9 @@ function skyTextures(stars) {
   stars = stars || [];
 
   stars.forEach((v) => {
-    let [x, y] = remap(v, width, height);
-    console.log("->", x, y);
+    let [x, y, i] = remap(v, width, height);
     if (x >= 0 && y >= 0) {
-      setWhite(data[X_POSITIVE], x, y);
+      setWhite(data[i], x, y);
     }
   });
 
@@ -157,7 +157,7 @@ function skyTextures(stars) {
 
   return [
     __texture(data[X_POSITIVE]),
-    t(),
+    __texture(data[X_NEGATIVE]),
     t(),
     t(),
     t(),
