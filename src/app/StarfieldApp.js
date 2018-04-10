@@ -136,7 +136,7 @@ export default class StarfieldApp extends QuentinLike {
 
     let stars = []; 
     let starSize = 900.0;
-    let STAR_COUNT = 999;
+    let STAR_COUNT = 9999;
 
     for (let i=0; i < STAR_COUNT; i++) {
       let r = starSize;
@@ -148,52 +148,7 @@ export default class StarfieldApp extends QuentinLike {
       stars.push([x, y, z]);
     }
 
-    let o = [];
-
-    function linf(v) {
-      return Math.max(
-        Math.abs(v[0]),
-        Math.abs(v[1]),
-        Math.abs(v[2]),
-      );
-    }
-
-    stars.forEach((v, i) => {
-      let n = linf(v);
-      let [x, y, z] = v;
-      x *= 3.0/n;
-      y *= 3.0/n;
-      z *= 3.0/n;
-      o.push([x, y, z]);
-    });
-
-    let size = 0.15;
-
-    stars.forEach((v, i) => {
-      // Arrow
-      let origin = new THREE.Vector3(v[0], v[1], v[2]);
-      let dir = origin.clone().multiplyScalar(-1);
-      let len = dir.length();
-      dir.normalize();
-      let h = new THREE.ArrowHelper(dir, origin, len, 0xFF55FF, 0, 0, 0);
-
-      // Point
-      let m = new THREE.Mesh(
-        new THREE.SphereGeometry(size, 32, 32),
-        new THREE.MeshBasicMaterial({color: 0x00FFFF}),
-      );
-      m.position.set(v[0], v[1], v[2]);
-      m.rotation.x = 2*Math.random()*Math.PI;
-      m.rotation.y = 2*Math.random()*Math.PI;
-      m.rotation.z = 2*Math.random()*Math.PI;
-
-      // Add
-      g.add(m);
-      // g.add(h);
-    });
-
     g.add(sky(stars, starSize));
-    // g.position.y += 8.0;
 
 
     return g;
