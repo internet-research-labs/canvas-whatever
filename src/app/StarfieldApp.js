@@ -135,18 +135,18 @@ export default class StarfieldApp extends QuentinLike {
     let g = new THREE.Group();
 
     let stars = []; 
-    let starSize = 700;
+    let starSize = 900;
     let STAR_COUNT = 60000;
 
     for (let i=0; i < STAR_COUNT; i++) {
       let r = starSize;
 
-      let t = 2*Math.PI*Math.random();
-      let u = 2*Math.PI*Math.random();
+      let t = 2*Math.random()-1;
+      let u = 2*Math.random()-1;
 
-      let x = r*Math.cos(t)*Math.sin(u);
-      let y = r*Math.sin(t)*Math.sin(u);
-      let z = r*Math.cos(u);
+      let x = t;
+      let y = u;
+      let z = 2*Math.random()-1.0;
       stars.push([x, y, z]);
     }
 
@@ -189,8 +189,8 @@ export default class StarfieldApp extends QuentinLike {
    */
   addGrassyField() {
     this.field = new GrassyField(
-        14,
-        14,
+        80,
+        80,
         9.0,
         30,
         this.floor.f,
@@ -306,7 +306,7 @@ export default class StarfieldApp extends QuentinLike {
 
     // ...
     this.camera.position.set(a, b, c);
-    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+    this.camera.lookAt(new THREE.Vector3(0, y-0.5*y, 0));
   }
 
   setupCamera() {

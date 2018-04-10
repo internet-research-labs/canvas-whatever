@@ -84,8 +84,6 @@ function remap([x, y, z], skyWidth, skyHeight) {
   u = (u+1)/2.*skyWidth;
   v = (v+1)/2.*skyHeight;
 
-  // console.log("(" + x + ", " + y + ", " + z + ") => (" + u + ", " + v + ")");
-
   return [Math.floor(u), Math.floor(v), face];
 }
 
@@ -108,7 +106,7 @@ let Z_NEGATIVE = 5;
  * Return sky texture
  */
 function skyTextures(stars) {
-  let width = 1300;
+  let width = 2000;
   let height = width;
   let size = width*height;
 
