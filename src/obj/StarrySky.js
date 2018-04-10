@@ -18,10 +18,11 @@ function linf(v) {
 /**
  * Return a sky object
  */
-export function sky(stars) {
+export function sky(stars, boxSize) {
   try {
-    let size = 2*SKY_SIZE;
-    let skyBox = new THREE.CubeGeometry(size, size, size, 1, 1, 1);
+    console.log(boxSize);
+    let size = 2*boxSize;
+    let skyBox = new THREE.CubeGeometry(boxSize, boxSize, boxSize, 1, 1, 1);
     let skyMat = skyMaterial(stars);
     let skyMesh = new THREE.Mesh(skyBox, skyMat);
     return skyMesh;
@@ -62,21 +63,19 @@ function remap([x, y, z], skyWidth, skyHeight) {
   switch (i) {
   // X-coord dominant
   case 0:
-    if (s > 0) {
-      u = -z/n;
-      v = y/n;
-      face = 0;
-    } else {
-      u = z/n;
-      v = y/n;
-      face = 1;
-    }
+    u = -s*z/n;
+    v = y/n;
+    face = s > 0 ? 0 : 1;
     break;
   case 1:
-    console.log("Y-Face");
+    u = x/n;
+    v = -s*z/n;
+    face = s > 0 ? 2 : 3;
     break
   case 2:
-    console.log("Z-Face");
+    u = s*x/n;
+    v = y/n;
+    face = s > 0 ? 4 : 5;
     break;
   default:
     throw "What the fuck";
@@ -109,8 +108,8 @@ let Z_NEGATIVE = 5;
  * Return sky texture
  */
 function skyTextures(stars) {
-  let width = 25;
-  let height = 25;
+  let width = 2000;
+  let height = 2000;
   let size = width*height;
 
   let data = [];
@@ -158,10 +157,10 @@ function skyTextures(stars) {
   return [
     __texture(data[X_POSITIVE]),
     __texture(data[X_NEGATIVE]),
-    t(),
-    t(),
-    t(),
-    t(),
+    __texture(data[Y_POSITIVE]),
+    __texture(data[Y_NEGATIVE]),
+    __texture(data[Z_POSITIVE]),
+    __texture(data[Z_NEGATIVE]),
   ];
 }
 
@@ -207,12 +206,12 @@ function skyMaterial(stars) {
   let textures = skyTextures(stars);
 
   let faceMaterials = [
-    new THREE.MeshBasicMaterial({map: textures[0]}),
-    new THREE.MeshBasicMaterial({map: textures[1]}),
-    new THREE.MeshBasicMaterial({map: t()}),
-    new THREE.MeshBasicMaterial({map: t()}),
-    new THREE.MeshBasicMaterial({map: t()}),
-    new THREE.MeshBasicMaterial({map: t()}),
+    new THREE.MeshBasicMaterial({map: textures[0], side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({map: textures[1], side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({map: textures[2], side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({map: textures[3], side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({map: textures[4], side: THREE.DoubleSide}),
+    new THREE.MeshBasicMaterial({map: textures[5], side: THREE.DoubleSide}),
   ];
 
   return faceMaterials;

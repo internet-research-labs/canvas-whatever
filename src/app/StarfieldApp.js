@@ -109,8 +109,6 @@ export default class StarfieldApp extends QuentinLike {
     this.force = new THREE.Vector3(0, 0, 1);
     this.dest = this.force.clone();
     this.dest.multiplyScalar(-1);
-
-    this.loadObjs();
   }
 
   // Setup a camera track... but in this case actually do nothing
@@ -137,29 +135,18 @@ export default class StarfieldApp extends QuentinLike {
     let g = new THREE.Group();
 
     let stars = []; 
+    let starSize = 900.0;
+    let STAR_COUNT = 999;
 
-    for (let i=0; i < 30; i++) {
-      let r = 9;
+    for (let i=0; i < STAR_COUNT; i++) {
+      let r = starSize;
       let t = Math.random()*Math.PI*2;
+      let u = Math.random()*Math.PI*2;
       let x = r*Math.cos(t);
       let y = r*Math.sin(t);
-      let z = 0;
+      let z = r*Math.cos(u);
       stars.push([x, y, z]);
     }
-
-    stars = [
-      [4, 0, 0],
-      [4, 3, 3],
-      [7, 6, 3],
-      [7, 3.3, -6],
-      [4, -3, 3],
-      //*/
-
-      [-4, 0, 0],
-      [-4, 3, 3],
-      [-7, 2, 3],
-      [-7, -6.9, 6.9],
-    ];
 
     let o = [];
 
@@ -188,7 +175,7 @@ export default class StarfieldApp extends QuentinLike {
       let dir = origin.clone().multiplyScalar(-1);
       let len = dir.length();
       dir.normalize();
-      let h = new THREE.ArrowHelper(dir, origin, len, 0xFF55FF);
+      let h = new THREE.ArrowHelper(dir, origin, len, 0xFF55FF, 0, 0, 0);
 
       // Point
       let m = new THREE.Mesh(
@@ -202,11 +189,12 @@ export default class StarfieldApp extends QuentinLike {
 
       // Add
       g.add(m);
-      g.add(h);
+      // g.add(h);
     });
 
-    g.add(sky(stars));
-    g.position.y += 8.0;
+    g.add(sky(stars, starSize));
+    // g.position.y += 8.0;
+
 
     return g;
   }
@@ -292,22 +280,6 @@ export default class StarfieldApp extends QuentinLike {
     // this.scene.add(cube);
   }
 
-  loadObjs() {
-    let loader = new THREE.OBJLoader();
-    let scene = this.scene;
-    loader.load(
-      'obj/Tombstone.obj',
-      (obj) => {
-        // scene.add(obj);
-      },
-      (xhr) => {
-      },
-      (err) => {
-        console.error(err);
-      },
-    );
-  }
-
   addTombstones() {
   }
 
@@ -361,43 +333,25 @@ export default class StarfieldApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/10.0;
+    f = t/100.0;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
     let y =  params.y;
 
-    let [a, b, c] = [r*Math.cos(f), y, r*Math.sin(f)];
+    // ...
+    let [a, b, c] = [r*Math.cos(r), y, r*Math.sin(r)];
 
-    //udebugger;
-    // console.log(this.u.time.value);
-    /*
-    this.sky.material.uniforms.time.value = 0.5*(Math.cos(t)+1);
-    this.sky.material.uniforms.dir.value.x = 0.5*(Math.cos(t)+1);
-    this.sky.material.uniforms.dir.value.y = 0.5*(Math.sin(t)+1);
-    this.sky.material.uniforms.dir.value.z = 1.0;
-    this.sky.material.needsUpdate = true;
-    //*/
-
-    // Set to zero
-    /*
-    this.sky.material.uniforms.dir.value.x = 0.0;
-    this.sky.material.uniforms.dir.value.y = 0.0;
-    this.sky.material.uniforms.dir.value.z = 0.0;
-    //
-    this.sky.rotation.x = (+2*t) % (2*Math.PI);
-    this.sky.rotation.y = (-2*t) % (2*Math.PI);
-    this.sky.rotation.z = (-3*t) % (2*Math.PI);
-    //*/
-
-    this.sky.rotation.x = 0;
-    this.sky.rotation.y = 0;
-    this.sky.rotation.z = 0;
+    // ...
+    let TWOPI = 2*Math.PI;
+    this.sky.rotation.x = f % TWOPI;
+    this.sky.rotation.y = f % TWOPI;;
+    this.sky.rotation.z = f % TWOPI;;
 
     // ...
     this.camera.position.set(a, b, c);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-
   }
+
   setupCamera() {
     this.camera = new THREE.PerspectiveCamera(
       this.app.view_angle,
