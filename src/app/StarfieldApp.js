@@ -135,15 +135,17 @@ export default class StarfieldApp extends QuentinLike {
     let g = new THREE.Group();
 
     let stars = []; 
-    let starSize = 900.0;
-    let STAR_COUNT = 9999;
+    let starSize = 700;
+    let STAR_COUNT = 60000;
 
     for (let i=0; i < STAR_COUNT; i++) {
       let r = starSize;
-      let t = Math.random()*Math.PI*2;
-      let u = Math.random()*Math.PI*2;
-      let x = r*Math.cos(t);
-      let y = r*Math.sin(t);
+
+      let t = 2*Math.PI*Math.random();
+      let u = 2*Math.PI*Math.random();
+
+      let x = r*Math.cos(t)*Math.sin(u);
+      let y = r*Math.sin(t)*Math.sin(u);
       let z = r*Math.cos(u);
       stars.push([x, y, z]);
     }

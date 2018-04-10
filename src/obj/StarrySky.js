@@ -108,18 +108,21 @@ let Z_NEGATIVE = 5;
  * Return sky texture
  */
 function skyTextures(stars) {
-  let width = 2000;
-  let height = 2000;
+  let width = 1300;
+  let height = width;
   let size = width*height;
 
   let data = [];
 
+
   for (let j=0; j < 6; j++) {
+    let r = Math.floor(Math.random()*255);
+    r = 0;
     data.push(__blank_data(width, height));
     for (let i=0; i < size; i++) {
-      data[j][4*i+0] = 0;
-      data[j][4*i+1] = 0;
-      data[j][4*i+2] = 0;
+      data[j][4*i+0] = r;
+      data[j][4*i+1] = r;
+      data[j][4*i+2] = r;
       data[j][4*i+3] = 255;
     }
   }
