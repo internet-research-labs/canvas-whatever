@@ -125,22 +125,28 @@ function skyTextures(stars) {
     }
   }
 
-  function setWhite(lis, x, y) {
+  function setWhite(lis, x, y, lum) {
+    lum = lum || 255.0;
     let i = 4*(y*height+x);
-    lis[i+0] = 255;
-    lis[i+1] = 255;
-    lis[i+2] = 255;
-    lis[i+3] = 255;
+    lis[i+0] = lum;
+    lis[i+1] = lum;
+    lis[i+2] = lum;
+    lis[i+3] = lum;
   }
 
   stars = stars || [];
 
+  let lum = 0;
   stars.forEach((v) => {
+    lum = Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]);
     let [x, y, i] = remap(v, width, height);
     if (x >= 0 && y >= 0) {
-      setWhite(data[i], x, y);
+      setWhite(data[i], x, y, Math.floor(255*lum));
     }
   });
+
+
+  console.log("lum ->", Math.floor(255*lum));
 
   function __texture(data) {
     let tex = new THREE.DataTexture(

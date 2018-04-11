@@ -136,7 +136,7 @@ export default class StarfieldApp extends QuentinLike {
 
     let stars = []; 
     let starSize = 900;
-    let STAR_COUNT = 60000;
+    let STAR_COUNT = 399999;
 
     for (let i=0; i < STAR_COUNT; i++) {
       let r = starSize;
@@ -189,8 +189,8 @@ export default class StarfieldApp extends QuentinLike {
    */
   addGrassyField() {
     this.field = new GrassyField(
-        80,
-        80,
+        20,
+        20,
         9.0,
         30,
         this.floor.f,
@@ -290,7 +290,7 @@ export default class StarfieldApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/100.0;
+    f = t/1000.0;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
     let y =  params.y;
