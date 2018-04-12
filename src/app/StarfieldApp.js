@@ -23,6 +23,11 @@ function stringToHex(str) {
   return parseInt(str.substring(1), 16);
 }
 
+const NORTH = new THREE.Vector3(-1, 0, 0);
+const EAST = new THREE.Vector3(0, 0, -1);
+const SOUTH = new THREE.Vector3(+1, 0, 0);
+const WEST = new THREE.Vector3(0, 0, +1);
+
 export default class StarfieldApp extends QuentinLike {
   constructor(params) {
     super(params);
@@ -97,6 +102,15 @@ export default class StarfieldApp extends QuentinLike {
     let start = getElapsedTime();
     this.fieldMesh = {}
     // this.addGrassyField();
+    this.addGrid();
+
+    // Add obelisks
+    console.log("Adding obelisks");
+    this.addObelisk(NORTH, 0xFF0000);
+    this.addObelisk(SOUTH, 0x00FFFF);
+    this.addObelisk(EAST, 0xFF00FF);
+    this.addObelisk(WEST, 0x00FF00);
+
     // console.log("Create grassy field time:", getElapsedTime()-start);
 
     this.force = new THREE.Vector3(0, 0, 1);
@@ -128,8 +142,8 @@ export default class StarfieldApp extends QuentinLike {
     let g = new THREE.Group();
 
     let stars = []; 
-    let starSize =   2;
-    let STAR_COUNT = 40*starSize;
+    let starSize =   700;
+    let STAR_COUNT = 90000;
 
     for (let i=0; i < STAR_COUNT; i++) {
       let r = starSize;
@@ -241,13 +255,24 @@ export default class StarfieldApp extends QuentinLike {
       floor: _abc,
     });
 
-    // this.addGrid();
     // let geo = this.floor.getMesh();
 
     // this.scene.add(new THREE.Mesh(geo, mat));
   }
+
+  addObelisk(p, c) {
+    let geo = new THREE.BoxGeometry(1, 5, 1);
+    let mat = new THREE.MeshBasicMaterial({color: c});
+    let mesh = new THREE.Mesh(geo, mat);
+    let pos = p.clone();
+    pos.multiplyScalar(20.0);
+    mesh.position.set(pos.x, pos.y+2.5, pos.z);
+    mesh.rotation.y = Math.PI/4.0;
+    this.scene.add(mesh);
+  }
+
   addGrid() {
-    let mat = new THREE.LineBasicMaterial({color: 0xB7B7BA});
+    let mat = new THREE.LineBasicMaterial({color: 0x333333});
     let VALS = 100;
     for (let i=-VALS; i <= VALS; i++) {
       let geo = new THREE.Geometry();
@@ -265,7 +290,7 @@ export default class StarfieldApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/10.0;
+    f = t/100.0;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
     let y =  params.y;
@@ -276,8 +301,8 @@ export default class StarfieldApp extends QuentinLike {
     // ...
     let TWOPI = 2*Math.PI;
     let theta = f % 2*Math.PI;
-    this.sky.rotation.x = 0;
-    this.sky.rotation.y = theta;
+    this.sky.rotation.x = theta;
+    // this.sky.rotation.y = theta;
     // this.sky.rotation.y 
     // this.sky.rotation.x = f % TWOPI;
     // this.sky.rotation.y = f % TWOPI;;
@@ -285,18 +310,14 @@ export default class StarfieldApp extends QuentinLike {
 
     // ...
     this.camera.position.set(a, b, c);
-    this.camera.position.set(-50, 0, 0);
+    this.camera.position.set(0, 90, 0);
+    this.camera.position.set(0, y, 0);
 
 
-    const NORTH = new THREE.Vector3(-1, 0, 0);
-    const SOUTH = new THREE.Vector3(+1, 0, 0);
-    const EAST = new THREE.Vector3(0, 0, -1);
-    const WEST = new THREE.Vector3(0, 0, +1);
-
-    this.camera.lookAt(NORTH);
-    this.camera.lookAt(SOUTH);
-    this.camera.lookAt(EAST);
-    this.camera.lookAt(WEST);
+    let pos = SOUTH.clone();
+    pos.multiplyScalar(20.0);
+    pos.y = 4.5;
+    this.camera.lookAt(pos);
   }
 
   setupCamera() {

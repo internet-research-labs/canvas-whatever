@@ -21,7 +21,7 @@ function linf(v) {
 export function sky(stars, boxSize) {
   try {
     console.log(boxSize);
-    let size = Math.floor(4.5*boxSize);
+    let size = Math.floor(3*boxSize);
     let skyBox = new THREE.CubeGeometry(boxSize, boxSize, boxSize, 1, 1, 1);
     let skyMat = skyMaterial(stars, size);
     let skyMesh = new THREE.Mesh(skyBox, skyMat);
