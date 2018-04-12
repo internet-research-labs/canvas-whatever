@@ -20,10 +20,10 @@ function linf(v) {
  */
 export function sky(stars, boxSize) {
   try {
-    console.log(boxSize);
     let size = 2*boxSize;
+    console.log(boxSize);
     let skyBox = new THREE.CubeGeometry(boxSize, boxSize, boxSize, 1, 1, 1);
-    let skyMat = skyMaterial(stars);
+    let skyMat = skyMaterial(stars, boxSize, 4.5*boxSize);
     let skyMesh = new THREE.Mesh(skyBox, skyMat);
     return skyMesh;
   } catch (err) {
@@ -105,9 +105,7 @@ let Z_NEGATIVE = 5;
 /**
  * Return sky texture
  */
-function skyTextures(stars) {
-  let width = 2000;
-  let height = width;
+function skyTextures(stars, width, height) {
   let size = width*height;
 
   let data = [];
@@ -146,8 +144,6 @@ function skyTextures(stars) {
   });
 
 
-  console.log("lum ->", Math.floor(255*lum));
-
   function __texture(data) {
     let tex = new THREE.DataTexture(
       data,
@@ -171,46 +167,18 @@ function skyTextures(stars) {
   ];
 }
 
-function t() {
-  let len = 4;
-  let width = Math.pow(2, len);
-  let height = Math.pow(2, len);
-  let size = width*height;
-  let data = new Uint8Array(4*size);
-
-  for (let i=0; i < size; i++) {
-    data[4*i+0] = 15;
-    data[4*i+1] = 55;
-    data[4*i+2] = 55;
-    data[4*i+3] = 255;
-  }
-
-  let tex = new THREE.DataTexture(
-    data,
-    width,
-    height,
-    THREE.RGBAFormat,
-    THREE.UnsignedByteType,
-    THREE.UVMapping,
-  );
-
-  tex.needsUpdate = true;
-
-  return tex;
-}
-
 
 /**
  * Return a sky material
  */
-function skyMaterial(stars) {
+function skyMaterial(stars, width, height) {
 
   let uniforms = {
     time: {value: 1.0},
     dir: {value: new THREE.Vector3(0.0, 0.0, 1.0), type: 'v3'},
   };
 
-  let textures = skyTextures(stars);
+  let textures = skyTextures(stars, width, height);
 
   let faceMaterials = [
     new THREE.MeshBasicMaterial({map: textures[0], side: THREE.DoubleSide}),

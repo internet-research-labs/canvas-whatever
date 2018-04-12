@@ -103,7 +103,8 @@ export default class StarfieldApp extends QuentinLike {
     //
 
     let start = getElapsedTime();
-    this.addGrassyField();
+    this.fieldMesh = {}
+    // this.addGrassyField();
     // console.log("Create grassy field time:", getElapsedTime()-start);
 
     this.force = new THREE.Vector3(0, 0, 1);
@@ -290,7 +291,7 @@ export default class StarfieldApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/1000.0;
+    f = t/10.0;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
     let y =  params.y;
@@ -300,13 +301,17 @@ export default class StarfieldApp extends QuentinLike {
 
     // ...
     let TWOPI = 2*Math.PI;
-    this.sky.rotation.x = f % TWOPI;
-    this.sky.rotation.y = f % TWOPI;;
-    this.sky.rotation.z = f % TWOPI;;
+    let theta = f % 2*Math.PI;
+    this.sky.rotation.x = theta;
+    // this.sky.rotation.y 
+    // this.sky.rotation.x = f % TWOPI;
+    // this.sky.rotation.y = f % TWOPI;;
+    // this.sky.rotation.z = f % TWOPI;;
 
     // ...
     this.camera.position.set(a, b, c);
-    this.camera.lookAt(new THREE.Vector3(0, y-0.5*y, 0));
+    this.camera.position.set(0, 0, 0);
+    this.camera.lookAt(new THREE.Vector3(1, 0, 0));
   }
 
   setupCamera() {
