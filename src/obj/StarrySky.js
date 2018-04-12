@@ -23,7 +23,7 @@ export function sky(stars, boxSize) {
     let size = 2*boxSize;
     console.log(boxSize);
     let skyBox = new THREE.CubeGeometry(boxSize, boxSize, boxSize, 1, 1, 1);
-    let skyMat = skyMaterial(stars, boxSize, 4.5*boxSize);
+    let skyMat = skyMaterial(stars, boxSize, .75*boxSize);
     let skyMesh = new THREE.Mesh(skyBox, skyMat);
     return skyMesh;
   } catch (err) {

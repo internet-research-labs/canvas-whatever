@@ -94,14 +94,6 @@ export default class StarfieldApp extends QuentinLike {
     // Add visible components
     this.addFloor();
 
-    /*
-    for (let i=-8; i <= 8; i++) {
-      let x = 8*i;
-      this.addTombstone(x, 0);
-    }
-    //*/
-    //
-
     let start = getElapsedTime();
     this.fieldMesh = {}
     // this.addGrassyField();
@@ -136,8 +128,8 @@ export default class StarfieldApp extends QuentinLike {
     let g = new THREE.Group();
 
     let stars = []; 
-    let starSize = 900;
-    let STAR_COUNT = 399999;
+    let starSize = 2000;
+    let STAR_COUNT = 99999;
 
     for (let i=0; i < STAR_COUNT; i++) {
       let r = starSize;
@@ -169,20 +161,6 @@ export default class StarfieldApp extends QuentinLike {
     );
     this.scene.add(this.forceArrow);
     // this.updateForceArrow();
-  }
-
-  /**
-   * Update Force ArrowHelper
-   */
-  updateForceArrow() {
-    this.dest = this.force.clone();
-    this.dest.multiplyScalar(-1);
-    this.forceArrow.setLength(norm(this.force));
-    this.forceArrow.position.x = this.force.x;
-    this.forceArrow.position.y = this.force.y;
-    this.forceArrow.position.z = this.force.z;
-    this.forceArrow.position.multiplyScalar(-1);
-
   }
 
   /**
@@ -232,14 +210,10 @@ export default class StarfieldApp extends QuentinLike {
     });
     let cube = new THREE.Mesh(geometry, material);
     cube.position.x = x;
-    cube.position.y = 4;;
+    cube.position.y = 0;
     cube.position.z = z;
-    // cube.rotation.y = Math.PI/4;
-    // this.scene.add(cube);
   }
 
-  addTombstones() {
-  }
 
   // Just draw a simple floor
   addFloor() {
@@ -291,7 +265,7 @@ export default class StarfieldApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/10.0;
+    f = t/1000.0;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
     let y =  params.y;
@@ -311,7 +285,17 @@ export default class StarfieldApp extends QuentinLike {
     // ...
     this.camera.position.set(a, b, c);
     this.camera.position.set(0, 0, 0);
-    this.camera.lookAt(new THREE.Vector3(1, 0, 0));
+
+
+    const NORTH = new THREE.Vector3(-1, 0, 0);
+    const SOUTH = new THREE.Vector3(+1, 0, 0);
+    const EAST = new THREE.Vector3(0, 0, -1);
+    const WEST = new THREE.Vector3(0, 0, +1);
+
+    this.camera.lookAt(NORTH);
+    this.camera.lookAt(SOUTH);
+    this.camera.lookAt(EAST);
+    this.camera.lookAt(WEST);
   }
 
   setupCamera() {
