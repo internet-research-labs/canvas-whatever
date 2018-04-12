@@ -128,8 +128,8 @@ export default class StarfieldApp extends QuentinLike {
     let g = new THREE.Group();
 
     let stars = []; 
-    let starSize = 2000;
-    let STAR_COUNT = 99999;
+    let starSize =   2;
+    let STAR_COUNT = 40*starSize;
 
     for (let i=0; i < STAR_COUNT; i++) {
       let r = starSize;
@@ -265,7 +265,7 @@ export default class StarfieldApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/1000.0;
+    f = t/10.0;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
     let y =  params.y;
@@ -276,7 +276,8 @@ export default class StarfieldApp extends QuentinLike {
     // ...
     let TWOPI = 2*Math.PI;
     let theta = f % 2*Math.PI;
-    this.sky.rotation.x = theta;
+    this.sky.rotation.x = 0;
+    this.sky.rotation.y = theta;
     // this.sky.rotation.y 
     // this.sky.rotation.x = f % TWOPI;
     // this.sky.rotation.y = f % TWOPI;;
@@ -284,7 +285,7 @@ export default class StarfieldApp extends QuentinLike {
 
     // ...
     this.camera.position.set(a, b, c);
-    this.camera.position.set(0, 0, 0);
+    this.camera.position.set(-50, 0, 0);
 
 
     const NORTH = new THREE.Vector3(-1, 0, 0);

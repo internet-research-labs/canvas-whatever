@@ -20,10 +20,10 @@ function linf(v) {
  */
 export function sky(stars, boxSize) {
   try {
-    let size = 2*boxSize;
     console.log(boxSize);
+    let size = Math.floor(4.5*boxSize);
     let skyBox = new THREE.CubeGeometry(boxSize, boxSize, boxSize, 1, 1, 1);
-    let skyMat = skyMaterial(stars, boxSize, .75*boxSize);
+    let skyMat = skyMaterial(stars, size);
     let skyMesh = new THREE.Mesh(skyBox, skyMat);
     return skyMesh;
   } catch (err) {
@@ -171,7 +171,10 @@ function skyTextures(stars, width, height) {
 /**
  * Return a sky material
  */
-function skyMaterial(stars, width, height) {
+function skyMaterial(stars, size) {
+
+  let width = size;
+  let height = size;
 
   let uniforms = {
     time: {value: 1.0},
