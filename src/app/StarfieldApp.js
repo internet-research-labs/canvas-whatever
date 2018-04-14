@@ -91,7 +91,7 @@ export default class StarfieldApp extends QuentinLike {
     // Sky
     this.sky = this.getSky();
     this.scene.add(this.sky);
-
+    this.setTheta(0.0);
 
     // Helper setup functions
     this.setupTrack();
@@ -210,6 +210,19 @@ export default class StarfieldApp extends QuentinLike {
     // this.fieldMesh.material = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
   }
 
+  setTheta(theta) {
+    this.skyTheta = theta;
+    this.skyAxis = new THREE.Vector3(
+      Math.cos(-theta),
+      Math.sin(-theta),
+      0.0,
+    );
+
+    let p = [this.skyAxis.x, this.skyAxis.y, this.skyAxis.z]; 
+    console.log("theta  = " + theta);
+    console.log("vector =  <" + p.join(", ") + ">");
+  }
+
   addTombstone(x, z) {
     let geometry = new THREE.BoxGeometry(4, 8, 1);
     let material =  new THREE.MeshPhongMaterial({
@@ -301,20 +314,15 @@ export default class StarfieldApp extends QuentinLike {
     // ...
     let TWOPI = 2*Math.PI;
     let theta = f % 2*Math.PI;
-    this.sky.rotation.x = theta;
-    // this.sky.rotation.y = theta;
-    // this.sky.rotation.y 
-    // this.sky.rotation.x = f % TWOPI;
-    // this.sky.rotation.y = f % TWOPI;;
-    // this.sky.rotation.z = f % TWOPI;;
+    this.sky.setRotationFromAxisAngle(this.skyAxis, theta);
 
     // ...
     this.camera.position.set(a, b, c);
     this.camera.position.set(0, 90, 0);
-    this.camera.position.set(0, 3*y, 0);
+    this.camera.position.set(0, 0, 0);
 
 
-    let pos = SOUTH.clone();
+    let pos = NORTH.clone();
     pos.multiplyScalar(20.0);
     pos.y = 4.5;
     this.camera.lookAt(pos);
