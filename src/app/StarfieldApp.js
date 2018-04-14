@@ -15,6 +15,8 @@ import SimplexNoise from 'simplex-noise';
 import {GrassyField} from '../obj/GrassyField.js';
 import {Land} from  '../obj/Land.js';
 
+import TriangleSurface from '../TriangleSurface.js';
+
 function norm(v) {
   return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
 }
@@ -97,17 +99,18 @@ export default class StarfieldApp extends QuentinLike {
     this.setupTrack();
 
     // Add visible components
-    this.addFloor();
 
     let start = getElapsedTime();
     this.fieldMesh = {}
-    // this.addGrassyField();
-    this.addGrid();
+
+    this.addFloor();
 
     // Add obelisks
-    console.log("Adding obelisks");
-    // this.addObelisk(NORTH, 0xFF0000);
-    // this.addObelisk(SOUTH, 0x00FFFF);
+    // console.log("Adding obelisks");
+    this.addObelisk([-20, 0], 0xFF0000); // N
+    this.addObelisk([0, -20], 0x00FFFF);
+    this.addObelisk([+20, 0], 0xFF00FF);
+    this.addObelisk([0, +20], 0x00FF00);
     // this.addObelisk(EAST, 0xFF00FF);
     // this.addObelisk(WEST, 0x00FF00);
 
@@ -122,16 +125,6 @@ export default class StarfieldApp extends QuentinLike {
   setupTrack() {
     this.camera.position.set(0, 30, 80);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-  }
-
-  getPoints(points) {
-    let g = new THREE.Group();
-
-    points.forEach((v, i) => {
-      console.log("...whatever");
-    });
-
-    return g;
   }
 
 
@@ -210,6 +203,7 @@ export default class StarfieldApp extends QuentinLike {
     // this.fieldMesh.material = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
   }
 
+  // Set the theta of the sky
   setTheta(theta) {
     this.skyTheta = theta;
     this.skyAxis = new THREE.Vector3(
@@ -217,12 +211,9 @@ export default class StarfieldApp extends QuentinLike {
       Math.sin(-theta),
       0.0,
     );
-
-    let p = [this.skyAxis.x, this.skyAxis.y, this.skyAxis.z]; 
-    console.log("theta  = " + theta);
-    console.log("vector =  <" + p.join(", ") + ">");
   }
 
+  // Add a tombstone
   addTombstone(x, z) {
     let geometry = new THREE.BoxGeometry(4, 8, 1);
     let material =  new THREE.MeshPhongMaterial({
@@ -263,29 +254,42 @@ export default class StarfieldApp extends QuentinLike {
     }());
 
     this.floor = new Land({
-      height: 50,
-      width: 50,
+      height: 900,
+      width: 900,
       floor: _abc,
+    });
+
+    let floorMat = new THREE.MeshBasicMaterial({
+      // color: 0x2194CE,
+      wireframe: true,
+      color: 0x334444,
     });
 
     // let geo = this.floor.getMesh();
 
-    // this.scene.add(new THREE.Mesh(geo, mat));
+    let surface = new TriangleSurface(this.floor.f, 1, 900, 900);
+
+    this.scene.add(new THREE.Mesh(surface.build(), floorMat));
+    // 
+    this.addGrassyField();
   }
 
-  addObelisk(p, c) {
+  addObelisk([x, z], c) {
     let geo = new THREE.BoxGeometry(1, 5, 1);
     let mat = new THREE.MeshBasicMaterial({color: c});
     let mesh = new THREE.Mesh(geo, mat);
-    let pos = p.clone();
-    pos.multiplyScalar(20.0);
+    let y = this.floor.f(x, z);
+    let pos = new THREE.Vector3(x, y, z);
     mesh.position.set(pos.x, pos.y+2.5, pos.z);
     mesh.rotation.y = Math.PI/4.0;
     this.scene.add(mesh);
   }
 
+  /**
+   * What is this?
+   */
   addGrid() {
-    let mat = new THREE.LineBasicMaterial({color: 0x333333});
+    let mat = new THREE.LineBasicMaterial({color: 0x999999});
     let VALS = 100;
     for (let i=-VALS; i <= VALS; i++) {
       let geo = new THREE.Geometry();
@@ -304,28 +308,34 @@ export default class StarfieldApp extends QuentinLike {
     let f = Math.PI/4.0;
     let r = 90;
     f = t/100.0;
-    let x = r*Math.cos(t);
-    let z = r*Math.sin(t);
+    let x = r*Math.cos(f);
+    let z = r*Math.sin(f);
     let y =  params.y;
 
     // ...
-    let [a, b, c] = [r*Math.cos(r), y, r*Math.sin(r)];
+    let [a, b, c] = [x, y, z];
 
     // ...
     let TWOPI = 2*Math.PI;
     let theta = f % 2*Math.PI;
-    this.sky.setRotationFromAxisAngle(this.skyAxis, theta);
+    this.sky.setRotationFromAxisAngle(this.skyAxis, 0.0);
 
     // ...
     this.camera.position.set(a, b, c);
-    this.camera.position.set(0, 90, 0);
-    this.camera.position.set(0, 0, 0);
+    this.camera.lookAt(0, 0, 0);
 
 
-    let pos = NORTH.clone();
+    let pos = SOUTH.clone();
     pos.multiplyScalar(20.0);
-    pos.y = 4.5;
-    this.camera.lookAt(pos);
+    pos.y = y;
+    // this.camera.lookAt(pos);
+
+    // Move skybox around camera position
+    this.sky.position.set(
+      this.camera.position.x,
+      this.camera.position.y,
+      this.camera.position.z,
+    );
   }
 
   setupCamera() {
