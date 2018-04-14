@@ -106,10 +106,10 @@ export default class StarfieldApp extends QuentinLike {
 
     // Add obelisks
     console.log("Adding obelisks");
-    this.addObelisk(NORTH, 0xFF0000);
-    this.addObelisk(SOUTH, 0x00FFFF);
-    this.addObelisk(EAST, 0xFF00FF);
-    this.addObelisk(WEST, 0x00FF00);
+    // this.addObelisk(NORTH, 0xFF0000);
+    // this.addObelisk(SOUTH, 0x00FFFF);
+    // this.addObelisk(EAST, 0xFF00FF);
+    // this.addObelisk(WEST, 0x00FF00);
 
     // console.log("Create grassy field time:", getElapsedTime()-start);
 
@@ -311,7 +311,7 @@ export default class StarfieldApp extends QuentinLike {
     // ...
     this.camera.position.set(a, b, c);
     this.camera.position.set(0, 90, 0);
-    this.camera.position.set(0, y, 0);
+    this.camera.position.set(0, 3*y, 0);
 
 
     let pos = SOUTH.clone();

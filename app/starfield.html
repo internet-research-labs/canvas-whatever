@@ -22,13 +22,15 @@
     #okok {
       z-index:10;
       position: absolute;
+      color: white;
+      bottom: 1em;
       left: 1em;
-      top: 1em;
       display: inline-block;
-      width: 400px;
       background-color: rgb(255, 68, 112);
-      padding: 1em;
       line-height: 1.4em;
+      font-family: sans-serif;
+      padding: 0.25em 0.40em;
+      letter-spacing: 0.125em;
     }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/91/three.min.js"></script>
@@ -43,13 +45,7 @@
   <body>
     ???
     <div id="you-know">
-<pre id="okok">
-all *** lights ** *** *** *** stars
-i guess we all can be trying to think a little clearer
-*** ** ***** **** **** **'** ******
-fuck **'** *** again tomorrow
-*** ***** *** **** I think * ******* rested ****
-</pre>
+<div id="okok">TBD</div>
 <!--
 all the lights in the sky are stars
 i guess we all can be trying to think a little clearer
@@ -63,6 +59,7 @@ and after all that I think i finally rested well
 
     function datGui() {
       grassParams = {
+        theta: Math.PI,
         color: "#202824",
         emissive: "#000000",
         specular: "#18163C",
@@ -75,8 +72,7 @@ and after all that I think i finally rested well
       gui.remember(grassParams);
 
       var grassFolder = gui.addFolder("Grass");
-
-
+      grassFolder.add(grassParams, "theta", -Math.PI/2.0, Math.PI/2.0).onChange(update);
       grassFolder.addColor(grassParams, "color").onChange(update);
       grassFolder.addColor(grassParams, "emissive").onChange(update);
       grassFolder.addColor(grassParams, "specular").onChange(update);
@@ -133,6 +129,7 @@ and after all that I think i finally rested well
 
     function update() {
       app.setPhong(grassParams);
+      app.setTheta(grassParams.theta);
     }
 
     </script>
