@@ -32,6 +32,13 @@ import TriangleMesh from './TriangleMesh.js';
 import {SubtitleScript, Subtitle} from './subtitles/Subtitles.js';
 
 
+// Layout stuff
+
+import {ChatBoxComponent} from './chat-box.js';
+
+
+// Exports
+
 export {
   // Apps
   CircleApp,

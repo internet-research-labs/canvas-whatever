@@ -4,7 +4,7 @@ import {add, cross, sub, normalize, scale} from '../math3.js';
 import {getElapsedTime} from '../utils.js';
 import * as THREE from 'THREE';
 
-import {sky} from '../obj/StarrySky.js';
+import {sky, StarrySky} from '../obj/StarrySky.js';
 
 import RibbonPath from '../RibbonPath.js';
 import Ribbon from '../Ribbon.js';
@@ -92,7 +92,7 @@ export default class StarfieldApp extends QuentinLike {
 
     // Sky
     this.sky = this.getSky();
-    this.scene.add(this.sky);
+    this.scene.add(this.sky.sky);
     this.setTheta(0.0);
 
     // Helper setup functions
@@ -150,10 +150,7 @@ export default class StarfieldApp extends QuentinLike {
       stars.push([x, y, z]);
     }
 
-    g.add(sky(stars, starSize));
-
-
-    return g;
+    return new StarrySky(stars, starSize);
   }
 
   /**
@@ -259,10 +256,31 @@ export default class StarfieldApp extends QuentinLike {
       floor: _abc,
     });
 
-    let floorMat = new THREE.MeshBasicMaterial({
-      // color: 0x2194CE,
-      wireframe: true,
-      color: 0x334444,
+    console.log(this.sky.textures);
+
+    let images = [];
+
+    this.sky.textures.forEach((v, i) => {
+      images.push(v.image);
+    });
+
+    let cubeTex = new THREE.CubeTexture(
+      images,
+      THREE.CubeReflectionMapping,
+    );
+    cubeTex.wrapS = THREE.RepeatWrapping;
+    cubeTex.wrapT = THREE.RepeatWrapping;
+    cubeTex.repeat.set( 4, 4 );
+
+    this.cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
+    this.scene.add(this.cubeCamera);
+
+
+    let floorMat = new THREE.MeshLambertMaterial({
+      color: 0x2194CE,
+      envMap: this.cubeCamera.renderTarget,
+      reflectivity: 0.9,
+      side: THREE.DoubleSide,
     });
 
     // let geo = this.floor.getMesh();
@@ -270,6 +288,11 @@ export default class StarfieldApp extends QuentinLike {
     let surface = new TriangleSurface(this.floor.f, 1, 900, 900);
 
     this.scene.add(new THREE.Mesh(surface.build(), floorMat));
+    let geo = new THREE.BoxGeometry(1, 5, 1);
+
+    this.mirrorBox = new THREE.Mesh(geo, floorMat);
+    this.scene.add(this.mirrorBox);
+
     // 
     this.addGrassyField();
   }
@@ -318,7 +341,7 @@ export default class StarfieldApp extends QuentinLike {
     // ...
     let TWOPI = 2*Math.PI;
     let theta = f % 2*Math.PI;
-    this.sky.setRotationFromAxisAngle(this.skyAxis, 0.0);
+    this.sky.sky.setRotationFromAxisAngle(this.skyAxis, 0.0);
 
     // ...
     this.camera.position.set(a, b, c);
@@ -331,11 +354,14 @@ export default class StarfieldApp extends QuentinLike {
     // this.camera.lookAt(pos);
 
     // Move skybox around camera position
-    this.sky.position.set(
+    this.sky.sky.position.set(
       this.camera.position.x,
       this.camera.position.y,
       this.camera.position.z,
     );
+
+    this.cubeCamera.position.copy(this.mirrorBox.position);
+    this.cubeCamera.update(this.renderer, this.scene);
   }
 
   setupCamera() {

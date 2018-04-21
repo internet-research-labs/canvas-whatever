@@ -194,3 +194,13 @@ function skyMaterial(stars, size) {
 
   return faceMaterials;
 }
+
+
+export class StarrySky {
+  constructor(stars, boxSize) {
+    this.stars = stars;
+    let size = Math.floor(3*boxSize);
+    this.sky = sky(stars, boxSize);
+    this.textures = skyTextures(stars, size, size);
+  }
+}
