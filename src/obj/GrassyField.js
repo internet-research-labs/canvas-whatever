@@ -177,19 +177,13 @@ export class GrassyField {
   // Return the phong material
   material(params) {
     this.params = params;
-    return new THREE.ShaderMaterial(
-      require('./shaders/windy-grass.vert'),
-      require('./shaders/windy-grass.frag'),
-      {
-        color: stringToHex(params.color),
-        emissive: stringToHex(params.emissive),
-        specular: stringToHex(params.specular),
-        shininess: params.shininess,
-        reflectivity: params.reflectivity,
-        shading: THREE.SmoothShading,
-        side: THREE.DoubleSide,
+    return new THREE.ShaderMaterial({
+      vertexShader: require('./shaders/windy-grass.vert'),
+      fragmentShader: require('./shaders/windy-grass.frag'),
+      uniforms: {
+        wind: {value: 10.0},
       },
-    );
+    });
 
   }
 }
