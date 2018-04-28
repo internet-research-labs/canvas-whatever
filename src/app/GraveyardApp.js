@@ -165,6 +165,10 @@ export default class GraveyardApp extends QuentinLike {
   }
 
   // ...
+  setWind(wind) {
+    this.wind = wind;
+    this.fieldMesh.material.uniforms.wind.value = wind;
+  }
   setPhong(params) {
     this.grassMaterial = this.field.material(params);
     this.fieldMesh.material = this.grassMaterial;
@@ -207,9 +211,6 @@ export default class GraveyardApp extends QuentinLike {
     // ...
     this.camera.position.set(a, b, c);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-    if (this.fieldMesh.material.uniforms) {
-      this.fieldMesh.material.uniforms.wind.value = 3*Math.cos(200*t);
-    }
   }
 
   setupCamera() {
