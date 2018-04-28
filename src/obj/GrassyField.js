@@ -176,13 +176,10 @@ export class GrassyField {
 
   // Return the phong material
   material(params) {
-    let vert = require('./shaders/windy-grass.vert');
-    let frag = require('./shaders/windy-grass.frag');
-
     this.params = params;
     return new THREE.ShaderMaterial(
-      vert,
-      frag,
+      require('./shaders/windy-grass.vert'),
+      require('./shaders/windy-grass.frag'),
       {
         color: stringToHex(params.color),
         emissive: stringToHex(params.emissive),
