@@ -1,6 +1,6 @@
 import Grass from '../obj/Grass.js';
 import {add, cross, sub, normalize, scale} from '../math3.js';
-import {getElapsedTime} from '../utils.js';
+import {stringToHex, getElapsedTime} from '../utils.js';
 
 function magnitude(vec, s) {
   return scale(normalize(vec), s);
@@ -171,7 +171,28 @@ export class GrassyField {
 
     let n = Float32Array.from(this.normals);
     this.geo.addAttribute('normal', new THREE.BufferAttribute(n, 3));
-    // console.log("Copy array time:", getElapsedTime()-start);
     return this.geo;
+  }
+
+  // Return the phong material
+  material(params) {
+    let vert = require('./shaders/windy-grass.vert');
+    let frag = require('./shaders/windy-grass.frag');
+
+    this.params = params;
+    return new THREE.ShaderMaterial(
+      vert,
+      frag,
+      {
+        color: stringToHex(params.color),
+        emissive: stringToHex(params.emissive),
+        specular: stringToHex(params.specular),
+        shininess: params.shininess,
+        reflectivity: params.reflectivity,
+        shading: THREE.SmoothShading,
+        side: THREE.DoubleSide,
+      },
+    );
+
   }
 }

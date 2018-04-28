@@ -32,4 +32,10 @@ let getElapsedTime = (function() {
   }
 }());
 
+
+// Return hex value from a hex string
+export function stringToHex(str) {
+  return parseInt(str.substring(1), 16);
+}
+
 export {getElapsedTime};

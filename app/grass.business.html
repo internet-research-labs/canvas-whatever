@@ -32,18 +32,11 @@
 
     function datGui() {
       grassParams = {
-        "color": "#333333",
-        "emissive": "#777777",
-        "specular": "#000000",
-        "shininess": 0.0,
-        "reflectivity": 0.0,
-      };
-
-      grassParams = {
         color: "#29614a",
         emissive: "#181010",
         specular: "#000000",
         shininess: 0,
+        wind: 0.0,
         reflectivity: 0,
       };
 
@@ -56,8 +49,9 @@
       grassFolder.addColor(grassParams, "color").onChange(update);
       grassFolder.addColor(grassParams, "emissive").onChange(update);
       grassFolder.addColor(grassParams, "specular").onChange(update);
-      grassFolder.add(grassParams, "shininess", 0, 200).onChange(update);
-      grassFolder.add(grassParams, "reflectivity", 0, 200).onChange(update);
+      grassFolder.add(grassParams, "shininess", 0, 1.0).onChange(update);
+      grassFolder.add(grassParams, "reflectivity", 0.0, 1.0).onChange(update);
+      grassFolder.add(grassParams, "wind", 0.0, 9.0).onChange(update);
 
       return grassParams;
     }
@@ -77,6 +71,7 @@
       app.draw();
 
       var stats = new Stats();
+      document.getElementById("okay").appendChild(stats.dom);
 
       (function loloop() {
         stats.begin();
@@ -111,5 +106,6 @@
     }
 
     </script>
+    <div id="okay"></div>
   </body>
 </html>

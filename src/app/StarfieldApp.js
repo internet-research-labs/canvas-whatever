@@ -194,7 +194,7 @@ export default class StarfieldApp extends QuentinLike {
       reflectivity: reflectivity,
       // shading: THREE.SmoothShading,
       flatShading: true,
-      side: THREE.DoubleSide,
+      side: THREE.BackSide,
     });
     this.fieldMesh.material = this.grassMaterial;
     // this.fieldMesh.material = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
@@ -272,15 +272,15 @@ export default class StarfieldApp extends QuentinLike {
     cubeTex.wrapT = THREE.RepeatWrapping;
     cubeTex.repeat.set( 4, 4 );
 
-    this.cubeCamera = new THREE.CubeCamera( 1, 100000, 128 );
+    this.cubeCamera = new THREE.CubeCamera(100, 1000, Math.pow(2, 11) );
     this.scene.add(this.cubeCamera);
 
 
-    let floorMat = new THREE.MeshLambertMaterial({
-      color: 0x2194CE,
+    let floorMat = new THREE.MeshPhongMaterial({
+      color: 0xCCCCCC,
       envMap: this.cubeCamera.renderTarget,
-      reflectivity: 0.9,
-      side: THREE.DoubleSide,
+      reflectivity: 0.95,
+      side: THREE.BackSide,
     });
 
     // let geo = this.floor.getMesh();
@@ -330,18 +330,18 @@ export default class StarfieldApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/100.0;
+    f = t/10000.0;
     let x = r*Math.cos(f);
     let z = r*Math.sin(f);
     let y =  params.y;
 
     // ...
-    let [a, b, c] = [x, y, z];
+    let [a, b, c] = [100, y, 100];
 
     // ...
     let TWOPI = 2*Math.PI;
     let theta = f % 2*Math.PI;
-    this.sky.sky.setRotationFromAxisAngle(this.skyAxis, 0.0);
+    this.sky.sky.setRotationFromAxisAngle(this.skyAxis, theta);
 
     // ...
     this.camera.position.set(a, b, c);

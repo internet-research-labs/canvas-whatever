@@ -11,18 +11,13 @@ import Ribbon from '../Ribbon.js';
 import {GrassyField} from '../obj/GrassyField.js';
 import {Land} from  '../obj/Land.js';
 
+import SimplexNoise from 'simplex-noise';
+
 /**
  * Return the norm of the vector
  */
 function norm(v) {
   return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
-}
-
-/**
- * ...
- */
-function stringToHex(str) {
-  return parseInt(str.substring(1), 16);
 }
 
 /**
@@ -161,46 +156,34 @@ export default class GraveyardApp extends QuentinLike {
       shading: THREE.SmoothShading,
       side: THREE.DoubleSide,
     });
+
     let cube = new THREE.Mesh(geometry, material);
     cube.position.x = x;
     cube.position.y = 4;;
     cube.position.z = z;
-    // cube.rotation.y = Math.PI/4;
     this.scene.add(cube);
   }
 
   // ...
-  setPhong({color, emissive, specular, shininess, reflectivity}) {
-    this.grassMaterial = new THREE.MeshPhongMaterial({
-      color: stringToHex(color),
-      emissive: stringToHex(emissive),
-      specular: stringToHex(specular),
-      shininess: shininess,
-      reflectivity: reflectivity,
-      shading: THREE.SmoothShading,
-      side: THREE.DoubleSide,
-    });
+  setPhong(params) {
+    this.grassMaterial = this.field.material(params);
     this.fieldMesh.material = this.grassMaterial;
   }
 
   // Just draw a simple floor
   addFloor() {
     let mat = new THREE.MeshBasicMaterial({
-      color: 0x33333,
-      emissive: 0x000000,
-      specular: 0x000000,
-      shininess: 0.0,
-      shading: THREE.SmoothShading,
-      side: THREE.DoubleSide,
+      color: 0xCCCCC,
+      wireframe: true,
     });
 
-    let _abc = function (x, y) {
-      return 1-(x*x+y*y)/128;
-      let a = x/12.0;
-      let b = y/12.0;
-      let m = Math.cos(a*a+b*b);
-      return m;
-    };
+    let _abc = (function () {
+      let s = 80.0;
+      let simplex = new SimplexNoise("whatever");
+      return (x, y) => {
+        return 4.0*simplex.noise2D(x/s, y/s);
+      };
+    }());
 
     this.floor = new Land({
       height: 20,
@@ -214,19 +197,18 @@ export default class GraveyardApp extends QuentinLike {
   }
 
   update(params) {
-    let t = getElapsedTime()/10.0;
-    let r = 90;
+    let t = +new Date()/300000.0;
+    let r = 70;
     let x = r*Math.cos(t);
     let z = r*Math.sin(t);
-    let y =  40;
 
-    let [a, b, c] = [r*Math.cos(t), 40, r*Math.sin(t)];
+    let [a, b, c] = [r*Math.cos(t), r/2, r*Math.sin(t)];
 
     // ...
     this.camera.position.set(a, b, c);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-
   }
+
   setupCamera() {
     this.camera = new THREE.PerspectiveCamera(
       this.app.view_angle,
