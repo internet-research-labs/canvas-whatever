@@ -1,11 +1,9 @@
 export class SunnySky {
   constructor(size) {
     this.size = size;
-
-    this.sky = new THREE.Mesh(
-      this.geometry(),
-      new THREE.MeshBasicMaterial({color: 0xCCCCCC}),
-    );
+    this.geo = this.geometry();
+    this.mat = this.material();
+    this.sky = new THREE.Mesh(this.geo, this.mat);
   }
 
   geometry() {
@@ -17,8 +15,11 @@ export class SunnySky {
     let vert = require('./shaders/sky.vert');
     let frag = require('./shaders/sky.frag');
     return new THREE.ShaderMaterial({
-      vertShader: vert,
-      fragShader: frag,
+      vertexShader: vert,
+      fragmentShader: frag,
+      uniforms: {
+        theta: {value: 0.3},
+      },
     });
   }
 }

@@ -265,7 +265,7 @@ export default class KanyeApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/10000.0;
+    f = t/100.0;
     let x = r*Math.cos(f);
     let z = r*Math.sin(f);
     let y =  params.y;
@@ -282,7 +282,7 @@ export default class KanyeApp extends QuentinLike {
     // ...
     this.camera.position.set(a, b, c);
     this.camera.lookAt(0, 0, 0);
-
+    this.sky.mat.uniforms.theta.value = theta;
 
     // Move skybox around camera position
     /*
