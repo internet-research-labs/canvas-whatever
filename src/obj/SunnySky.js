@@ -21,6 +21,7 @@ export class SunnySky {
       fragmentShader: frag,
       uniforms: {
         theta: {value: 0.3},
+        size: {value: this.size},
       },
     });
   }

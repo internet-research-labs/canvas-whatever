@@ -234,7 +234,7 @@ export default class KanyeApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/20.0;
+    f = t/70.0;
     let x = r*Math.cos(f);
     let z = r*Math.sin(f);
     let y = 0.0;
