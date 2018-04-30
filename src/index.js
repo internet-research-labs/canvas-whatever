@@ -10,6 +10,7 @@ import GeodeApp from './app/GeodeApp.js';
 import GrassApp from './app/GrassApp.js';
 import GraveyardApp from './app/GraveyardApp.js';
 import InstancedHillApp from './app/InstancedHillApp.js';
+import KanyeApp from './app/KanyeApp.js';
 import OverlapApp from './app/OverlapApp.js';
 import QuentinApp from './app/QuentinApp.js';
 import RibbonApp from './app/RibbonApp.js';
@@ -54,6 +55,7 @@ export {
   GoldGridApp,
   GrassApp,
   GraveyardApp,
+  KanyeApp,
   InstancedHillApp,
   OverlapApp,
   QuentinApp,
