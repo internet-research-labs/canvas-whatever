@@ -8,13 +8,15 @@ export class SunnySky {
 
   geometry() {
     let size = this.size;
-    return new THREE.BoxGeometry(size, size, size, 1, 1, 1);
+    let geo = new THREE.BoxGeometry(size, size, size, 1, 1, 1);
+    return geo;
   }
 
   material() {
     let vert = require('./shaders/sky.vert');
     let frag = require('./shaders/sky.frag');
     return new THREE.ShaderMaterial({
+      transparent: true,
       vertexShader: vert,
       fragmentShader: frag,
       uniforms: {

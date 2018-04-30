@@ -84,6 +84,8 @@ export default class KanyeApp extends QuentinLike {
 
     // Sky
     this.sky = this.getSky();
+    // this.sky.sky.position.y = 3.0;
+
     this.scene.add(this.sky.sky);
     this.setTheta(0.0);
 
@@ -117,40 +119,7 @@ export default class KanyeApp extends QuentinLike {
    * Return a sky [and helper objects]
    */
   getSky() {
-    /*
-    let g = new THREE.Group();
-
-    let stars = []; 
-    let starSize =   700;
-    let STAR_COUNT = 90000;
-
-    for (let i=0; i < STAR_COUNT; i++) {
-      let r = starSize;
-
-      let t = 2*Math.random()-1;
-      let u = 2*Math.random()-1;
-
-      let x = t;
-      let y = u;
-      let z = 2*Math.random()-1.0;
-      stars.push([x, y, z]);
-    }
-    */
-
     return new SunnySky(15.0);
-  }
-
-  /**
-   * Create the Force ArrowHelper and Update
-   */
-  addForceArrow() {
-    this.forceArrow = new THREE.ArrowHelper(
-      this.force,
-      this.dest,
-      norm(this.force),
-      0x000000,
-    );
-    this.scene.add(this.forceArrow);
   }
 
   /**
@@ -265,24 +234,29 @@ export default class KanyeApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = Math.PI/4.0;
     let r = 90;
-    f = t/100.0;
+    f = t/20.0;
     let x = r*Math.cos(f);
     let z = r*Math.sin(f);
-    let y =  params.y;
+    let y = 0.0;
 
     // ...
-    let [a, b, c] = [100, y, 100];
+    let [a, b, c] = [10*Math.cos(f), y, 10*Math.sin(f)];
+    [a, b, c] = [100, 0, 0];
 
     // ...
     let TWOPI = 2*Math.PI;
     let theta = f % 2*Math.PI;
     // this.sky.sky.setRotationFromAxisAngle(this.skyAxis, theta);
+    //
 
 
     // ...
     this.camera.position.set(a, b, c);
     this.camera.lookAt(0, 0, 0);
     this.sky.mat.uniforms.theta.value = theta;
+    this.sky.sky.rotation.x = 2*theta;
+    this.sky.sky.rotation.y = -theta;
+    this.sky.sky.rotation.z = 3*theta;
 
     // Move skybox around camera position
     /*

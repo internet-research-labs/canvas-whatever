@@ -1,15 +1,19 @@
-uniform float time;
-uniform vec3 dir;
-varying vec4 n;
+// precision mediump float;
+// precision mediump int;
+
+// uniform float time;
+// uniform vec3 dir;
+// varying vec4 n;
 
 uniform float theta;
 
+varying vec3 vPosition;
+
 void main() {
-  vec4 u = normalize(vec4(dir, 1.0));
-  vec4 v = normalize(n);
-  float l = dot(u, v);
-  l = abs(cos(theta));
-  float x = l*gl_FragCoord.x/400.0;
-  float y = l*gl_FragCoord.y/400.0;
-  gl_FragColor = vec4(x, y, l, 1.0);
+  float l = abs(cos(theta));
+  float w = gl_FragCoord.w;
+  float x = (vPosition.x+0.5);
+  float y = (vPosition.y+0.5);
+  float z = (vPosition.z+0.5);
+  gl_FragColor = vec4(x, y, 0.0, 1.0);
 }
