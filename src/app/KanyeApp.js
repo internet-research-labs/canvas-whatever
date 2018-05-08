@@ -119,7 +119,10 @@ export default class KanyeApp extends QuentinLike {
    * Return a sky [and helper objects]
    */
   getSky() {
-    return new SunnySky(15.0);
+    return new SunnySky({
+      size: 15.0,
+      sunPosition: [1, 0, 0],
+    });
   }
 
   /**
@@ -232,40 +235,25 @@ export default class KanyeApp extends QuentinLike {
 
   update(params) {
     let t = +new Date() / 200.0 / 1.0;
-    let f = Math.PI/4.0;
-    let r = 90;
-    f = t/70.0;
-    let x = r*Math.cos(f);
-    let z = r*Math.sin(f);
-    let y = 0.0;
+    let f = t/70.;
 
-    // ...
-    let [a, b, c] = [10*Math.cos(f), y, 10*Math.sin(f)];
-    [a, b, c] = [100, 0, 0];
+    let [a, b, c] = [100, 100, 100];
 
     // ...
     let TWOPI = 2*Math.PI;
     let theta = f % 2*Math.PI;
-    // this.sky.sky.setRotationFromAxisAngle(this.skyAxis, theta);
-    //
 
-
-    // ...
+    // xD
     this.camera.position.set(a, b, c);
     this.camera.lookAt(0, 0, 0);
     this.sky.mat.uniforms.theta.value = theta;
-    this.sky.sky.rotation.x = 2*theta;
-    this.sky.sky.rotation.y = -theta;
-    this.sky.sky.rotation.z = 3*theta;
 
-    // Move skybox around camera position
-    /*
-    this.sky.sky.position.set(
-      this.camera.position.x,
-      this.camera.position.y,
-      this.camera.position.z,
-    );
-    */
+    // ...
+    let u = 7.*theta;
+    let x = 20.*Math.cos(u);
+    let y = 20.*Math.sin(-u);
+    let z = 0.;
+    this.sky.setSunPosition(x, y, z);
   }
 
   setupCamera() {

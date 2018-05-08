@@ -104,11 +104,11 @@ and after all that I think i finally rested well
       document.getElementById("stats").appendChild(stats.dom);
 
       (function loloop() {
+        requestAnimationFrame(loloop);
         stats.begin();
         app.update(grassParams);
         app.draw();
         stats.end();
-        requestAnimationFrame(loloop);
       }());
 
       window.addEventListener('resize', debounce(100, function (ev) {
