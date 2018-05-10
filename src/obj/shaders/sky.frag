@@ -6,6 +6,7 @@
 // varying vec4 n;
 
 uniform float theta;
+uniform vec3 sunPosition;
 
 varying vec3 vPosition;
 
@@ -17,7 +18,7 @@ vec3 sun() {
 
 // Return rgb sky contribution
 vec3 sky() {
-  return vec3(0.);
+  return vec3(1./distance(normalize(vPosition), normalize(sunPosition)))/10.0;
 }
 
 void main() {
@@ -26,5 +27,6 @@ void main() {
   float x = (vPosition.x+0.5);
   float y = (vPosition.y+0.5);
   float z = (vPosition.z+0.5);
-  gl_FragColor = vec4(x, y, z, 1.0);
+  vec4 c = vec4(sky() + sun(), 1.0);
+  gl_FragColor = c + vec4(x, y, z, 1.0);
 }

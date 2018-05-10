@@ -1,12 +1,14 @@
 export class SunnySky {
   constructor({size, sunPosition}) {
     this.size = size;
-    this.geo = this.geometry();
-    this.mat = this.material();
-    this.sky = new THREE.Group();
 
 
     this.demoSun = this.getDemoSphere([15, 0, 0]);
+
+
+    this.geo = this.geometry();
+    this.mat = this.material();
+    this.sky = new THREE.Group();
 
     this.sky.add(new THREE.Mesh(this.geo, this.mat));
     this.sky.add(this.demoSun);
@@ -38,6 +40,7 @@ export class SunnySky {
       vertexShader: vert,
       fragmentShader: frag,
       uniforms: {
+        sunPosition: {value: this.demoSun.position},
         theta: {value: 0.3},
         size: {value: this.size},
       },
