@@ -10,6 +10,9 @@ export default class TriangleSurface {
   constructor(f, radius, width, height) {
     this.f = f;
     this.mesh = new TriangleMesh(radius);
+    this.width = width;
+    this.height = height;
+    this.radius = radius;
   }
 
   vector(v) {
@@ -22,8 +25,14 @@ export default class TriangleSurface {
     let f = this.f;
     let geo = new THREE.Geometry();
 
-    for (let i=-50; i < 50; i++) {
-      for (let j=-50; j < 50; j++) {
+    let X_SEGS = Math.floor(this.width/this.radius);
+    let Y_SEGS = Math.floor(this.height/this.radius);
+
+    console.log(this.width, this.height);
+    console.log(X_SEGS, Y_SEGS);
+
+    for (let i=-X_SEGS/2; i < X_SEGS/2; i++) {
+      for (let j=-Y_SEGS; j < Y_SEGS; j++) {
 
         let [a, b, c] = this.mesh.get(i, j).getPointList();
 

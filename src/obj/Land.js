@@ -8,7 +8,8 @@ export class Land {
     this.height = height;
     this.width = width;
     this.f = floor;
-    this.surface = new TriangleSurface(this.f, 0.9, 20.0, 20.0);
+    this.surface = new TriangleSurface(this.f, 1.0, width, height);
+    console.log("width, height", width, height);
   }
 
   /**

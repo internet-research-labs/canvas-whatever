@@ -97,7 +97,7 @@ export default class KanyeApp extends QuentinLike {
     let start = getElapsedTime();
     this.fieldMesh = {}
 
-    // this.addFloor();
+    this.addFloor();
 
     // Torus
     /*
@@ -120,7 +120,7 @@ export default class KanyeApp extends QuentinLike {
    */
   getSky() {
     return new SunnySky({
-      size: 15.0,
+      size: 750.0,
       sunPosition: [1, 0, 0],
     });
   }
@@ -171,7 +171,7 @@ export default class KanyeApp extends QuentinLike {
 
   addFloor() {
     let mat = new THREE.MeshPhongMaterial({
-      color: 0x33333,
+      color: 0x00000,
       emissive: 0x000000,
       specular: 0x000000,
       shininess: 0.0,
@@ -181,16 +181,16 @@ export default class KanyeApp extends QuentinLike {
     });
 
     let _abc = (function () {
-      let s = 80.0;
+      let s = 30.0;
       let simplex = new SimplexNoise("whatever");
       return (x, y) => {
-        return 4.0*simplex.noise2D(x/s, y/s);
+        return 4.0*simplex.noise2D(x/s, y/s/3.);
       };
     }());
 
     this.floor = new Land({
-      height: 900,
-      width: 900,
+      height: 10,
+      width: 10,
       floor: _abc,
     });
 
@@ -199,7 +199,7 @@ export default class KanyeApp extends QuentinLike {
     let loader = new THREE.FontLoader();
     loader.load('helvetiker.json', (font) => {
       let textGeo = new THREE.TextGeometry(
-        "fuck",
+        "you know better",
         {
           font: font,
           size: 3.0,
@@ -212,23 +212,13 @@ export default class KanyeApp extends QuentinLike {
       this.scene.add(new THREE.Mesh(textGeo, textMat));
     });
 
-    let cubeTex = new THREE.CubeTexture(
-      images,
-      THREE.CubeReflectionMapping,
-    );
-    cubeTex.wrapS = THREE.RepeatWrapping;
-    cubeTex.wrapT = THREE.RepeatWrapping;
-    cubeTex.repeat.set( 4, 4 );
-
     let floorMat = new THREE.MeshBasicMaterial({
-      color: 0x004455,
-      // envMap: this.cubeCamera.renderTarget,
-      reflectivity: 0.95,
+      color: 0x444444,
       wireframe: true,
-      side: THREE.BackSide,
+      side: THREE.DoubleSide,
     });
 
-    let surface = new TriangleSurface(this.floor.f, 1, 900, 900);
+    let surface = new TriangleSurface(this.floor.f, 2.0, 80.0, 80.0);
 
     this.scene.add(new THREE.Mesh(surface.build(), floorMat));
   }
@@ -249,7 +239,7 @@ export default class KanyeApp extends QuentinLike {
     this.sky.mat.uniforms.theta.value = theta;
 
     // ...
-    let u = 3.*theta;
+    let u = 1.*theta;
     let x = 20.*Math.cos(9*u);
     let y = 20.*Math.cos(u);
     let z = 20.*Math.sin(9*u);

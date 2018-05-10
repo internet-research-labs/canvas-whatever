@@ -3,7 +3,7 @@ export class SunnySky {
     this.size = size;
 
 
-    this.demoSun = this.getDemoSphere([15, 0, 0]);
+    this.demoSun = this.getDemoSphere(sunPosition);
 
 
     this.geo = this.geometry();
@@ -11,7 +11,7 @@ export class SunnySky {
     this.sky = new THREE.Group();
 
     this.sky.add(new THREE.Mesh(this.geo, this.mat));
-    this.sky.add(this.demoSun);
+    // this.sky.add(this.demoSun);
   }
 
   getDemoSphere([x, y, z]) {
@@ -39,7 +39,7 @@ export class SunnySky {
       transparent: true,
       vertexShader: vert,
       fragmentShader: frag,
-      side: THREE.BackSide,
+      side: THREE.DoubleSide,
       uniforms: {
         sunPosition: {value: this.demoSun.position},
         theta: {value: 0.3},
