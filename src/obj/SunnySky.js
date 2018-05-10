@@ -39,6 +39,7 @@ export class SunnySky {
       transparent: true,
       vertexShader: vert,
       fragmentShader: frag,
+      side: THREE.BackSide,
       uniforms: {
         sunPosition: {value: this.demoSun.position},
         theta: {value: 0.3},

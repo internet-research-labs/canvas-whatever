@@ -13,13 +13,14 @@ varying vec3 vPosition;
 
 //  Return rgb sun contribution
 vec3 sun() {
-  return vec3(0., .3, .3);
+  float l = 1./distance(normalize(vPosition), normalize(sunPosition))/3.0;
+  return vec3(0., l, 2.*l);
 }
 
 // Return rgb sky contribution
 vec3 sky() {
   float l = 1./distance(normalize(vPosition), normalize(sunPosition))/4.0;
-  return vec3(2.*l, l, l);
+  return vec3(l, l, l);
 }
 
 vec4 dash() {
