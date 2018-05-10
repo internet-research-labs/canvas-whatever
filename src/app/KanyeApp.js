@@ -249,10 +249,10 @@ export default class KanyeApp extends QuentinLike {
     this.sky.mat.uniforms.theta.value = theta;
 
     // ...
-    let u = 7.*theta;
-    let x = 20.*Math.cos(u);
-    let y = 20.*Math.sin(-u);
-    let z = 0.;
+    let u = 3.*theta;
+    let x = 20.*Math.cos(9*u);
+    let y = 20.*Math.cos(u);
+    let z = 20.*Math.sin(9*u);
     this.sky.setSunPosition(x, y, z);
   }
 

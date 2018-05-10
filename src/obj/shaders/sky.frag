@@ -13,12 +13,18 @@ varying vec3 vPosition;
 
 //  Return rgb sun contribution
 vec3 sun() {
-  return vec3(0.);
+  return vec3(0., .3, .3);
 }
 
 // Return rgb sky contribution
 vec3 sky() {
-  return vec3(1./distance(normalize(vPosition), normalize(sunPosition)))/10.0;
+  float l = 1./distance(normalize(vPosition), normalize(sunPosition))/4.0;
+  return vec3(2.*l, l, l);
+}
+
+vec4 dash() {
+  float l = mod(vPosition.y*100.0, 3.0) > 1.5 ? 1.0 : 0.0;
+  return vec4(2.*l, l, l, 1.0);
 }
 
 void main() {
@@ -28,5 +34,5 @@ void main() {
   float y = (vPosition.y+0.5);
   float z = (vPosition.z+0.5);
   vec4 c = vec4(sky() + sun(), 1.0);
-  gl_FragColor = c + vec4(x, y, z, 1.0);
+  gl_FragColor = c;
 }
