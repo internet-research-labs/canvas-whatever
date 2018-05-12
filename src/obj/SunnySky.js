@@ -1,17 +1,12 @@
 export class SunnySky {
   constructor({size, sunPosition}) {
     this.size = size;
-
-
     this.demoSun = this.getDemoSphere(sunPosition);
-
-
     this.geo = this.geometry();
     this.mat = this.material();
     this.sky = new THREE.Group();
 
     this.sky.add(new THREE.Mesh(this.geo, this.mat));
-    // this.sky.add(this.demoSun);
   }
 
   getDemoSphere([x, y, z]) {

@@ -9,7 +9,6 @@ export class Land {
     this.width = width;
     this.f = floor;
     this.surface = new TriangleSurface(this.f, 1.0, width, height);
-    console.log("width, height", width, height);
   }
 
   /**

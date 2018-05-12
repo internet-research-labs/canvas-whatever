@@ -119,6 +119,7 @@ export default class KanyeApp extends QuentinLike {
    * Return a sky [and helper objects]
    */
   getSky() {
+    console.log(">>>?");
     return new SunnySky({
       size: 750.0,
       sunPosition: [1, 0, 0],
