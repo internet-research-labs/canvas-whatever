@@ -5,7 +5,6 @@ export class SunnySky {
     this.geo = this.geometry();
     this.mat = this.material();
     this.sky = new THREE.Group();
-
     this.sky.add(new THREE.Mesh(this.geo, this.mat));
   }
 
@@ -28,15 +27,19 @@ export class SunnySky {
 
   // Return material for
   material() {
-    let vert = require('./shaders/sky.vert');
-    let frag = require('./shaders/sky.frag');
     return new THREE.ShaderMaterial({
       transparent: true,
-      vertexShader: vert,
-      fragmentShader: frag,
+      vertexShader: require('./shaders/sky.vert'),
+      fragmentShader: require('./shaders/sky.frag'),
       side: THREE.DoubleSide,
       uniforms: {
+        rayleigh: {value: 4.0},
+        turbidity: {value: 4.9},
+        mieDirectionalG: {value: 0.0},
+        mieCoefficient: {value: 0.0},
+        luminance: {value: 1.0},
         sunPosition: {value: this.demoSun.position},
+
         theta: {value: 0.3},
         size: {value: this.size},
       },

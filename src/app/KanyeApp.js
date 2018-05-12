@@ -84,13 +84,9 @@ export default class KanyeApp extends QuentinLike {
 
     // Sky
     this.sky = this.getSky();
-    // this.sky.sky.position.y = 3.0;
 
     this.scene.add(this.sky.sky);
     this.setTheta(0.0);
-
-    // Helper setup functions
-    this.setupTrack();
 
     // Add visible components
 
@@ -98,20 +94,6 @@ export default class KanyeApp extends QuentinLike {
     this.fieldMesh = {}
 
     this.addFloor();
-
-    // Torus
-    /*
-    let geo = new THREE.TorusKnotBufferGeometry(10, 2, 100, 16);
-    let mat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-    this.torus = new THREE.Mesh(geo, mat);
-    this.scene.add(this.torus);
-    */
-  }
-
-  // Setup a camera track... but in this case actually do nothing
-  setupTrack() {
-    this.camera.position.set(0, 30, 80);
-    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
 
@@ -119,29 +101,10 @@ export default class KanyeApp extends QuentinLike {
    * Return a sky [and helper objects]
    */
   getSky() {
-    console.log(">>>?");
     return new SunnySky({
-      size: 750.0,
+      size: 950.0,
       sunPosition: [1, 0, 0],
     });
-  }
-
-  /**
-   * ...
-   */
-  addGrassyField() {
-    this.field = new GrassyField(
-        20,
-        20,
-        9.0,
-        30,
-        this.floor.f,
-      );
-    this.fieldMesh = new THREE.Mesh(
-      this.field.geometry(),
-      this.grassMaterial,
-    );
-    this.scene.add(this.fieldMesh);
   }
 
   setPhong({color, emissive, specular, shininess, reflectivity}) {
@@ -190,8 +153,8 @@ export default class KanyeApp extends QuentinLike {
     }());
 
     this.floor = new Land({
-      height: 10,
-      width: 10,
+      height: 100.0,
+      width: 100.0,
       floor: _abc,
     });
 
@@ -228,23 +191,27 @@ export default class KanyeApp extends QuentinLike {
     let t = +new Date() / 200.0 / 1.0;
     let f = t/70.;
 
-    let [a, b, c] = [100, 100, 100];
-
     // ...
     let TWOPI = 2*Math.PI;
     let theta = f % 2*Math.PI;
 
     // xD
+    let [a, b, c] = [0, 10.0, 0];
     this.camera.position.set(a, b, c);
-    this.camera.lookAt(0, 0, 0);
+    this.camera.lookAt(-1.0, b, 0);
     this.sky.mat.uniforms.theta.value = theta;
+    /*
+    this.sky.sky.position.x = a;
+    this.sky.sky.position.y = b;
+    this.sky.sky.position.z = c;
+    //*/
 
     // ...
-    let u = 1.*theta;
-    let x = 20.*Math.cos(9*u);
-    let y = 20.*Math.cos(u);
-    let z = 20.*Math.sin(9*u);
-    this.sky.setSunPosition(x, y, z);
+    let u = 2.*theta;
+    let x = Math.sin(u);
+    let y = 0.1*Math.cos(u);
+    let z = 0.1*Math.sin(u);
+    this.sky.setSunPosition(-1.0, y, z);
   }
 
   setupCamera() {
