@@ -8,6 +8,20 @@ export class SunnySky {
     this.sky.add(new THREE.Mesh(this.geo, this.mat));
   }
 
+
+  simulacrum() {
+    console.log("[SIMULACRUM] Added");
+    let g = new THREE.Group();
+
+    let size = 100.0;
+    let box = new THREE.BoxGeometry(size, size, size, 1, 1, 1);
+    let mat = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
+
+    g.add(new THREE.Mesh(box, mat));
+
+    return g;
+  }
+
   getDemoSphere([x, y, z]) {
     let geo = new THREE.Mesh(
       new THREE.SphereGeometry(1, 32, 32),

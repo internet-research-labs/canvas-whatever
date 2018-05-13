@@ -84,6 +84,8 @@ export default class KanyeApp extends QuentinLike {
 
     // Sky
     this.sky = this.getSky();
+    this.scene.add(this.sky.simulacrum());
+    this.scene.add(this.sky.getDemoSphere([0, 0, 0]));
 
     this.scene.add(this.sky.sky);
     this.setTheta(0.0);
@@ -93,7 +95,7 @@ export default class KanyeApp extends QuentinLike {
     let start = getElapsedTime();
     this.fieldMesh = {}
 
-    this.addFloor();
+    // this.addFloor();
   }
 
 
@@ -200,15 +202,15 @@ export default class KanyeApp extends QuentinLike {
     let theta = f % 2*Math.PI;
 
     // xD
-    let [a, b, c] = [5, 10.0, 0];
+    let [a, b, c] = [5, 0.0, 0];
     this.camera.position.set(a, b, c);
-    this.camera.lookAt(a-1.0, b, 0);
+    this.camera.lookAt(0, 0, 0);
     this.sky.mat.uniforms.theta.value = theta;
 
     // ...
     let u = 2.*theta;
     let x = Math.sin(u);
-    let y = 0.1*Math.cos(u)+.1;
+    let y = 0.1*Math.cos(u)+.07;
     let z = 0.1*Math.sin(u);
     this.sky.setSunPosition(-1.0, y, z);
   }
