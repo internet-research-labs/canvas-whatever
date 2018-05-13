@@ -7,8 +7,6 @@
 uniform float size;
 uniform vec3 sunPosition;
 
-varying vec3 vPosition;
-
 /**
  * 
  */

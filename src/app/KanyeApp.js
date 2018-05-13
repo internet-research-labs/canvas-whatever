@@ -102,9 +102,13 @@ export default class KanyeApp extends QuentinLike {
    */
   getSky() {
     return new SunnySky({
-      size: 950.0,
+      size: 300.0,
       sunPosition: [1, 0, 0],
     });
+  }
+
+  set(params) {
+    this.sky.set(params);
   }
 
   setPhong({color, emissive, specular, shininess, reflectivity}) {
@@ -148,7 +152,7 @@ export default class KanyeApp extends QuentinLike {
       let s = 30.0;
       let simplex = new SimplexNoise("whatever");
       return (x, y) => {
-        return 4.0*simplex.noise2D(x/s, y/s/3.);
+        return 10.0*simplex.noise2D(x/s, y/s);
       };
     }());
 
@@ -177,12 +181,12 @@ export default class KanyeApp extends QuentinLike {
     });
 
     let floorMat = new THREE.MeshBasicMaterial({
-      color: 0x444444,
-      wireframe: true,
+      color: 0x000000,
+      wireframe: false,
       side: THREE.DoubleSide,
     });
 
-    let surface = new TriangleSurface(this.floor.f, 2.0, 80.0, 80.0);
+    let surface = new TriangleSurface(this.floor.f, 4.0, 1000.0, 1000.0);
 
     this.scene.add(new THREE.Mesh(surface.build(), floorMat));
   }
@@ -196,20 +200,15 @@ export default class KanyeApp extends QuentinLike {
     let theta = f % 2*Math.PI;
 
     // xD
-    let [a, b, c] = [0, 10.0, 0];
+    let [a, b, c] = [5, 10.0, 0];
     this.camera.position.set(a, b, c);
-    this.camera.lookAt(-1.0, b, 0);
+    this.camera.lookAt(a-1.0, b, 0);
     this.sky.mat.uniforms.theta.value = theta;
-    /*
-    this.sky.sky.position.x = a;
-    this.sky.sky.position.y = b;
-    this.sky.sky.position.z = c;
-    //*/
 
     // ...
     let u = 2.*theta;
     let x = Math.sin(u);
-    let y = 0.1*Math.cos(u);
+    let y = 0.1*Math.cos(u)+.1;
     let z = 0.1*Math.sin(u);
     this.sky.setSunPosition(-1.0, y, z);
   }

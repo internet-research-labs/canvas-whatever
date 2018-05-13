@@ -28,9 +28,6 @@ export default class TriangleSurface {
     let X_SEGS = Math.floor(this.width/this.radius);
     let Y_SEGS = Math.floor(this.height/this.radius);
 
-    console.log(this.width, this.height);
-    console.log(X_SEGS, Y_SEGS);
-
     for (let i=-X_SEGS/2; i < X_SEGS/2; i++) {
       for (let j=-Y_SEGS; j < Y_SEGS; j++) {
 

@@ -51,4 +51,13 @@ export class SunnySky {
     this.demoSun.position.y = y;
     this.demoSun.position.z = z;
   }
+
+  set(params) {
+    console.log(params);
+    this.mat.uniforms.rayleigh.value = params.rayleigh || this.mat.uniforms.rayleigh.value;
+    this.mat.uniforms.turbidity.value = params.turbidity || this.mat.uniforms.turbidity.value;
+    this.mat.uniforms.luminance.value = params.luminance || this.mat.uniforms.luminance.value;
+    // this.mat.uniforms.mieDirectionalG.value = params.mieDirectionalG || this.mat.uniforms.mieDirectionalG.value;
+    // this.mat.uniforms.mieCoefficient.value = params.mieCoefficient || this.mat.uniforms.mieCoefficient.value;
+  }
 }
