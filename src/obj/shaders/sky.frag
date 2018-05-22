@@ -54,6 +54,12 @@ vec3 Uncharted2Tonemap( vec3 x ) {
   return ( ( x * ( A * x + C * B ) + D * E ) / ( x * ( A * x + B ) + D * F ) ) - E / F;
 }
 
+vec4 stars(vec3 pos) {
+  float l = pow(cos(10.*pos.z) + sin(10.*pos.y), 3.0)/4.0;
+  l = 0.0;
+  return vec4(l, l, l, 0.0);
+}
+
 
 void main() {
   // optical length
@@ -96,5 +102,6 @@ void main() {
 
   vec3 retColor = pow( color, vec3( 1.0 / ( 1.2 + ( 1.2 * vSunfade ) ) ) );
 
-  gl_FragColor = vec4( retColor, 1.0 );
+
+  gl_FragColor = vec4( retColor, 1.0 ) + stars(vWorldPosition);
 }

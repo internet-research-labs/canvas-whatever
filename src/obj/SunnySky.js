@@ -1,25 +1,57 @@
 export class SunnySky {
-  constructor({size, sunPosition}) {
+  // Constructor
+  constructor({size, sunPosition, simulacrum}) {
     this.size = size;
     this.demoSun = this.getDemoSphere(sunPosition);
     this.geo = this.geometry();
     this.mat = this.material();
     this.sky = new THREE.Group();
     this.sky.add(new THREE.Mesh(this.geo, this.mat));
+
+
+    if (simulacrum) {
+      this.simulacrum = this.simulacrum(0, 0, 0);
+    }
   }
 
 
-  simulacrum() {
+  // Return the simulacrum
+  simulacrum(x, y, z) {
+
+    let objects = {};
+
+
     console.log("[SIMULACRUM] Added");
     let g = new THREE.Group();
 
-    let size = 100.0;
-    let box = new THREE.BoxGeometry(size, size, size, 1, 1, 1);
-    let mat = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
+    let size = 0.2;
+    let box = new THREE.BoxGeometry(size, size, size);
+    let mat = new THREE.MeshBasicMaterial({
+      side: THREE.DoubleSide,
+      color: 0xDDDDDD,
+      wireframe: true,
+    });
+    objects.sky = new THREE.Mesh(box, mat);
+    objects.sky.position.set(0.0, 0.0, 0.0);
 
-    g.add(new THREE.Mesh(box, mat));
+    objects.sun = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(size/4.0),
+      mat,
+    );
+    objects.sun.position.set(0.0, 0.1, 1.0);
+    g.add(objects.sky);
+    g.add(objects.sun);
 
-    return g;
+
+    // Position the entire simulacrum
+    g.position.x = x;
+    g.position.y = y;
+    g.position.z = z;
+
+    return {
+      group: g,
+      objects: objects,
+    };
   }
 
   getDemoSphere([x, y, z]) {
@@ -64,6 +96,13 @@ export class SunnySky {
     this.demoSun.position.x = x;
     this.demoSun.position.y = y;
     this.demoSun.position.z = z;
+
+    if (this.simulacrum) {
+      let [j, k, l] = [6.0*x, 6.0*y, 6.0*z];
+      this.simulacrum.objects.sun.position.set(j, k, l);
+      let r = -3.0;
+      this.simulacrum.objects.sun.rotation.set(r*j, r*k, r*l);
+    }
   }
 
   set(params) {

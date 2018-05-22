@@ -84,8 +84,7 @@ export default class KanyeApp extends QuentinLike {
 
     // Sky
     this.sky = this.getSky();
-    this.scene.add(this.sky.simulacrum());
-    this.scene.add(this.sky.getDemoSphere([0, 0, 0]));
+    this.scene.add(this.sky.simulacrum.group);
 
     this.scene.add(this.sky.sky);
     this.setTheta(0.0);
@@ -95,7 +94,7 @@ export default class KanyeApp extends QuentinLike {
     let start = getElapsedTime();
     this.fieldMesh = {}
 
-    // this.addFloor();
+    this.addFloor();
   }
 
 
@@ -106,6 +105,7 @@ export default class KanyeApp extends QuentinLike {
     return new SunnySky({
       size: 300.0,
       sunPosition: [1, 0, 0],
+      simulacrum: true,
     });
   }
 
@@ -141,7 +141,7 @@ export default class KanyeApp extends QuentinLike {
 
   addFloor() {
     let mat = new THREE.MeshPhongMaterial({
-      color: 0x00000,
+      color: 0x000CCC,
       emissive: 0x000000,
       specular: 0x000000,
       shininess: 0.0,
@@ -183,7 +183,7 @@ export default class KanyeApp extends QuentinLike {
     });
 
     let floorMat = new THREE.MeshBasicMaterial({
-      color: 0x000000,
+      color: 0x002222,
       wireframe: false,
       side: THREE.DoubleSide,
     });
@@ -202,10 +202,12 @@ export default class KanyeApp extends QuentinLike {
     let theta = f % 2*Math.PI;
 
     // xD
-    let [a, b, c] = [5, 0.0, 0];
+    let [a, b, c] = [5, 9.0, 0];
+    let [j, k, l] = [a-6.0, b, c];
+    this.sky.simulacrum.group.position.set(j, k, l);
+
     this.camera.position.set(a, b, c);
-    this.camera.lookAt(0, 0, 0);
-    this.sky.mat.uniforms.theta.value = theta;
+    this.camera.lookAt(j, k, l);
 
     // ...
     let u = 2.*theta;
