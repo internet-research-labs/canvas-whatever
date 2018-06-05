@@ -17,18 +17,20 @@ export class Sky {
   globe() {
     let g = new THREE.Group();
     let mesh = new THREE.Mesh(
-      new THREE.SphereGeometry(0.1, 30, 30),
+      new THREE.SphereGeometry(0.1, 40, 40),
       new THREE.MeshBasicMaterial({
         side: THREE.DoubleSide,
         color: 0xDDDDDD,
         wireframe: true,
+        transparent: true,
+        opacity: 0.1,
       }),
     );
 
-    function _dir(p, c) {
+    function _dir([x, y, z], c) {
       let g = new THREE.Geometry();
-      g.vertices.push(new THREE.Vector3(0, 0, 0));
-      g.vertices.push(new THREE.Vector3(p[0], p[1], p[2]));
+      g.vertices.push(new THREE.Vector3(-x, -y, -z));
+      g.vertices.push(new THREE.Vector3(x, y, z));
       let m = new THREE.LineBasicMaterial({color: c});
       return new THREE.Line(g, m);
     }
@@ -46,7 +48,6 @@ export class Sky {
 
     return g;
   }
-
 
   // Return the simulacrum
   simulacrum(x, y, z) {
