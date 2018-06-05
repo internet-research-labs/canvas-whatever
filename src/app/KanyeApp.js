@@ -204,17 +204,20 @@ export default class KanyeApp extends QuentinLike {
     // xD
     let [a, b, c] = [5, 9.0, 0];
     let [j, k, l] = [a-6.0, b, c];
-    this.sky.simulacrum.group.position.set(j, k, l);
+
+    this.sky.simulacrum.group.position.set(j-4.99, k-0.69, l+0.69);
+    this.sky.simulacrum.group.rotation.set(Math.PI/3.0, Math.PI/3.0, -Math.PI/6.0);
 
     this.camera.position.set(a, b, c);
     this.camera.lookAt(j, k, l);
 
     // ...
     let u = 2.*theta;
-    let x = Math.sin(u);
-    let y = 0.1*Math.cos(u)+.07;
-    let z = 0.1*Math.sin(u);
-    this.sky.setSunPosition(-1.0, y, z);
+    let r = 0.3;
+    let x = r*-3.0;
+    let y = r*0.3*Math.cos(u)+0.075;
+    let z = r*0.3*Math.sin(u);
+    this.sky.setSunPosition(x, y, z);
   }
 
   setupCamera() {

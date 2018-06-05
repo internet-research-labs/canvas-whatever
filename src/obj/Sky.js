@@ -2,49 +2,55 @@ export class Sky {
   // Constructor
   constructor({size, sunPosition, simulacrum}) {
     this.size = size;
-    this.demoSun = this.getDemoSphere(sunPosition);
+    this.demoSun = new THREE.Group();
     this.geo = this.geometry();
     this.mat = this.material();
     this.sky = new THREE.Group();
     this.sky.add(new THREE.Mesh(this.geo, this.mat));
 
     if (simulacrum) {
-      this.simulacrum = this.simulacrum(0, 0, 0);
+      this.simulacrum = this.simulacrum(-1.0, 0, 0);
+      this.simulacrum.group.position.set(-1.0, -1.0, -1.0);
+      console.log(this.simulacrum.group.position);
       console.log("[SIMULACRUM] Added");
     }
   }
 
   globe() {
     let g = new THREE.Group();
-    let mesh = new THREE.Mesh(
-      new THREE.SphereGeometry(0.1, 40, 40),
-      new THREE.MeshBasicMaterial({
-        side: THREE.DoubleSide,
-        color: 0xDDDDDD,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.1,
-      }),
-    );
+
+    /**
+     *
+     */
+    function _globe([x, y, z], c) {
+      return new THREE.Mesh(
+        new THREE.SphereGeometry(0.1, 30, 30),
+        new THREE.MeshBasicMaterial({
+          side: THREE.DoubleSide,
+          color: c,
+          wireframe: true,
+          transparent: true,
+          opacity: 0.05,
+        }),
+      );
+    }
 
     function _dir([x, y, z], c) {
       let g = new THREE.Geometry();
       g.vertices.push(new THREE.Vector3(-x, -y, -z));
       g.vertices.push(new THREE.Vector3(x, y, z));
-      let m = new THREE.LineBasicMaterial({color: c});
+      let m = new THREE.LineBasicMaterial({color: c, linewidth: 100});
       return new THREE.Line(g, m);
     }
 
-    let l = 0.2;
-    g.add(_dir([l, 0, 0], 0xFF0000));
-    g.add(_dir([0, l, 0], 0x00FF00));
-    g.add(_dir([0, 0, l], 0x0000FF));
-    g.add(mesh);
 
-    g.position.set(0.0, 0.0, .90);
-    g.rotation.x = -0.1;
-    g.rotation.y = -0.1;
-    g.rotation.z = -0.1;
+    let axes = new THREE.Group();
+    let l = 0.3;
+    axes.add(_dir([l, 0, 0], 0xFF0000));
+    axes.add(_dir([0, l, 0], 0x00FF00));
+    axes.add(_dir([0, 0, l], 0x0000FF));
+    axes.add(_globe([0, 0, 0], 0x999999));
+    g.add(axes);
 
     return g;
   }
@@ -52,51 +58,44 @@ export class Sky {
   // Return the simulacrum
   simulacrum(x, y, z) {
 
+    console.log("[SIMULACRUM] (x, y, z) = (", x, y, z, ")");
+
     let objects = {};
 
     let g = new THREE.Group();
 
     let size = 0.2;
-    let box = new THREE.BoxGeometry(size, size, size);
     let mat = new THREE.MeshBasicMaterial({
-      side: THREE.DoubleSide,
       color: 0xDDDDDD,
       wireframe: true,
     });
-    objects.sky = new THREE.Mesh(box, mat);
-    objects.sky.position.set(0.0, 0.0, 0.0);
-
     objects.sun = new THREE.Mesh(
       new THREE.IcosahedronGeometry(size/4.0),
       mat,
     );
-    objects.sun.position.set(0.0, 0.1, 1.0);
-    objects.globe = this.globe();
+    objects.world = this.globe();
+    objects.stars = _box([0, 0, 0], 0xCCCCCC);
+    function _box([x, y, z], c) {
+      let size = 0.3;
+      let box = new THREE.EdgesGeometry(new THREE.BoxGeometry(size, size, size));
+      let mat = new THREE.LineBasicMaterial({
+        color: 0xDDDDDD,
+        linewidth: 10,
+      });
+      return new THREE.LineSegments(box, mat);
+    }
 
-    g.add(objects.sky);
+
+    // objects.sun.position.set(0.0, 0.1, 1.0);
+
+    g.add(objects.world);
     g.add(objects.sun);
-    g.add(objects.globe);
-
-    // Position the entire simulacrum
-    g.position.x = x;
-    g.position.y = y;
-    g.position.z = z;
+    g.add(objects.stars);
 
     return {
       group: g,
       objects: objects,
     };
-  }
-
-  getDemoSphere([x, y, z]) {
-    let geo = new THREE.Mesh(
-      new THREE.SphereGeometry(1, 32, 32),
-      new THREE.MeshBasicMaterial({color: 0x000000}),
-    );
-    geo.position.x = x;
-    geo.position.y = y;
-    geo.position.z = z;
-    return geo;
   }
 
   geometry() {
@@ -132,9 +131,10 @@ export class Sky {
     this.demoSun.position.z = z;
 
     if (this.simulacrum) {
-      let [j, k, l] = [6.0*x, 6.0*y, 6.0*z];
+      let v = 1.0;
+      let [j, k, l] = [v*x, v*y, v*z];
       this.simulacrum.objects.sun.position.set(j, k, l);
-      let r = -3.0;
+      let r = -20.0;
       this.simulacrum.objects.sun.rotation.set(r*j, r*k, r*l);
     }
   }
