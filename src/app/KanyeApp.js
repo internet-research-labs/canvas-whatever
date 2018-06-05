@@ -5,7 +5,7 @@ import {getElapsedTime,stringToHex} from '../utils.js';
 import * as THREE from 'THREE';
 
 import {sky, StarrySky} from '../obj/StarrySky.js';
-import {SunnySky} from '../obj/SunnySky.js';
+import {Sky} from '../obj/Sky.js';
 
 import RibbonPath from '../RibbonPath.js';
 import Ribbon from '../Ribbon.js';
@@ -102,7 +102,7 @@ export default class KanyeApp extends QuentinLike {
    * Return a sky [and helper objects]
    */
   getSky() {
-    return new SunnySky({
+    return new Sky({
       size: 300.0,
       sunPosition: [1, 0, 0],
       simulacrum: true,

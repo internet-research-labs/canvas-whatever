@@ -84,8 +84,15 @@
         reflectivity: 0,
         "y": 17,
         zapYa: 0.1,
-      };
 
+        // World positions
+        "theta": 0.001,
+        "fi": 0.001,
+
+        // ...
+        "sun-theta": 0.001,
+
+      };
 
       var gui = new dat.GUI({load: JSON});
       gui.remember(params);
@@ -100,6 +107,12 @@
 
       var liesFolder = gui.addFolder("LIES");
       liesFolder.add(params, "zapYa", 0.0, 10.0).onChange(update);
+
+      var posFolder = gui.addFolder("LOCATION LOCATION LOCATION");
+      posFolder.add(params, "theta", -Math.PI, Math.PI).onChange(update);
+      posFolder.add(params, "fi", -Math.PI, Math.PI).onChange(update);
+
+      posFolder.open();
 
       return params;
     }
