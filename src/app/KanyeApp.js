@@ -113,6 +113,10 @@ export default class KanyeApp extends QuentinLike {
     this.sky.set(params);
   }
 
+  setGlobePosition(theta, fi) {
+    this.sky.setGlobePosition(theta, fi);
+  }
+
   setPhong({color, emissive, specular, shininess, reflectivity}) {
     this.grassMaterial = new THREE.MeshPhongMaterial({
       color: stringToHex(color),
@@ -164,12 +168,10 @@ export default class KanyeApp extends QuentinLike {
       floor: _abc,
     });
 
-    let images = [];
-
     let loader = new THREE.FontLoader();
     loader.load('helvetiker.json', (font) => {
       let textGeo = new THREE.TextGeometry(
-        "you know better",
+        "shake that body, party that bod",
         {
           font: font,
           size: 3.0,
@@ -205,17 +207,17 @@ export default class KanyeApp extends QuentinLike {
     let [a, b, c] = [5, 9.0, 0];
     let [j, k, l] = [a-6.0, b, c];
 
-    this.sky.simulacrum.group.position.set(j-4.99, k-0.69, l+0.69);
-    this.sky.simulacrum.group.rotation.set(Math.PI/3.0, Math.PI/3.0, -Math.PI/6.0);
+    this.sky.simulacrum.group.position.set(j, k, l);
+    this.sky.simulacrum.group.rotation.set(0, Math.PI/2. + 0.1, 0);
 
     this.camera.position.set(a, b, c);
     this.camera.lookAt(j, k, l);
 
     // ...
-    let u = 2.*theta;
+    let u = 9.*theta;
     let r = 0.3;
     let x = r*-3.0;
-    let y = r*0.3*Math.cos(u)+0.075;
+    let y = r*0.3*Math.cos(u)+0.005;
     let z = r*0.3*Math.sin(u);
     this.sky.setSunPosition(x, y, z);
   }

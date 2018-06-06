@@ -90,7 +90,7 @@
         "fi": 0.001,
 
         // ...
-        "sun-theta": 0.001,
+        "time": 0.5,
 
       };
 
@@ -108,12 +108,14 @@
       var liesFolder = gui.addFolder("LIES");
       liesFolder.add(params, "zapYa", 0.0, 10.0).onChange(update);
 
-      var posFolder = gui.addFolder("LOCATION LOCATION LOCATION");
+      var posFolder = gui.addFolder("WORLD POSITION");
       posFolder.add(params, "theta", -Math.PI, Math.PI).onChange(update);
       posFolder.add(params, "fi", -Math.PI, Math.PI).onChange(update);
-      posFolder.add(params, "fi", -Math.PI, Math.PI).onChange(update);
-
       posFolder.open();
+
+      var skyPosFolder = gui.addFolder("STARS STARS STARS STARS");
+      skyPosFolder.add(params, "time", 0.0, 1.0).onChange(update);
+      skyPosFolder.open();
 
       return params;
     }
@@ -166,6 +168,7 @@
     function update() {
       // app.setPhong(params);
       app.set(params);
+      app.setGlobePosition(params.theta, params.fi);
     }
 
     </script>

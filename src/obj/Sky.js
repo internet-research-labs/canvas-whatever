@@ -1,3 +1,59 @@
+function round(f, n) {
+  let s = Math.pow(10, n);
+  return Math.round(s*f)/s;
+}
+
+
+// Return Cartesian Coordinates from Normalized Spherical [Theta,Fi]
+function cartesian([r, theta, fi]) {
+  return [
+    round(r*Math.sin(theta)*Math.cos(fi), 3),
+    round(r*Math.sin(theta)*Math.sin(fi), 3),
+    round(r*Math.cos(theta), 3),
+  ];
+}
+
+
+// Return a box
+function _box([x, y, z], c) {
+  let size = 0.3;
+  let box = new THREE.EdgesGeometry(new THREE.BoxGeometry(size, size, size));
+  let mat = new THREE.LineBasicMaterial({
+    color: 0xDDDDDD,
+    linewidth: 10,
+  });
+  return new THREE.LineSegments(box, mat);
+}
+
+
+// Return a line from origin to [x, y, z]
+function _dir([x, y, z], c) {
+  let g = new THREE.Geometry();
+  g.vertices.push(new THREE.Vector3(-x, -y, -z));
+  g.vertices.push(new THREE.Vector3(x, y, z));
+  let m = new THREE.LineBasicMaterial({color: c, linewidth: 100});
+  return new THREE.Line(g, m);
+}
+
+// Return a global at [x, y, z] of color {{c}} size {{size}}
+function _globe([x, y, z], c, size) {
+  size = size || 0.1;
+  let g = new THREE.Mesh(
+    new THREE.SphereGeometry(size, 20, 20),
+    new THREE.MeshBasicMaterial({
+      side: THREE.DoubleSide,
+      color: c,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.75,
+    }),
+  );
+
+  g.position.set(x, y, z);
+
+  return g;
+}
+
 export class Sky {
   // Constructor
   constructor({size, sunPosition, simulacrum}) {
@@ -11,7 +67,6 @@ export class Sky {
     if (simulacrum) {
       this.simulacrum = this.simulacrum(-1.0, 0, 0);
       this.simulacrum.group.position.set(-1.0, -1.0, -1.0);
-      console.log(this.simulacrum.group.position);
       console.log("[SIMULACRUM] Added");
     }
   }
@@ -19,37 +74,12 @@ export class Sky {
   globe() {
     let g = new THREE.Group();
 
-    /**
-     *
-     */
-    function _globe([x, y, z], c) {
-      return new THREE.Mesh(
-        new THREE.SphereGeometry(0.1, 30, 30),
-        new THREE.MeshBasicMaterial({
-          side: THREE.DoubleSide,
-          color: c,
-          wireframe: true,
-          transparent: true,
-          opacity: 0.05,
-        }),
-      );
-    }
-
-    function _dir([x, y, z], c) {
-      let g = new THREE.Geometry();
-      g.vertices.push(new THREE.Vector3(-x, -y, -z));
-      g.vertices.push(new THREE.Vector3(x, y, z));
-      let m = new THREE.LineBasicMaterial({color: c, linewidth: 100});
-      return new THREE.Line(g, m);
-    }
-
-
     let axes = new THREE.Group();
     let l = 0.3;
     axes.add(_dir([l, 0, 0], 0xFF0000));
     axes.add(_dir([0, l, 0], 0x00FF00));
     axes.add(_dir([0, 0, l], 0x0000FF));
-    axes.add(_globe([0, 0, 0], 0x999999));
+    axes.add(_globe([0, 0, 0], 0xCCCCCC));
     g.add(axes);
 
     return g;
@@ -57,9 +87,6 @@ export class Sky {
 
   // Return the simulacrum
   simulacrum(x, y, z) {
-
-    console.log("[SIMULACRUM] (x, y, z) = (", x, y, z, ")");
-
     let objects = {};
 
     let g = new THREE.Group();
@@ -75,22 +102,15 @@ export class Sky {
     );
     objects.world = this.globe();
     objects.stars = _box([0, 0, 0], 0xCCCCCC);
-    function _box([x, y, z], c) {
-      let size = 0.3;
-      let box = new THREE.EdgesGeometry(new THREE.BoxGeometry(size, size, size));
-      let mat = new THREE.LineBasicMaterial({
-        color: 0xDDDDDD,
-        linewidth: 10,
-      });
-      return new THREE.LineSegments(box, mat);
-    }
-
+    let pos = cartesian([1.0, 0.0, 0.0]);
+    objects.pos = _globe(pos, 0x00CCCC, 0.025);
 
     // objects.sun.position.set(0.0, 0.1, 1.0);
 
     g.add(objects.world);
     g.add(objects.sun);
     g.add(objects.stars);
+    g.add(objects.pos);
 
     return {
       group: g,
@@ -140,11 +160,15 @@ export class Sky {
   }
 
   set(params) {
-    console.log(params);
     this.mat.uniforms.rayleigh.value = params.rayleigh || this.mat.uniforms.rayleigh.value;
     this.mat.uniforms.turbidity.value = params.turbidity || this.mat.uniforms.turbidity.value;
     this.mat.uniforms.luminance.value = params.luminance || this.mat.uniforms.luminance.value;
-    // this.mat.uniforms.mieDirectionalG.value = params.mieDirectionalG || this.mat.uniforms.mieDirectionalG.value;
-    // this.mat.uniforms.mieCoefficient.value = params.mieCoefficient || this.mat.uniforms.mieCoefficient.value;
+  }
+
+  setGlobePosition(theta, fi) {
+    if (this.simulacrum) {
+      let [x, y, z] = cartesian([0.1, theta, fi]);
+      this.simulacrum.objects.pos.position.set(x, y, z);
+    }
   }
 }
