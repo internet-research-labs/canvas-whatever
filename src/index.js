@@ -22,6 +22,7 @@ import TriGridApp from './app/TriGridApp.js';
 import TriOverlapApp from './app/TriOverlapApp.js';
 import TriangleClipGridApp from './app/TriangleClipGridApp.js';
 import WaveApp from './app/WaveApp.js';
+import WavveyApp from './app/WavveyApp.js';
 import WillApp from './app/WillApp.js';
 import {FlatApp, GoldGridApp} from './app/GoldGridApp.js';
 
@@ -66,6 +67,7 @@ export {
   StarfieldApp,
   TriOverlapApp,
   TriangleClipGridApp,
+  WavveyApp,
   WaveApp,
   WillApp,
 
