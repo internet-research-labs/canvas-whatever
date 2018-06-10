@@ -63,6 +63,9 @@ export class Sky {
     this.mat = this.material();
     this.sky = new THREE.Group();
     this.sky.add(new THREE.Mesh(this.geo, this.mat));
+    this.params = {
+      'rot': 0.0,
+    };
 
     if (simulacrum) {
       this.simulacrum = this.simulacrum(-1.0, 0, 0);
@@ -107,10 +110,10 @@ export class Sky {
 
     // objects.sun.position.set(0.0, 0.1, 1.0);
 
+    objects.world.add(objects.pos);
     g.add(objects.world);
     g.add(objects.sun);
     g.add(objects.stars);
-    g.add(objects.pos);
 
     return {
       group: g,
@@ -164,6 +167,21 @@ export class Sky {
     this.mat.uniforms.turbidity.value = params.turbidity || this.mat.uniforms.turbidity.value;
     this.mat.uniforms.luminance.value = params.luminance || this.mat.uniforms.luminance.value;
   }
+
+  // t in [0, 1)
+  setGlobeRotation(t) {
+    this.params.rot = (t % 1.0)*2.0*Math.PI;
+    console.log(this.params);
+    if (this.simulacrum) {
+      let axis = new THREE.Vector3(0.0, 1.0, 0.0);
+      axis.normalize();
+      this.simulacrum.objects.world.setRotationFromAxisAngle(
+        axis,
+        this.params.rot,
+      );
+    }
+  }
+
 
   setGlobePosition(theta, fi) {
     if (this.simulacrum) {

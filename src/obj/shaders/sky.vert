@@ -1,8 +1,12 @@
-// precision mediump float;
-// precision mediump int;
+/*
+precision mediump float;
+precision mediump int;
 
-// uniform mat4 modelViewMatrix; // optional
-// uniform mat4 projectionMatrix; // optional
+uniform vec3 position;
+uniform mat4 modelMatrix;
+uniform mat4 modelViewMatrix; // optional
+uniform mat4 projectionMatrix; // optional
+//*/
 
 uniform float size;
 uniform vec3 sunPosition;

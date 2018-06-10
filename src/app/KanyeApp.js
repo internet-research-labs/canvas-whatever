@@ -220,6 +220,7 @@ export default class KanyeApp extends QuentinLike {
     let y = r*0.3*Math.cos(u)+0.005;
     let z = r*0.3*Math.sin(u);
     this.sky.setSunPosition(x, y, z);
+    this.sky.setGlobeRotation(t/100.0);
   }
 
   setupCamera() {
