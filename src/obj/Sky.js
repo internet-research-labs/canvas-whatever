@@ -4,6 +4,10 @@ function round(f, n) {
 }
 
 
+export class SkySimulacrum {
+}
+
+
 // Return Cartesian Coordinates from Normalized Spherical [Theta,Fi]
 function cartesian([r, theta, fi]) {
   return [
@@ -171,7 +175,6 @@ export class Sky {
   // t in [0, 1)
   setGlobeRotation(t) {
     this.params.rot = (t % 1.0)*2.0*Math.PI;
-    console.log(this.params);
     if (this.simulacrum) {
       let axis = new THREE.Vector3(0.0, 1.0, 0.0);
       axis.normalize();
