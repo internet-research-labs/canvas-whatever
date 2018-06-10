@@ -82,8 +82,8 @@ export default class WavveyApp {
     // Meshes
     this.grids = [
       grid((x, y) => { return 0.3*Math.cos(3*x)+2.0; }, 10.0, 10.0),
-      grid((x, y) => { return 0.3*Math.sin(2*x)+1.0; }, 10.0, 10.0),
-      grid((x, y) => { return 0.3*Math.cos(x*x+y*y)-1.0; }, 10.0, 10.0),
+      // grid((x, y) => { return 0.3*Math.sin(2*x)+1.0; }, 10.0, 10.0),
+      // grid((x, y) => { return 0.3*Math.cos(x*x+y*y)-1.0; }, 10.0, 10.0),
       grid((x, y) => { return 0.3*Math.cos(x*x+y*y)-2.0; }, 10.0, 10.0),
     ];
 
@@ -102,7 +102,7 @@ export default class WavveyApp {
 
     // ...
     let theta = f;
-    theta = Math.PI/2.0+0.01;
+    // theta = Math.PI/2.0+0.01;
 
     let r = 50.0;
 
