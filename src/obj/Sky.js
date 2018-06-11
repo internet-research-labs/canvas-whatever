@@ -2,8 +2,8 @@ import {cartesian} from '../utils.js';
 
 
 // Return a box
-function _box([x, y, z], c) {
-  let size = 0.3;
+function _box([x, y, z], c, size) {
+  size = size || 0.3;
   let box = new THREE.EdgesGeometry(new THREE.BoxGeometry(size, size, size));
   let mat = new THREE.LineBasicMaterial({
     color: 0xDDDDDD,
@@ -58,20 +58,18 @@ export class SimulacrumSky extends AbstractSky {
     super();
     this.size = params ? params.size : undefined;
     this.group = new THREE.Group();
-
     this.objects = this.generate(0, 0, 0);
-    console.log("!!!", this.objects.group);
   }
 
   globe() {
     let g = new THREE.Group();
 
     let axes = new THREE.Group();
-    let l = 0.3;
+    let l = 2.0*this.size;
     axes.add(_dir([l, 0, 0], 0xFF0000));
     axes.add(_dir([0, l, 0], 0x00FF00));
     axes.add(_dir([0, 0, l], 0x0000FF));
-    axes.add(_globe([0, 0, 0], 0xCCCCCC));
+    axes.add(_globe([0, 0, 0], 0xCCCCCC, this.size));
     g.add(axes);
 
     return g;
@@ -104,8 +102,8 @@ export class SimulacrumSky extends AbstractSky {
       mat,
     );
     objects.world = this.globe();
-    objects.stars = _box([0, 0, 0], 0xCCCCCC);
-    let pos = cartesian([1.0, 0.0, 0.0]);
+    objects.stars = _box([0, 0, 0], 0xCCCCCC, this.size*2.9);
+    let pos = cartesian([this.size, 0.0, 0.0]);
     objects.pos = _globe(pos, 0x00CCCC, 0.025);
 
     // objects.sun.position.set(0.0, 0.1, 1.0);
@@ -122,21 +120,23 @@ export class SimulacrumSky extends AbstractSky {
   }
 
   object() {
-    console.log(this.objects.group);
     return this.objects.group;
   }
 
   setGlobePosition(theta, fi) {
-    let [x, y, z] = cartesian([0.1, theta, fi]);
+    let [x, y, z] = cartesian([this.size, theta, fi]);
     this.objects.objects.pos.position.set(x, y, z);
   }
 
   setSunPosition(x, y, z) {
-    let v = 1.0;
-    let [j, k, l] = [v*x, v*y, v*z];
-    this.objects.objects.sun.position.set(j, k, l);
+    let p = new THREE.Vector3(x, y, z);
+    p.normalize();
+    p.multiplyScalar(4*this.size);
+
+    this.objects.objects.sun.position.copy(p);
+
     let r = -20.0;
-    this.objects.objects.sun.rotation.set(r*j, r*k, r*l);
+    this.objects.objects.sun.rotation.set(r*p.x, r*p.y, r*p.z);
   }
 
   setGlobeRotation(t) {
@@ -191,9 +191,9 @@ export class Sky {
   }
 
   setSunPosition(x, y, z) {
-    this.demoSun.position.x = x;
-    this.demoSun.position.y = y;
-    this.demoSun.position.z = z;
+    let p = new THREE.Vector3(x, y, z);
+    p.normalize();
+    this.demoSun.position.set(p.x, p.y, p.z);
   }
 
   set(params) {

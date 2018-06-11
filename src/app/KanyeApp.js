@@ -4,7 +4,7 @@ import {add, cross, sub, normalize, scale} from '../math3.js';
 import {getElapsedTime,stringToHex} from '../utils.js';
 import * as THREE from 'THREE';
 
-import {SimulacrumSky, Sky} from '../obj/Sky.js';
+import {AbstractSky, SimulacrumSky, Sky} from '../obj/Sky.js';
 
 import RibbonPath from '../RibbonPath.js';
 import Ribbon from '../Ribbon.js';
@@ -79,10 +79,11 @@ export default class KanyeApp extends QuentinLike {
 
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(1.2);
-    this.renderer.setClearColor(0xFFFFFF);
+    this.renderer.setClearColor(0xFF4470);
+    this.renderer.setClearColor(0x000000);
 
     // Sky
-    this.sky = new Sky({
+    this.sky = new AbstractSky({
       size: 300.0,
       sunPosition: [1, 0, 0],
       simulacrum: true,
@@ -90,13 +91,13 @@ export default class KanyeApp extends QuentinLike {
 
     // Simulacrum
     this.sim = new SimulacrumSky({
-      size: 0.3,
+      size: 0.2,
       sunPosition: [1, 0, 0],
     });
 
     // this.simulacrum = this.
     // this.scene.add(this.sky.simulacrum.group);
-    this.scene.add(this.sky.sky);
+    // this.scene.add(this.sky.sky);
     this.scene.add(this.sim.object());
 
     // Add visible components
@@ -110,6 +111,14 @@ export default class KanyeApp extends QuentinLike {
   set(params) {
     this.sky.set(params);
     this.sim.set(params);
+
+    return;
+
+    this.sky.setSunPosition(x, y, z);
+    this.sim.setSunPosition(x, y, z);
+
+    this.sky.setGlobeRotation(0.0);
+    this.sim.setGlobeRotation(0.0);
   }
 
   setGlobePosition(theta, fi) {
@@ -183,23 +192,10 @@ export default class KanyeApp extends QuentinLike {
     let [j, k, l] = [a-6.0, b, c];
 
     this.sim.objects.group.position.set(j, k, l);
-    this.sim.objects.group.rotation.set(0, Math.PI/2. + 0.1, 0);
+    this.sim.objects.group.rotation.set(0, Math.PI/2., 0);
 
     this.camera.position.set(a, b, c);
     this.camera.lookAt(j, k, l);
-
-    // ...
-    let u = 9.*theta;
-    let r = 0.3;
-    let x = r*-3.0;
-    let y = r*0.3*Math.cos(u)+0.005;
-    let z = r*0.3*Math.sin(u);
-
-    this.sky.setSunPosition(x, y, z);
-    this.sim.setSunPosition(x, y, z);
-
-    this.sky.setGlobeRotation(t/100.0);
-    this.sim.setGlobeRotation(t/100.0);
   }
 
   setupCamera() {
