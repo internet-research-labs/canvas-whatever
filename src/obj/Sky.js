@@ -60,8 +60,7 @@ export class SimulacrumSky extends AbstractSky {
     this.group = new THREE.Group();
 
     this.objects = this.generate(0, 0, 0);
-
-    this.group.add(this.objects.group);
+    console.log("!!!", this.objects.group);
   }
 
   globe() {
@@ -123,7 +122,13 @@ export class SimulacrumSky extends AbstractSky {
   }
 
   object() {
-    return this.group;
+    console.log(this.objects.group);
+    return this.objects.group;
+  }
+
+  setGlobePosition(theta, fi) {
+    let [x, y, z] = cartesian([0.1, theta, fi]);
+    this.objects.objects.pos.position.set(x, y, z);
   }
 }
 
@@ -139,13 +144,6 @@ export class Sky {
     this.params = {
       'rot': 0.0,
     };
-
-    if (simulacrum) {
-      this.simulacrum = new SimulacrumSky();
-      // this.simulacrum.group.position.set(-1.0, -1.0, -1.0);
-      // this.simulacrum = this.simulacrum(-1.0, 0, 0);
-      console.log("[SIMULACRUM] Added");
-    }
   }
 
   geometry() {
@@ -214,11 +212,5 @@ export class Sky {
 
 
   setGlobePosition(theta, fi) {
-    /*
-    if (this.simulacrum) {
-      let [x, y, z] = cartesian([0.1, theta, fi]);
-      this.simulacrum.objects.pos.position.set(x, y, z);
-    }
-    */
   }
 }

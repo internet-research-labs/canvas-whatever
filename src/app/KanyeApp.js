@@ -89,7 +89,7 @@ export default class KanyeApp extends QuentinLike {
     });
 
     // Simulacrum
-    this.simulacrum = new SimulacrumSky({
+    this.sim = new SimulacrumSky({
       size: 0.3,
       sunPosition: [1, 0, 0],
     });
@@ -97,7 +97,7 @@ export default class KanyeApp extends QuentinLike {
     // this.simulacrum = this.
     // this.scene.add(this.sky.simulacrum.group);
     this.scene.add(this.sky.sky);
-    this.scene.add(this.simulacrum.group);
+    this.scene.add(this.sim.object());
 
     // Add visible components
 
@@ -109,12 +109,12 @@ export default class KanyeApp extends QuentinLike {
 
   set(params) {
     this.sky.set(params);
-    this.sky.simulacrum.set(params);
+    this.sim.set(params);
   }
 
   setGlobePosition(theta, fi) {
     this.sky.setGlobePosition(theta, fi);
-    this.sky.simulacrum.setGlobePosition(theta, fi);
+    this.sim.setGlobePosition(theta, fi);
   }
 
   // Add floor
@@ -182,7 +182,7 @@ export default class KanyeApp extends QuentinLike {
     let [a, b, c] = [5, 9.0, 0];
     let [j, k, l] = [a-6.0, b, c];
 
-    this.simulacrum.group.position.set(j, k, l);
+    this.sim.objects.group.position.set(j, k, l);
     // this.sky.simulacrum.group.rotation.set(0, Math.PI/2. + 0.1, 0);
 
     this.camera.position.set(a, b, c);
@@ -196,10 +196,10 @@ export default class KanyeApp extends QuentinLike {
     let z = r*0.3*Math.sin(u);
 
     this.sky.setSunPosition(x, y, z);
-    this.sky.simulacrum.setSunPosition(x, y, z);
+    this.sim.setSunPosition(x, y, z);
 
     this.sky.setGlobeRotation(t/100.0);
-    this.sky.simulacrum.setGlobeRotation(t, 100.0);
+    // this.sky.simulacrum.setGlobeRotation(t, 100.0);
   }
 
   setupCamera() {
