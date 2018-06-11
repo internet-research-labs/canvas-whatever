@@ -1,21 +1,10 @@
-function round(f, n) {
-  let s = Math.pow(10, n);
-  return Math.round(s*f)/s;
-}
+import {cartesian} from '../utils.js';
 
 
 export class SkySimulacrum {
 }
 
 
-// Return Cartesian Coordinates from Normalized Spherical [Theta,Fi]
-function cartesian([r, theta, fi]) {
-  return [
-    round(r*Math.sin(theta)*Math.cos(fi), 3),
-    round(r*Math.sin(theta)*Math.sin(fi), 3),
-    round(r*Math.cos(theta), 3),
-  ];
-}
 
 
 // Return a box

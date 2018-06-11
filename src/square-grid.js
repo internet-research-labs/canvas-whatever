@@ -1,4 +1,5 @@
 import {random} from './utils.js';
+import {cartesian} from './utils.js';
 
 /**
  *
@@ -131,7 +132,6 @@ export class SquareSurface {
 
         let [a, b, c, d] = this.grid.getPointList(i, j);
 
-
         __add_brick(a, b);
         __add_brick(b, c);
         __add_brick(c, d);
@@ -157,11 +157,7 @@ export class SphereSurface {
     let self = this;
     let geo = new THREE.Geometry();
 
-
-    let TOTAL = 200;
-
-    function __v3([x, z]) {
-      let y = self.f(x, z);
+    function __v3([x, y, z]) {
       return new THREE.Vector3(x, y, z);
     }
 
@@ -173,18 +169,44 @@ export class SphereSurface {
       );
     }
 
+
+    let dt = Math.PI/TOTAL;
+    let df = 2*Math.PI/TOTAL;
+
+    let F = this.f;
+    function __cart(t, f) {
+      return cartesian([F(t, f), t, f]);
+    }
+
+
+    let TOTAL = 160;
+
     for (let i=0; i < TOTAL; i++) {
       for (let j=0; j < TOTAL; j++) {
-        let k = geo.vertices.length;
-        let points = [];
 
-        let [a, b, c, d] = this.grid.getPointList(i, j);
+        if ((i+j)%2) {
+          continue;
+        }
 
+        let t0 = (i+0.0)/TOTAL*Math.PI;
+        let t1 = (i+1.0)/TOTAL*Math.PI;
+        let f0 = (j+0.0)/TOTAL*2*Math.PI;
+        let f1 = (j+1.0)/TOTAL*2*Math.PI;
+
+
+        let r = 5.0;
+        let a = __cart(t0, f0);
+        let b = __cart(t1, f0);
+        let c = __cart(t1, f1);
+        let d = __cart(t0, f1);
 
         __add_brick(a, b);
-        __add_brick(b, c);
         __add_brick(c, d);
+        __add_brick(b, c);
         __add_brick(d, a);
+
+        // console.log(t0, f0)
+        // console.log(t1, f1)
 
       }
     }

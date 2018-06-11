@@ -10,14 +10,15 @@ import {Sky} from '../obj/Sky.js';
 import RibbonPath from '../RibbonPath.js';
 import Ribbon from '../Ribbon.js';
 
-import {SquareGrid, SphereSurface, SquareSurface} from '../square-grid.js';
+import {SphereSurface, SquareSurface} from '../square-grid.js';
 
 function norm(v) {
   return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
 }
 
 function grid(f, width, height) {
-  let surface = new SquareSurface(f, 0.2, width, height);
+  // let surface = new SquareSurface(f, 0.2, width, height);
+  let surface = new SphereSurface(f, 0.2, width, height);
 
   return new THREE.LineSegments(
     surface.build(), 
@@ -81,10 +82,16 @@ export default class WavveyApp {
 
     // Meshes
     this.grids = [
-      grid((x, y) => { return 0.3*Math.cos(3*x)+2.0; }, 10.0, 10.0),
+      // grid((x, y) => { return 0.3*Math.cos(3*x)+2.0; }, 10.0, 10.0),
       // grid((x, y) => { return 0.3*Math.sin(2*x)+1.0; }, 10.0, 10.0),
       // grid((x, y) => { return 0.3*Math.cos(x*x+y*y)-1.0; }, 10.0, 10.0),
-      grid((x, y) => { return 0.3*Math.cos(x*x+y*y)-2.0; }, 10.0, 10.0),
+      // grid((x, y) => { return 0.3*Math.cos(x*x+y*y)-2.0; }, 10.0, 10.0),
+      // grid((t, f) => { return 2*t; }, 10.0, 10.0),
+      // grid((t, f) => { return Math.cos(t)+Math.sin(2*f)+4.0; }, 10.0, 10.0),
+      grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      // grid((t, f) => { return 8.0; }, 10.0, 10.0),
+      // grid((t, f) => { return 4.0; }, 10.0, 10.0),
+      // grid((t, f) => { return 6.0; }, 10.0, 10.0),
     ];
 
     let g = new THREE.Group();
