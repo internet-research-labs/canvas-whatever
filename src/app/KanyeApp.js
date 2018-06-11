@@ -97,6 +97,7 @@ export default class KanyeApp extends QuentinLike {
     // this.simulacrum = this.
     // this.scene.add(this.sky.simulacrum.group);
     this.scene.add(this.sky.sky);
+    this.scene.add(this.simulacrum.group);
 
     // Add visible components
 
@@ -181,7 +182,7 @@ export default class KanyeApp extends QuentinLike {
     let [a, b, c] = [5, 9.0, 0];
     let [j, k, l] = [a-6.0, b, c];
 
-    // this.sky.simulacrum.group.position.set(j, k, l);
+    this.simulacrum.group.position.set(j, k, l);
     // this.sky.simulacrum.group.rotation.set(0, Math.PI/2. + 0.1, 0);
 
     this.camera.position.set(a, b, c);

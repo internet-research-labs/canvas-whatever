@@ -57,29 +57,11 @@ export class SimulacrumSky extends AbstractSky {
   constructor(params) {
     super();
     this.size = params ? params.size : undefined;
-    this.object = new THREE.Group();
-  }
-}
+    this.group = new THREE.Group();
 
-export class Sky {
-  // Constructor
-  constructor({size, sunPosition, simulacrum}) {
-    this.size = size;
-    this.demoSun = new THREE.Group();
-    this.geo = this.geometry();
-    this.mat = this.material();
-    this.sky = new THREE.Group();
-    this.sky.add(new THREE.Mesh(this.geo, this.mat));
-    this.params = {
-      'rot': 0.0,
-    };
+    this.objects = this.generate(0, 0, 0);
 
-    if (simulacrum) {
-      this.simulacrum = new SimulacrumSky();
-      // this.simulacrum.group.position.set(-1.0, -1.0, -1.0);
-      // this.simulacrum = this.simulacrum(-1.0, 0, 0);
-      console.log("[SIMULACRUM] Added");
-    }
+    this.group.add(this.objects.group);
   }
 
   globe() {
@@ -96,8 +78,19 @@ export class Sky {
     return g;
   }
 
-  // Return the simulacrum
-  simulacrum(x, y, z) {
+  // Return control objects from inputs
+  _params({sunPosition, globeCoordinates}) {
+    console.log("[SIMULACRUM] Sun is at ", sunPosition);
+    console.log("[SIMULACRUM] Located at  ", globleCoordinates);
+  }
+
+  _starbox() {
+  }
+
+  _blank() {
+  }
+
+  generate(x, y, z) {
     let objects = {};
 
     let g = new THREE.Group();
@@ -127,6 +120,32 @@ export class Sky {
       group: g,
       objects: objects,
     };
+  }
+
+  object() {
+    return this.group;
+  }
+}
+
+export class Sky {
+  // Constructor
+  constructor({size, sunPosition, simulacrum}) {
+    this.size = size;
+    this.demoSun = new THREE.Group();
+    this.geo = this.geometry();
+    this.mat = this.material();
+    this.sky = new THREE.Group();
+    this.sky.add(new THREE.Mesh(this.geo, this.mat));
+    this.params = {
+      'rot': 0.0,
+    };
+
+    if (simulacrum) {
+      this.simulacrum = new SimulacrumSky();
+      // this.simulacrum.group.position.set(-1.0, -1.0, -1.0);
+      // this.simulacrum = this.simulacrum(-1.0, 0, 0);
+      console.log("[SIMULACRUM] Added");
+    }
   }
 
   geometry() {
