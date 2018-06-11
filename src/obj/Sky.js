@@ -42,7 +42,7 @@ function _globe([x, y, z], c, size) {
 }
 
 
-// Base Sky
+// Must-implement methods for Sky-like things
 export class AbstractSky {
   object() { }
   set() { }
@@ -130,11 +130,28 @@ export class SimulacrumSky extends AbstractSky {
     let [x, y, z] = cartesian([0.1, theta, fi]);
     this.objects.objects.pos.position.set(x, y, z);
   }
+
+  setSunPosition(x, y, z) {
+    let v = 1.0;
+    let [j, k, l] = [v*x, v*y, v*z];
+    this.objects.objects.sun.position.set(j, k, l);
+    let r = -20.0;
+    this.objects.objects.sun.rotation.set(r*j, r*k, r*l);
+  }
+
+  setGlobeRotation(t) {
+    let axis = new THREE.Vector3(0.0, 1.0, 0.0);
+    axis.normalize();
+    this.objects.objects.world.setRotationFromAxisAngle(
+      axis,
+      t,
+    );
+  }
 }
 
 export class Sky {
   // Constructor
-  constructor({size, sunPosition, simulacrum}) {
+  constructor({size, sunPosition}) {
     this.size = size;
     this.demoSun = new THREE.Group();
     this.geo = this.geometry();
@@ -177,16 +194,6 @@ export class Sky {
     this.demoSun.position.x = x;
     this.demoSun.position.y = y;
     this.demoSun.position.z = z;
-
-    /*
-    if (this.simulacrum) {
-      let v = 1.0;
-      let [j, k, l] = [v*x, v*y, v*z];
-      this.simulacrum.objects.sun.position.set(j, k, l);
-      let r = -20.0;
-      this.simulacrum.objects.sun.rotation.set(r*j, r*k, r*l);
-    }
-    */
   }
 
   set(params) {
@@ -198,16 +205,6 @@ export class Sky {
   // t in [0, 1)
   setGlobeRotation(t) {
     this.params.rot = (t % 1.0)*2.0*Math.PI;
-    /*
-    if (this.simulacrum) {
-      let axis = new THREE.Vector3(0.0, 1.0, 0.0);
-      axis.normalize();
-      this.simulacrum.objects.world.setRotationFromAxisAngle(
-        axis,
-        this.params.rot,
-      );
-    }
-    */
   }
 
 

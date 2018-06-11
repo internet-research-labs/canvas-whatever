@@ -183,7 +183,7 @@ export default class KanyeApp extends QuentinLike {
     let [j, k, l] = [a-6.0, b, c];
 
     this.sim.objects.group.position.set(j, k, l);
-    // this.sky.simulacrum.group.rotation.set(0, Math.PI/2. + 0.1, 0);
+    this.sim.objects.group.rotation.set(0, Math.PI/2. + 0.1, 0);
 
     this.camera.position.set(a, b, c);
     this.camera.lookAt(j, k, l);
@@ -199,7 +199,7 @@ export default class KanyeApp extends QuentinLike {
     this.sim.setSunPosition(x, y, z);
 
     this.sky.setGlobeRotation(t/100.0);
-    // this.sky.simulacrum.setGlobeRotation(t, 100.0);
+    this.sim.setGlobeRotation(t/100.0);
   }
 
   setupCamera() {
