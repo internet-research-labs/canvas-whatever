@@ -124,6 +124,55 @@ export class SquareSurface {
       );
     }
 
+    for (let i=-TOTAL/2; i <= TOTAL/2; i++) {
+      for (let j=-TOTAL/2; j <= TOTAL/2; j++) {
+        let k = geo.vertices.length;
+        let points = [];
+
+        let [a, b, c, d] = this.grid.getPointList(i, j);
+
+
+        __add_brick(a, b);
+        __add_brick(b, c);
+        __add_brick(c, d);
+        __add_brick(d, a);
+
+      }
+    }
+
+    return geo;
+  }
+
+}
+
+
+
+export class SphereSurface {
+  constructor(f, radius, width, height) {
+    this.f = f;
+    this.grid = new SquareGrid({width: 0.08, height:  0.08});
+  }
+
+  build() {
+    let self = this;
+    let geo = new THREE.Geometry();
+
+
+    let TOTAL = 200;
+
+    function __v3([x, z]) {
+      let y = self.f(x, z);
+      return new THREE.Vector3(x, y, z);
+    }
+
+    function __add_brick(p, q) {
+
+      geo.vertices.push(
+        __v3(p),
+        __v3(q),
+      );
+    }
+
     for (let i=0; i < TOTAL; i++) {
       for (let j=0; j < TOTAL; j++) {
         let k = geo.vertices.length;

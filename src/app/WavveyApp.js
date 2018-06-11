@@ -10,7 +10,7 @@ import {Sky} from '../obj/Sky.js';
 import RibbonPath from '../RibbonPath.js';
 import Ribbon from '../Ribbon.js';
 
-import {SquareGrid, SquareSurface} from '../square-grid.js';
+import {SquareGrid, SphereSurface, SquareSurface} from '../square-grid.js';
 
 function norm(v) {
   return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
