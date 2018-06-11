@@ -54,7 +54,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.min.js"></script>
 
-    <script src="assets/svv.im.bundled.js"></script>
+    <script src="assets/svv.im.bundled.min.js"></script>
     <script src="dat.gui.min.js"></script>
     <script src="/stats.min.js"></script>
   </head>
@@ -131,7 +131,6 @@
       
       app.setup();
       app.update(params);
-      app.setPhong(params);
       app.draw();
 
       var stats = new Stats();
@@ -166,7 +165,6 @@
     });
 
     function update() {
-      // app.setPhong(params);
       app.set(params);
       app.setGlobePosition(params.theta, params.fi);
     }

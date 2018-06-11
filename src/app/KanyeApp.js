@@ -4,8 +4,7 @@ import {add, cross, sub, normalize, scale} from '../math3.js';
 import {getElapsedTime,stringToHex} from '../utils.js';
 import * as THREE from 'THREE';
 
-import {sky, StarrySky} from '../obj/StarrySky.js';
-import {Sky} from '../obj/Sky.js';
+import {SimulacrumSky, Sky} from '../obj/Sky.js';
 
 import RibbonPath from '../RibbonPath.js';
 import Ribbon from '../Ribbon.js';
@@ -83,11 +82,21 @@ export default class KanyeApp extends QuentinLike {
     this.renderer.setClearColor(0xFFFFFF);
 
     // Sky
-    this.sky = this.getSky();
-    this.scene.add(this.sky.simulacrum.group);
+    this.sky = new Sky({
+      size: 300.0,
+      sunPosition: [1, 0, 0],
+      simulacrum: true,
+    });
 
+    // Simulacrum
+    this.simulacrum = new SimulacrumSky({
+      size: 0.3,
+      sunPosition: [1, 0, 0],
+    });
+
+    // this.simulacrum = this.
+    // this.scene.add(this.sky.simulacrum.group);
     this.scene.add(this.sky.sky);
-    this.setTheta(0.0);
 
     // Add visible components
 
@@ -97,52 +106,17 @@ export default class KanyeApp extends QuentinLike {
     this.addFloor();
   }
 
-
-  /**
-   * Return a sky [and helper objects]
-   */
-  getSky() {
-    return new Sky({
-      size: 300.0,
-      sunPosition: [1, 0, 0],
-      simulacrum: true,
-    });
-  }
-
   set(params) {
     this.sky.set(params);
+    this.sky.simulacrum.set(params);
   }
 
   setGlobePosition(theta, fi) {
     this.sky.setGlobePosition(theta, fi);
+    this.sky.simulacrum.setGlobePosition(theta, fi);
   }
 
-  setPhong({color, emissive, specular, shininess, reflectivity}) {
-    this.grassMaterial = new THREE.MeshPhongMaterial({
-      color: stringToHex(color),
-      emissive: stringToHex(emissive),
-      specular: stringToHex(specular),
-      shininess: shininess,
-      reflectivity: reflectivity,
-      // shading: THREE.SmoothShading,
-      flatShading: true,
-      side: THREE.BackSide,
-    });
-    this.fieldMesh.material = this.grassMaterial;
-    // this.fieldMesh.material = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, });
-  }
-
-  // Set the theta of the sky
-  setTheta(theta) {
-    this.skyTheta = theta;
-    this.skyAxis = new THREE.Vector3(
-      Math.cos(-theta),
-      Math.sin(-theta),
-      0.0,
-    );
-  }
-
-
+  // Add floor
   addFloor() {
     let mat = new THREE.MeshPhongMaterial({
       color: 0x000CCC,
@@ -207,8 +181,8 @@ export default class KanyeApp extends QuentinLike {
     let [a, b, c] = [5, 9.0, 0];
     let [j, k, l] = [a-6.0, b, c];
 
-    this.sky.simulacrum.group.position.set(j, k, l);
-    this.sky.simulacrum.group.rotation.set(0, Math.PI/2. + 0.1, 0);
+    // this.sky.simulacrum.group.position.set(j, k, l);
+    // this.sky.simulacrum.group.rotation.set(0, Math.PI/2. + 0.1, 0);
 
     this.camera.position.set(a, b, c);
     this.camera.lookAt(j, k, l);
@@ -219,8 +193,12 @@ export default class KanyeApp extends QuentinLike {
     let x = r*-3.0;
     let y = r*0.3*Math.cos(u)+0.005;
     let z = r*0.3*Math.sin(u);
+
     this.sky.setSunPosition(x, y, z);
+    this.sky.simulacrum.setSunPosition(x, y, z);
+
     this.sky.setGlobeRotation(t/100.0);
+    this.sky.simulacrum.setGlobeRotation(t, 100.0);
   }
 
   setupCamera() {

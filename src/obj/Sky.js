@@ -1,12 +1,6 @@
 import {cartesian} from '../utils.js';
 
 
-export class SkySimulacrum {
-}
-
-
-
-
 // Return a box
 function _box([x, y, z], c) {
   let size = 0.3;
@@ -47,6 +41,26 @@ function _globe([x, y, z], c, size) {
   return g;
 }
 
+
+// Base Sky
+export class AbstractSky {
+  object() { }
+  set() { }
+  setSunPosition(x, y, z) { }
+  setGlobeRotation(t) { }
+  setGlobePosition(theta, fi) { }
+}
+
+
+// Simulacrum
+export class SimulacrumSky extends AbstractSky {
+  constructor(params) {
+    super();
+    this.size = params ? params.size : undefined;
+    this.object = new THREE.Group();
+  }
+}
+
 export class Sky {
   // Constructor
   constructor({size, sunPosition, simulacrum}) {
@@ -61,8 +75,9 @@ export class Sky {
     };
 
     if (simulacrum) {
-      this.simulacrum = this.simulacrum(-1.0, 0, 0);
-      this.simulacrum.group.position.set(-1.0, -1.0, -1.0);
+      this.simulacrum = new SimulacrumSky();
+      // this.simulacrum.group.position.set(-1.0, -1.0, -1.0);
+      // this.simulacrum = this.simulacrum(-1.0, 0, 0);
       console.log("[SIMULACRUM] Added");
     }
   }
@@ -146,6 +161,7 @@ export class Sky {
     this.demoSun.position.y = y;
     this.demoSun.position.z = z;
 
+    /*
     if (this.simulacrum) {
       let v = 1.0;
       let [j, k, l] = [v*x, v*y, v*z];
@@ -153,6 +169,7 @@ export class Sky {
       let r = -20.0;
       this.simulacrum.objects.sun.rotation.set(r*j, r*k, r*l);
     }
+    */
   }
 
   set(params) {
@@ -164,6 +181,7 @@ export class Sky {
   // t in [0, 1)
   setGlobeRotation(t) {
     this.params.rot = (t % 1.0)*2.0*Math.PI;
+    /*
     if (this.simulacrum) {
       let axis = new THREE.Vector3(0.0, 1.0, 0.0);
       axis.normalize();
@@ -172,13 +190,16 @@ export class Sky {
         this.params.rot,
       );
     }
+    */
   }
 
 
   setGlobePosition(theta, fi) {
+    /*
     if (this.simulacrum) {
       let [x, y, z] = cartesian([0.1, theta, fi]);
       this.simulacrum.objects.pos.position.set(x, y, z);
     }
+    */
   }
 }
