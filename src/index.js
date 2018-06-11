@@ -27,8 +27,6 @@ import WillApp from './app/WillApp.js';
 import {FlatApp, GoldGridApp} from './app/GoldGridApp.js';
 
 // ...
-import Loading from './components/Loading.jsx';
-import LoadingCube from './LoadingCube.js';
 import TriangleClipGrid from './TriangleClipGrid.js';
 import TriangleMesh from './TriangleMesh.js';
 import {SubtitleScript, Subtitle} from './subtitles/Subtitles.js';
@@ -75,9 +73,7 @@ export {
   TriangleMesh,
   TriangleClipGrid,
 
-  // Components
-  Loading,
-  LoadingCube,
+  // ...
   Subtitle,
   SubtitleScript,
 };
