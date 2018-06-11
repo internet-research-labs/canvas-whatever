@@ -4,7 +4,7 @@
   "description": "svv.im",
   "main": "index.js",
   "scripts": {
-    "ayy": "node ./node_modules/webpack/bin/webpack.js",
+    "ayy": "node ./node_modules/webpack/bin/webpack.js -p",
     "lmao": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base=app/ --inline --hot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -89,6 +89,7 @@ export default class WavveyApp {
       // grid((t, f) => { return 2*t; }, 10.0, 10.0),
       // grid((t, f) => { return Math.cos(t)+Math.sin(2*f)+4.0; }, 10.0, 10.0),
       grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      // grid((t, f) => { return 0.5*Math.sin(23*(t))+4.0; }, 10.0, 10.0),
       // grid((t, f) => { return 8.0; }, 10.0, 10.0),
       // grid((t, f) => { return 4.0; }, 10.0, 10.0),
       // grid((t, f) => { return 6.0; }, 10.0, 10.0),

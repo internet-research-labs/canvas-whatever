@@ -1,13 +1,18 @@
+const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 module.exports = {
   context: __dirname + "/src",
   entry: './index.js',
   output: {
     path: __dirname + '/dist',
+    filename: 'svv.im.bundled.min.js',
     publicPath: "assets/",
-    filename: 'svv.im.bundled.js',
     libraryTarget: 'var',
     library: 'svv',
   },
+  // devtool: 'source-map',
+  plugins: new webpack.optimize.UglifyJsPlugin(),
   module: {
     loaders: [
       {
