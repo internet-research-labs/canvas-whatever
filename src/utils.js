@@ -49,9 +49,9 @@ export function round(f, n) {
 // Return Cartesian Coordinates from Normalized Spherical [Theta,Fi]
 export function cartesian([r, t, f]) {
   return [
-    r*Math.cos(t)*Math.sin(f),
-    r*Math.sin(t)*Math.sin(f),
-    r*Math.cos(f),
+    round(r*Math.sin(t)*Math.cos(f), 3),
+    round(r*Math.sin(t)*Math.sin(f), 3),
+    round(r*Math.cos(t), 3),
   ];
 }
 
