@@ -1,23 +1,8 @@
-import App from './App.js';
-import QuentinLike from '../app-utils/Quentin.js';
-import {add, cross, sub, normalize, scale} from '../math3.js';
-import {getElapsedTime,stringToHex} from '../utils.js';
 import * as THREE from 'THREE';
-
-import {sky, StarrySky} from '../obj/StarrySky.js';
-import {Sky} from '../obj/Sky.js';
-
-import RibbonPath from '../RibbonPath.js';
-import Ribbon from '../Ribbon.js';
 
 import {SphereSurface, SquareSurface} from '../square-grid.js';
 
-function norm(v) {
-  return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
-}
-
 function grid(f, width, height) {
-  // let surface = new SquareSurface(f, 0.2, width, height);
   let surface = new SphereSurface(f, 0.2, width, height);
 
   return new THREE.LineSegments(
