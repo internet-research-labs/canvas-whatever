@@ -1,5 +1,4 @@
-import {random} from './utils.js';
-import {cartesian} from './utils.js';
+import {random, cartesian, longlat} from './utils.js';
 
 /**
  *
@@ -148,13 +147,12 @@ export class SquareSurface {
 
 
 export class SphereSurface {
-  constructor(f, radius, width, height) {
+  constructor(f, detail) {
     this.f = f;
-    this.grid = new SquareGrid({width: 0.08, height:  0.08});
+    this.detail = detail;
   }
 
   build() {
-    let self = this;
     let geo = new THREE.Geometry();
 
     function __v3([x, y, z]) {
@@ -179,13 +177,13 @@ export class SphereSurface {
     }
 
 
-    let TOTAL = 160;
+    let TOTAL = this.detail;
 
     for (let i=0; i < TOTAL; i++) {
       for (let j=0; j < TOTAL; j++) {
 
         if ((i+j)%2) {
-          continue;
+          // continue;
         }
 
         let t0 = (i+0.0)/TOTAL*Math.PI;
@@ -193,8 +191,6 @@ export class SphereSurface {
         let f0 = (j+0.0)/TOTAL*2*Math.PI;
         let f1 = (j+1.0)/TOTAL*2*Math.PI;
 
-
-        let r = 5.0;
         let a = __cart(t0, f0);
         let b = __cart(t1, f0);
         let c = __cart(t1, f1);
@@ -204,10 +200,6 @@ export class SphereSurface {
         __add_brick(c, d);
         __add_brick(b, c);
         __add_brick(d, a);
-
-        // console.log(t0, f0)
-        // console.log(t1, f1)
-
       }
     }
 

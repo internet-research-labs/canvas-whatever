@@ -86,8 +86,8 @@
         zapYa: 0.1,
 
         // World positions
-        "theta": 0.001,
-        "fi": 0.001,
+        "longitude": 0.001,
+        "latitude": 0.001,
 
         // ...
         "time": 0.5,
@@ -109,8 +109,8 @@
       liesFolder.add(params, "zapYa", 0.0, 10.0).onChange(update);
 
       var posFolder = gui.addFolder("WORLD POSITION");
-      posFolder.add(params, "theta", -Math.PI, Math.PI).onChange(update);
-      posFolder.add(params, "fi", -Math.PI, Math.PI).onChange(update);
+      posFolder.add(params, "latitude", -Math.PI/2.0, Math.PI/2.0).onChange(update);
+      posFolder.add(params, "longitude", -Math.PI, Math.PI).onChange(update);
       posFolder.open();
 
       var skyPosFolder = gui.addFolder("STARS STARS STARS STARS");
@@ -130,11 +130,10 @@
       var params = datGui();
       
       app.setup();
-      app.update(params);
-      app.draw();
 
       var stats = new Stats();
       document.getElementById("stats").appendChild(stats.dom);
+      update();
 
       (function loloop() {
         requestAnimationFrame(loloop);
@@ -165,8 +164,9 @@
     });
 
     function update() {
-      app.set(params);
-      app.setGlobePosition(params.theta, params.fi);
+      // app.set(params);
+      // app.setGlobePosition(params.latitude, params.longitude);
+      app.setGlobePosition(params.longitude, params.latitude);
     }
 
     </script>

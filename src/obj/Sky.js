@@ -1,4 +1,4 @@
-import {cartesian} from '../utils.js';
+import {cartesian, longlat} from '../utils.js';
 
 
 // Return a box
@@ -103,7 +103,7 @@ export class SimulacrumSky extends AbstractSky {
     );
     objects.world = this.globe();
     objects.stars = _box([0, 0, 0], 0xCCCCCC, this.size*2.9);
-    let pos = cartesian([this.size, 0.0, 0.0]);
+    let pos = longlat([this.size, 0.0, 0.0]);
     objects.pos = _globe(pos, 0x00CCCC, 0.025);
 
     // objects.sun.position.set(0.0, 0.1, 1.0);
@@ -123,8 +123,8 @@ export class SimulacrumSky extends AbstractSky {
     return this.objects.group;
   }
 
-  setGlobePosition(theta, fi) {
-    let [x, y, z] = cartesian([this.size, theta, fi]);
+  setGlobePosition(lon, lat) {
+    let [x, y, z] = longlat([this.size, lon, lat]);
     this.objects.objects.pos.position.set(x, y, z);
   }
 

@@ -3,7 +3,7 @@ import * as THREE from 'THREE';
 import {SphereSurface, SquareSurface} from '../square-grid.js';
 
 function grid(f, width, height) {
-  let surface = new SphereSurface(f, 0.2, width, height);
+  let surface = new SphereSurface(f, 160);
 
   return new THREE.LineSegments(
     surface.build(), 

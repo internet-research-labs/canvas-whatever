@@ -1,29 +1,14 @@
-import App from './App.js';
-import QuentinLike from '../app-utils/Quentin.js';
-import {add, cross, sub, normalize, scale} from '../math3.js';
-import {getElapsedTime,stringToHex} from '../utils.js';
 import * as THREE from 'THREE';
 
 import {AbstractSky, SimulacrumSky, Sky} from '../obj/Sky.js';
 
-import RibbonPath from '../RibbonPath.js';
-import Ribbon from '../Ribbon.js';
-
 import SimplexNoise from 'simplex-noise';
 
-// Generative objects
-import {GrassyField} from '../obj/GrassyField.js';
 import {Land} from  '../obj/Land.js';
-
 import TriangleSurface from '../TriangleSurface.js';
 
-function norm(v) {
-  return Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
-}
-
-export default class KanyeApp extends QuentinLike {
+export default class KanyeApp {
   constructor(params) {
-    super(params);
     this.id = params.id;
     this.el = document.getElementById(this.id);
     this.app = {};
@@ -57,6 +42,7 @@ export default class KanyeApp extends QuentinLike {
       this.app.near,
       this.app.far,
     );
+    this.setupCamera();
 
     // Lights
     this.ambientLight = new THREE.AmbientLight(0xCCCCCC);
@@ -95,16 +81,7 @@ export default class KanyeApp extends QuentinLike {
       sunPosition: [1, 0, 0],
     });
 
-    // this.simulacrum = this.
-    // this.scene.add(this.sky.simulacrum.group);
-    // this.scene.add(this.sky.sky);
     this.scene.add(this.sim.object());
-
-    // Add visible components
-
-    let start = getElapsedTime();
-    this.fieldMesh = {}
-
     this.addFloor();
   }
 
@@ -121,9 +98,9 @@ export default class KanyeApp extends QuentinLike {
     this.sim.setGlobeRotation(0.0);
   }
 
-  setGlobePosition(theta, fi) {
-    this.sky.setGlobePosition(theta, fi);
-    this.sim.setGlobePosition(theta, fi);
+  setGlobePosition(lon, lat) {
+    this.sky.setGlobePosition(lon, lat);
+    this.sim.setGlobePosition(lon, lat);
   }
 
   // Add floor
@@ -192,7 +169,7 @@ export default class KanyeApp extends QuentinLike {
     let [j, k, l] = [a-6.0, b, c];
 
     this.sim.objects.group.position.set(j, k, l);
-    this.sim.objects.group.rotation.set(0, Math.PI/2., 0);
+    // this.sim.objects.group.rotation.set(0, f, 0);
 
     this.camera.position.set(a, b, c);
     this.camera.lookAt(j, k, l);
@@ -205,6 +182,7 @@ export default class KanyeApp extends QuentinLike {
       this.app.near,
       this.app.far
     );
+    this.camera.up.set(0.0, 1.0, 0.0);
   }
 
   resize(width, height) {

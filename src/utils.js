@@ -1,11 +1,9 @@
+// Select a random element from a list
 export function select(list) {
   return list[Math.floor(Math.random() * list.length)];
 };
 
-/**
- * Make 3 dimensional multi array
- *
- */
+// May a 3-dimensional array
 export function makeArray3(height, width, depth) {
   let array3 = new Array(height);
   for (let i=0; i < height; i++) {
@@ -17,14 +15,17 @@ export function makeArray3(height, width, depth) {
   return array3;
 };
 
+// Return rgb(r, b, b) as a string
 export function rgb(r, g, b) {
   return "rgb(" + r + ", " + g + ", " + b + ")";
 };
 
+// Return random floating point in [lower, upper)
 export function random(lower, upper) {
   return lower + Math.random() * (upper-lower);
 };
 
+// Return elapsed time since function was declared
 let getElapsedTime = (function() {
   let start = +new Date();
   return function () {
@@ -32,30 +33,34 @@ let getElapsedTime = (function() {
   }
 }());
 
+export {getElapsedTime};
 
 // Return hex value from a hex string
 export function stringToHex(str) {
   return parseInt(str.substring(1), 16);
 }
 
-export {getElapsedTime};
-
-
-
+// Return decimal number rounded to the n-th place
 export function round(f, n) {
   let s = Math.pow(10, n);
   return Math.round(s*f)/s;
 }
 
-
-
 // Return Cartesian Coordinates from Normalized Spherical [Theta,Fi]
-export function cartesian([r, theta, fi]) {
+export function cartesian([r, t, f]) {
   return [
-    round(r*Math.sin(theta)*Math.cos(fi), 3),
-    round(r*Math.sin(theta)*Math.sin(fi), 3),
-    round(r*Math.cos(theta), 3),
+    r*Math.cos(t)*Math.sin(f),
+    r*Math.sin(t)*Math.sin(f),
+    r*Math.cos(f),
   ];
 }
 
-
+// Return xyz-coordinate from Longitude-Latitude
+export function longlat([r, lon, lat]) {
+  lat = Math.PI/2.0 - lat;
+  return [
+    r*Math.sin(lat)*Math.sin(lon),
+    r*Math.cos(lat),
+    r*Math.sin(lat)*Math.cos(lon),
+  ];
+}
