@@ -3,8 +3,7 @@ import * as THREE from 'THREE';
 import {SphereSurface, SquareSurface} from '../square-grid.js';
 
 function grid(f, width, height) {
-  let surface = new SphereSurface(f, 160);
-
+  let surface = new SphereSurface(f, 230);
   return new THREE.LineSegments(
     surface.build(), 
     new THREE.LineBasicMaterial({color: 0x000000}),
@@ -42,42 +41,14 @@ export default class WavveyApp {
     // Camera
     this.setupCamera();
 
-    // Lights
-    this.ambientLight = new THREE.AmbientLight(0xCCCCCC);
-    this.directionalLight = new THREE.DirectionalLight(0x333333, 0.5);
-    this.pointLight1 = new THREE.PointLight(0x333333, 2, 800);
-    this.pointLight2 = new THREE.PointLight(0x333333, 2, 800);
-
-    this.directionalLight.position.set(0, 0, -1);
-    this.pointLight1.position.set(0, 10, -10);
-    this.pointLight2.position.set(0, 10, -10);
-
-    this.directionalLight.lookAt(new THREE.Vector3(0, 0, 0));
-    this.pointLight1.lookAt(new THREE.Vector3(0, 0, 0));
-    this.pointLight2.lookAt(new THREE.Vector3(0, 0, 0));
-
-    this.scene.add(this.directionalLight);
-    this.scene.add(this.pointLight1);
-    this.scene.add(this.pointLight2);
-    this.scene.add(this.ambientLight);
-
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setPixelRatio(1.2);
+    this.renderer.setPixelRatio(2.0);
     this.renderer.setClearColor(0xFFFFFF);
 
     // Meshes
     this.grids = [
-      // grid((x, y) => { return 0.3*Math.cos(3*x)+2.0; }, 10.0, 10.0),
-      // grid((x, y) => { return 0.3*Math.sin(2*x)+1.0; }, 10.0, 10.0),
-      // grid((x, y) => { return 0.3*Math.cos(x*x+y*y)-1.0; }, 10.0, 10.0),
-      // grid((x, y) => { return 0.3*Math.cos(x*x+y*y)-2.0; }, 10.0, 10.0),
-      // grid((t, f) => { return 2*t; }, 10.0, 10.0),
-      // grid((t, f) => { return Math.cos(t)+Math.sin(2*f)+4.0; }, 10.0, 10.0),
+      grid((x, y) => { return 0.3*Math.cos(3*x)+2.0; }, 10.0, 10.0),
       grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
-      // grid((t, f) => { return 0.5*Math.sin(23*(t))+4.0; }, 10.0, 10.0),
-      // grid((t, f) => { return 8.0; }, 10.0, 10.0),
-      // grid((t, f) => { return 4.0; }, 10.0, 10.0),
-      // grid((t, f) => { return 6.0; }, 10.0, 10.0),
     ];
 
     let g = new THREE.Group();
