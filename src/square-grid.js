@@ -80,7 +80,6 @@ export class FunSurface {
       let x = random(-3.0, 3.0);
       let y = random(-3.0, 3.0);
       let z = random(-3.0, 3.0);
-
       geo.vertices.push(new THREE.Vector3(x, y, z));
     }
 
@@ -93,9 +92,7 @@ export class FunSurface {
 
     return geo;
   }
-
 }
-
 
 
 export class SquareSurface {
@@ -108,7 +105,6 @@ export class SquareSurface {
     let self = this;
     let geo = new THREE.Geometry();
 
-
     let TOTAL = 200;
 
     function __v3([x, z]) {
@@ -117,7 +113,6 @@ export class SquareSurface {
     }
 
     function __add_brick(p, q) {
-
       geo.vertices.push(
         __v3(p),
         __v3(q),
@@ -128,22 +123,17 @@ export class SquareSurface {
       for (let j=-TOTAL/2; j <= TOTAL/2; j++) {
         let k = geo.vertices.length;
         let points = [];
-
         let [a, b, c, d] = this.grid.getPointList(i, j);
-
         __add_brick(a, b);
         __add_brick(b, c);
         __add_brick(c, d);
         __add_brick(d, a);
-
       }
     }
 
     return geo;
   }
-
 }
-
 
 
 export class SphereSurface {
@@ -160,18 +150,17 @@ export class SphereSurface {
     }
 
     function __add_brick(p, q) {
-
       geo.vertices.push(
         __v3(p),
         __v3(q),
       );
     }
 
-
     let dt = Math.PI/TOTAL;
     let df = 2*Math.PI/TOTAL;
 
     let F = this.f;
+
     function __cart(t, f) {
       return cartesian([F(t, f), t, f]);
     }
@@ -182,8 +171,9 @@ export class SphereSurface {
     for (let i=0; i < TOTAL; i++) {
       for (let j=0; j < TOTAL; j++) {
 
+        // Reduces size of mesh, even though it'll look the same
         if ((i+j)%2) {
-          // continue;
+          continue;
         }
 
         let t0 = (i+0.0)/TOTAL*Math.PI;
@@ -205,5 +195,4 @@ export class SphereSurface {
 
     return geo;
   }
-
 }

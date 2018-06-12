@@ -47,7 +47,7 @@ export default class WavveyApp {
 
     // Meshes
     this.grids = [
-      grid((x, y) => { return 0.3*Math.cos(3*x)+2.0; }, 10.0, 10.0),
+      // grid((x, y) => { return 0.3*Math.cos(3*x)+2.0; }, 10.0, 10.0),
       grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
     ];
 
