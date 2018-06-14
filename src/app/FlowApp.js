@@ -19,7 +19,6 @@ class Particle {
   }
 }
 
-// ...
 class Particles {
   constructor(n) {
     this.particles = [];
@@ -105,7 +104,7 @@ export default class FlowApp {
         self.resize(window.innerWidth, window.innerHeight);
       }),
       // How we should handle a mouse move
-      move: debounce(30, (ev) => {
+      move: debounce(10, (ev) => {
         mouse.x = ev.clientX;
         mouse.y = ev.clientY;
         let p = new THREE.Vector3(
