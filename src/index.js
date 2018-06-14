@@ -6,6 +6,7 @@ import Diagonal01App from './app/Diagonal01App.js';
 import DontYouThinkApp from './app/DontYouThinkApp.js';
 import DripApp from './app/DripApp.js';
 import FaceApp from './app/FaceApp.js';
+import FlowApp from './app/FlowApp.js';
 import GeodeApp from './app/GeodeApp.js';
 import GrassApp from './app/GrassApp.js';
 import GraveyardApp from './app/GraveyardApp.js';
@@ -49,6 +50,7 @@ export {
   DontYouThinkApp,
   DripApp,
   FaceApp,
+  FlowApp,
   FlatApp,
   GeodeApp,
   GoldGridApp,
