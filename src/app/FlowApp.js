@@ -19,6 +19,7 @@ class Particle {
   }
 }
 
+// ...
 class Particles {
   constructor(n) {
     this.particles = [];
@@ -39,43 +40,52 @@ class Particles {
 
 // App that has a flow
 export default class FlowApp {
+
+  // Construct the basic things
   constructor(params) {
     this.id = params.id;
     this.el = document.getElementById(this.id);
-    this.app = {};
     this.width = this.el.offsetWidth;
     this.height = this.el.offsetHeight;
   }
 
+  // Setup WebGL bullshit
   setup() {
-    this.app.width      = this.width;
-    this.app.height     = this.height;
-    this.app.view_angle = 15;
-    this.app.aspect     = this.width/this.height;
-    this.app.near       = 0.1;
-    this.app.far        = 2000;
-    this.app.iterations = 0;
-    this.app.time       = 0;
 
-    // Renderer
-    this.renderer = new THREE.WebGLRenderer({
-      antialias : true,
-      canvas: this.el,
-    });
-
-    // Scene
-    this.scene = new THREE.Scene();
+    this.app = {
+      width: this.width,
+      height: this.height,
+      view_angle: 15,
+      aspect: this.width/this.height,
+      near: 0.1,
+      far: 2000,
+    };
 
     // Camera
     this.setupCamera();
 
-    // Setup renderer stuff
+    // Scene + Renderer
+    this.scene = new THREE.Scene();
+    this.renderer = new THREE.WebGLRenderer({
+      antialias : true,
+      canvas: this.el,
+    });
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(1.5);
     this.renderer.setClearColor(0xFFFFFF);
 
     // Adding things
     this.addParticles();
+  }
+
+  // Setup camera
+  setupCamera() {
+    this.camera = new THREE.PerspectiveCamera(
+      this.app.view_angle,
+      this.app.aspect,
+      this.app.near,
+      this.app.far
+    );
   }
 
   // Return the THREE Geometry object representing the particle 
@@ -95,7 +105,7 @@ export default class FlowApp {
         self.resize(window.innerWidth, window.innerHeight);
       }),
       // How we should handle a mouse move
-      move: debounce(3, (ev) => {
+      move: debounce(30, (ev) => {
         mouse.x = ev.clientX;
         mouse.y = ev.clientY;
         let p = new THREE.Vector3(
@@ -109,6 +119,7 @@ export default class FlowApp {
     }
   }
 
+  // Add particles to the App + Scene
   addParticles() {
     let g = new THREE.Group();
     let size = 0.3;
@@ -128,19 +139,13 @@ export default class FlowApp {
     this.scene.add(g);
   }
 
+  // Update
   update(params) {
     this.camera.lookAt(0.0, 0.0, 0.0);
   }
 
-  setupCamera() {
-    this.camera = new THREE.PerspectiveCamera(
-      this.app.view_angle,
-      this.app.aspect,
-      this.app.near,
-      this.app.far
-    );
-  }
-
+  // Resize to dimensions of screen
+  // XXX: Make this work on mobile
   resize(width, height) {
     this.app.width = width;
     this.app.height = height;
@@ -150,6 +155,7 @@ export default class FlowApp {
     this.renderer.setSize(this.app.width, this.app.height);
   }
 
+  // Dumb draw
   draw() {
     this.renderer.render(this.scene, this.camera);
   }
