@@ -84,6 +84,7 @@ export default class FlowApp {
     return new THREE.EdgesGeometry(d);
   }
 
+  // Return object containing all the necessary event handlers
   eventHandlers() {
     let self = this;
     let mouse = {x: 0.0, y: 0.0};
@@ -98,9 +99,9 @@ export default class FlowApp {
         mouse.x = ev.clientX;
         mouse.y = ev.clientY;
         let p = new THREE.Vector3(
-          1.0,
-          -(2*mouse.y/window.innerHeight - 1.0),
-          -(2*mouse.x/window.innerWidth - 1.0),
+          0.5,
+          -2*(2*mouse.y/window.innerHeight - 1.0),
+          -2*(2*mouse.x/window.innerWidth - 1.0),
         );
         p.multiplyScalar(88.0);
         this.camera.position.copy(p);
@@ -128,13 +129,6 @@ export default class FlowApp {
   }
 
   update(params) {
-    let t = +new Date() / 200.0 / 1.0;
-    let theta = t/9.;
-    theta = Math.PI/2.0;
-    let r = 50.0;
-    let x = 50.0*Math.cos(theta);
-    let y = 0.0;
-    let z = 50.0*Math.sin(theta);
     this.camera.lookAt(0.0, 0.0, 0.0);
   }
 

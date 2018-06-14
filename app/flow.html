@@ -12,6 +12,23 @@
       height: 100%;
     }
 
+    #dont-watch-me-watch-tv {
+      font-size: 58pt;
+      font-family: sans-serif;
+      font-style: italic;
+      letter-spacing: -0.05em;
+      color: white;
+      display: block;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      height: 100px;
+      width: 400px;
+      margin-top: -50px;
+      margin-left: -200px;
+      text-shadow: 1px 0px 0px rgba(0, 0, 0, 1);
+    }
+
     #dont-touch-me {
       position: absolute;
       display: block;
@@ -58,6 +75,7 @@
     <div id="stats"></div>
     <div id="you-know">
     <div id="best">yeah for sure</div>
+    <div id="dont-watch-me-watch-tv">maybe it'll be less complex next time</div>
     <canvas id="dont-touch-me"></canvas></div>
 
     <script>
@@ -93,26 +111,6 @@
       var gui = new dat.GUI({load: JSON});
       gui.remember(params);
 
-      var skyFolder = gui.addFolder("SKY SKY SKY SKY");
-      skyFolder.add(params, "theta", -Math.PI/2.0, Math.PI/2.0).onChange(update);
-      skyFolder.add(params, "rayleigh", 0.0, 7.0).onChange(update);
-      skyFolder.add(params, "turbidity", 0.0, 7.0).onChange(update);
-      skyFolder.add(params, "luminance", 0.0, 8.1).onChange(update);
-      skyFolder.add(params, "mieDirectionalG", 0.0, 7.0).onChange(update);
-      skyFolder.add(params, "mieCoefficient", 0.0, 7.0).onChange(update);
-
-      var liesFolder = gui.addFolder("LIES");
-      liesFolder.add(params, "zapYa", 0.0, 10.0).onChange(update);
-
-      var posFolder = gui.addFolder("WORLD POSITION");
-      posFolder.add(params, "theta", -Math.PI, Math.PI).onChange(update);
-      posFolder.add(params, "fi", -Math.PI, Math.PI).onChange(update);
-      posFolder.open();
-
-      var skyPosFolder = gui.addFolder("STARS STARS STARS STARS");
-      skyPosFolder.add(params, "time", 0.0, 1.0).onChange(update);
-      skyPosFolder.open();
-
       return params;
     }
 
@@ -141,17 +139,11 @@
       }());
 
 
-      let handles = app.eventHandlers();
-
-      window.addEventListener('resize', handles.resize);
-      window.addEventListener('mousemove', handles.move);
-      
-      /*
-      debounce(100, function (ev) {
-        app.resize(window.innerWidth, window.innerHeight);
-      }));
-*/
-
+      (function cant_stop_wont_stop() {
+        let handles = app.eventHandlers();
+        window.addEventListener('resize', handles.resize);
+        window.addEventListener('mousemove', handles.move);
+      }());
     });
 
     function update() {
