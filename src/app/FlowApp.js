@@ -71,7 +71,7 @@ export default class FlowApp {
 
     // Setup renderer stuff
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setPixelRatio(1.0);
+    this.renderer.setPixelRatio(1.5);
     this.renderer.setClearColor(0xFFFFFF);
 
     // Adding things
