@@ -140,24 +140,11 @@
         stats.end();
       }());
 
-      window.addEventListener('resize', debounce(100, function (ev) {
-        app.resize(window.innerWidth, window.innerHeight);
-      }));
-
-      // Hoisting
-
-      function debounce(delay, f) {
-        var id = null;
-        return function () {
-          var self = this;
-          var args = arguments;
-          clearTimeout(id);
-          id = setTimeout(function () {
-            f.apply(self, args);
-          }, delay);
-        }
-      }
-
+      (function cant_stop_wont_stop() {
+        let handles = app.eventHandlers();
+        window.addEventListener('resize', handles.resize);
+        window.addEventListener('mousemove', handles.move);
+      }());
     });
 
     function update() {

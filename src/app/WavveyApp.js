@@ -1,15 +1,18 @@
 import * as THREE from 'THREE';
 
 import {SphereSurface, SquareSurface} from '../square-grid.js';
+import {debounce} from '../function-utils.js';
 
+
+// Return a blah
 function grid(f, width, height) {
-  let surface = new SphereSurface(f, 230);
   return new THREE.LineSegments(
-    surface.build(), 
+    new SphereSurface(f, 160).build(),
     new THREE.LineBasicMaterial({color: 0x000000}),
   );
 }
 
+// Return an instance of wavvey app
 export default class WavveyApp {
   constructor(params) {
     this.id = params.id;
@@ -20,62 +23,78 @@ export default class WavveyApp {
   }
 
   setup() {
-    this.app.width      = this.width;
-    this.app.height     = this.height;
-    this.app.view_angle = 15;
-    this.app.aspect     = this.width/this.height;
-    this.app.near       = 0.1;
-    this.app.far        = 2000;
-    this.app.iterations = 0;
-    this.app.time       = 0;
+    this.app = {
+      width: this.width,
+      height: this.height,
+      view_angle: 15,
+      aspect: this.width/this.height,
+      near: 0.1,
+      far: 2000,
+    };
+
+    this.meta = {
+      lastPosition: new THREE.Vector3(0.0, 0.0, 0.0),
+    };
+
+    // Camera
+    this.setupCamera();
+
+    // Scene
+    this.scene = new THREE.Scene();
 
     // Renderer
     this.renderer = new THREE.WebGLRenderer({
       antialias : true,
       canvas: this.el,
     });
-
-    // Scene
-    this.scene = new THREE.Scene();
-
-    // Camera
-    this.setupCamera();
-
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setPixelRatio(2.0);
+    this.renderer.setPixelRatio(1.5);
     this.renderer.setClearColor(0xFFFFFF);
 
     // Meshes
     this.grids = [
-      // grid((x, y) => { return 0.3*Math.cos(3*x)+2.0; }, 10.0, 10.0),
       grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
     ];
 
+    // Grids
     let g = new THREE.Group();
     this.grids.forEach((v, _) => {
       v.rotation.x = Math.PI/2.0;
       g.add(v);
     });
 
+    // Attach'em
     this.scene.add(g);
   }
 
+  // Return object containing all the necessary event handlers
+  eventHandlers() {
+    let self = this;
+    let mouse = {x: 0.0, y: 0.0};
+
+    return {
+      resize: debounce(100, (ev) => {
+        self.resize(window.innerWidth, window.innerHeight);
+      }),
+      move: debounce(10, (ev) => {
+        mouse.x = ev.clientX;
+        mouse.y = ev.clientY;
+        let p = new THREE.Vector3(
+          0.5,
+          -2*(2*mouse.y/window.innerHeight - 1.0),
+          -2*(2*mouse.x/window.innerWidth - 1.0),
+        );
+        p.multiplyScalar(88.0);
+        this.camera.position.copy(p);
+      }),
+    }
+  }
+
   update(params) {
-    let t = +new Date() / 200.0 / 1.0;
-    let f = t/9.;
-
-    // ...
-    let theta = f;
-    // theta = Math.PI/2.0+0.01;
-
-    let r = 50.0;
-
-    let x = 50.0*Math.cos(theta);
-    let y = 0.0;
-    let z = 50.0*Math.sin(theta);
-
-    this.camera.position.set(x, y, z);
-    this.camera.lookAt(0.0, 0.0, 0.0);
+    if (!this.meta.lastPosition.equals(this.camera.position)) {
+      this.meta.lastPosition.copy(this.camera.position);
+      this.camera.lookAt(0.0, 0.0, 0.0);
+    }
   }
 
   setupCamera() {

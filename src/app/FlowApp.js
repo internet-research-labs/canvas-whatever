@@ -97,13 +97,11 @@ export default class FlowApp {
   eventHandlers() {
     let self = this;
     let mouse = {x: 0.0, y: 0.0};
-    let screen = {w: window.innerWidth, h: window.innerHeight};
+
     return {
-      // How we should handle a resize
       resize: debounce(100, (ev) => {
         self.resize(window.innerWidth, window.innerHeight);
       }),
-      // How we should handle a mouse move
       move: debounce(10, (ev) => {
         mouse.x = ev.clientX;
         mouse.y = ev.clientY;
