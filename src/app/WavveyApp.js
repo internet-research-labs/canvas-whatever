@@ -20,6 +20,8 @@ export default class WavveyApp {
     this.app = {};
     this.width = this.el.offsetWidth;
     this.height = this.el.offsetHeight;
+    this.width = 1000;
+    this.height = 1000;
   }
 
   setup() {
@@ -44,12 +46,29 @@ export default class WavveyApp {
 
     // Renderer
     this.renderer = new THREE.WebGLRenderer({
-      antialias : true,
+      antialias: true,
       canvas: this.el,
     });
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setPixelRatio(1.5);
-    this.renderer.setClearColor(0xFFFFFF);
+    this.renderer.setClearColor(0xFFFFFF, 1);
+    this.renderer.setPixelRatio(2.5);
+    // this.renderer.setClearColor(0xFFFFFF);
+    document.body.appendChild(this.renderer.domElement);
+
+    let renderPass = new THREE.RenderPass(this.scene, this.camera);
+
+    let copyPass = new THREE.ShaderPass(THREE.CopyShader);
+    copyPass.renderToScreen = true;
+
+    this.rgbPass = new THREE.ShaderPass( THREE.RGBShiftShader );
+    this.rgbPass.uniforms[ 'amount' ].value = 0.0015;
+    this.rgbPass.renderToScreen = true;
+
+    this.composer = new THREE.EffectComposer(this.renderer);
+    this.composer.setSize(this.width, this.height);
+    this.composer.addPass(renderPass);
+    // this.composer.addPass(copyPass);
+    this.composer.addPass(this.rgbPass);
 
     // Meshes
     this.grids = [
@@ -79,6 +98,9 @@ export default class WavveyApp {
       move: debounce(10, (ev) => {
         mouse.x = ev.clientX;
         mouse.y = ev.clientY;
+        let u = 2*ev.clientX/window.innerWidth-1.0;
+        let v = 2*ev.clientX/window.innerWidth-1.0;
+        this.rgbPass.uniforms['amount'].value = Math.sqrt(u*u+v*v)/300.+0.002;
         let p = new THREE.Vector3(
           0.5,
           -2*(2*mouse.y/window.innerHeight - 1.0),
@@ -110,12 +132,13 @@ export default class WavveyApp {
     this.app.width = width;
     this.app.height = height;
     this.app.aspect = width/height;
-    this.setupCamera();
+    this.camera.spect = this.app.aspect;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.app.width, this.app.height);
+    this.composer.setSize(this.app.width, this.app.height);
   }
 
   draw() {
-    this.renderer.render(this.scene, this.camera);
+    this.composer.render(0.05);
   }
 }

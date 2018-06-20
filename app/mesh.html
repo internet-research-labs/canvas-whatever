@@ -3,6 +3,7 @@
   <head>
     <title>(wip.af) i'm not really thinking about it</title>
     <style>
+
     #you-know {
       position: fixed;
       top: 0;
@@ -48,20 +49,31 @@
       letter-spacing: 0.125em;
     }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/91/three.min.js"></script>
-    <!-- ... -->
-    <script https://threejs.org/examples/js/shaders/RGBShiftShader.js
 
-    <script src="assets/svv.im.bundled.min.js"></script>
+    <!--
+      VIA:  alteredq / http://alteredqualia.com/
+      Thanks, homey.
+    -->
+    <script src="/assets/three.min.js"></script>
+    <script src="/assets/xxxoo/CopyShader.js"></script>
+    <script src="/assets/xxxoo/EffectComposer.js"></script>
+    <script src="/assets/xxxoo/RenderPass.js"></script>
+    <script src="/assets/xxxoo/ShaderPass.js"></script>
+    <script src="/assets/xxxoo/TexturePass.js"></script>
+    <script src="/assets/xxxoo/RGBShiftShader.js"></script>
+    <script src="/assets/xxxoo/DotScreenShader.js"></script>
+
+    <!-- ... -->
+    <script src="/assets/svv.im.bundled.min.js"></script>
     <script src="dat.gui.min.js"></script>
     <script src="/stats.min.js"></script>
   </head>
   <body>
     <div id="stats"></div>
-    <div id="you-know">
-    <div id="best">yeah for sure</div>
-    <canvas id="dont-touch-me"></canvas></div>
+    <canvas width="1300" height="1300" id="dont-touch-me"></canvas>
 
+    <!-- <div id="you-know"> -->
+    <div id="best">yeah for sure</div>
     <script>
 
     function datGui() {
@@ -147,6 +159,7 @@
         window.addEventListener('resize', handles.resize);
         window.addEventListener('mousemove', handles.move);
       }());
+      //*/
     });
 
     function update() {
@@ -154,4 +167,4 @@
 
     </script>
   </body>
-</html>
+
