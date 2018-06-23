@@ -99,14 +99,12 @@ export default class WavveyApp {
       move: debounce(10, (ev) => {
         mouse.x = ev.clientX;
         mouse.y = ev.clientY;
-        let u = 2*ev.clientX/window.innerWidth-1.0;
-        let v = 2*ev.clientX/window.innerWidth-1.0;
-        this.rgbPass.uniforms['amount'].value = Math.sqrt(u*u+v*v)/300.+0.002;
-        this.updatePosition(
-          0.5,
-          -2*(2*mouse.y/window.innerHeight - 1.0),
-          -2*(2*mouse.x/window.innerWidth - 1.0),
-        );
+        // let u = 1*ev.clientX/window.innerWidth-1.0;
+        // let v = 1*ev.clientX/window.innerWidth-1.0;
+        // this.rgbPass.uniforms['amount'].value = Math.sqrt(u*u+v*v)/298.+0.002;
+        let y = -1*(2*mouse.y/window.innerHeight - 1.0);
+        let z = -1*(2*mouse.x/window.innerWidth - 1.0);
+        this.updatePosition(y, z);
       }),
     }
   }
@@ -138,7 +136,7 @@ export default class WavveyApp {
     this.width = width;
     this.height = height;
     this.app.aspect = this.width/this.height;
-    this.camera.spect = this.app.aspect;
+    this.camera.aspect = this.app.aspect;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.width, this.height);
     this.composer.setSize(this.width, this.height);
