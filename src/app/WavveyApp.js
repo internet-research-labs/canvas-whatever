@@ -20,14 +20,10 @@ export default class WavveyApp {
     this.app = {};
     this.width = this.el.offsetWidth;
     this.height = this.el.offsetHeight;
-    this.width = 1000;
-    this.height = 1000;
   }
 
   setup() {
     this.app = {
-      width: this.width,
-      height: this.height,
       view_angle: 15,
       aspect: this.width/this.height,
       near: 0.1,
@@ -76,14 +72,16 @@ export default class WavveyApp {
     ];
 
     // Grids
-    let g = new THREE.Group();
+    this.group = new THREE.Group();
     this.grids.forEach((v, _) => {
       v.rotation.x = Math.PI/2.0;
-      g.add(v);
+      this.group.add(v);
     });
 
     // Attach'em
-    this.scene.add(g);
+    this.scene.add(this.group);
+    this.updatePosition(0.0, 0.0);
+    this.resize(this.width, this.height);
   }
 
   // Return object containing all the necessary event handlers
@@ -93,7 +91,10 @@ export default class WavveyApp {
 
     return {
       resize: debounce(100, (ev) => {
-        self.resize(window.innerWidth, window.innerHeight);
+        let size = Math.min(window.innerWidth, window.innerHeight);
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
+        self.resize(this.width, this.height);
       }),
       move: debounce(10, (ev) => {
         mouse.x = ev.clientX;
@@ -101,15 +102,19 @@ export default class WavveyApp {
         let u = 2*ev.clientX/window.innerWidth-1.0;
         let v = 2*ev.clientX/window.innerWidth-1.0;
         this.rgbPass.uniforms['amount'].value = Math.sqrt(u*u+v*v)/300.+0.002;
-        let p = new THREE.Vector3(
+        this.updatePosition(
           0.5,
           -2*(2*mouse.y/window.innerHeight - 1.0),
           -2*(2*mouse.x/window.innerWidth - 1.0),
         );
-        p.multiplyScalar(88.0);
-        this.camera.position.copy(p);
       }),
     }
+  }
+
+  updatePosition(y, z) {
+    let p = new THREE.Vector3(0.5, y, z);
+    p.multiplyScalar(88.0);
+    this.camera.position.copy(p);
   }
 
   update(params) {
@@ -117,6 +122,7 @@ export default class WavveyApp {
       this.meta.lastPosition.copy(this.camera.position);
       this.camera.lookAt(0.0, 0.0, 0.0);
     }
+    this.group.rotation.y = + new Date() / 1000.0;
   }
 
   setupCamera() {
@@ -129,16 +135,17 @@ export default class WavveyApp {
   }
 
   resize(width, height) {
-    this.app.width = width;
-    this.app.height = height;
-    this.app.aspect = width/height;
+    this.width = width;
+    this.height = height;
+    this.app.aspect = this.width/this.height;
     this.camera.spect = this.app.aspect;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(this.app.width, this.app.height);
-    this.composer.setSize(this.app.width, this.app.height);
+    this.renderer.setSize(this.width, this.height);
+    this.composer.setSize(this.width, this.height);
   }
 
   draw() {
-    this.composer.render(0.05);
+    // this.composer.render(1.05);
+    this.renderer.render(this.scene, this.camera);
   }
 }
