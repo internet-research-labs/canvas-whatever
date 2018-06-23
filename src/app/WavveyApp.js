@@ -7,7 +7,7 @@ import {debounce} from '../function-utils.js';
 // Return a blah
 function grid(f, width, height) {
   return new THREE.LineSegments(
-    new SphereSurface(f, 160).build(),
+    new SphereSurface(f, 193).build(),
     new THREE.LineBasicMaterial({color: 0x000000}),
   );
 }
@@ -47,7 +47,7 @@ export default class WavveyApp {
     });
     this.renderer.setSize(this.width, this.height);
     this.renderer.setClearColor(0xFFFFFF, 1);
-    this.renderer.setPixelRatio(2.5);
+    this.renderer.setPixelRatio(1.5);
     // this.renderer.setClearColor(0xFFFFFF);
     document.body.appendChild(this.renderer.domElement);
 
