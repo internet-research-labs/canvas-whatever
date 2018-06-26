@@ -3,17 +3,24 @@ import * as THREE from 'THREE';
 import {SphereSurface, SquareSurface} from '../square-grid.js';
 import {debounce} from '../function-utils.js';
 
+function _spherical(x, y, z) {
+  let r = Math.sqrt(x*x+y*y+z*z);
+  let t = Math.acos(z/r);
+  let f = Math.atan(y/x);
+  return [r, t , f];
+}
+
 
 // Return a blah
 function grid(f, width, height) {
   return new THREE.LineSegments(
-    new SphereSurface(f, 193).build(),
+    new SphereSurface(f, 119).build(),
     new THREE.LineBasicMaterial({color: 0x000000}),
   );
 }
 
 // Return an instance of wavvey app
-export default class WavveyApp {
+export default class HolyApp {
   constructor(params) {
     this.id = params.id;
     this.el = document.getElementById(this.id);
@@ -28,10 +35,6 @@ export default class WavveyApp {
       aspect: this.width/this.height,
       near: 0.1,
       far: 2000,
-    };
-
-    this.meta = {
-      lastPosition: new THREE.Vector3(0.0, 0.0, 0.0),
     };
 
     // Camera
@@ -70,10 +73,9 @@ export default class WavveyApp {
 
     // Meshes
     this.grids = [
-      grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      grid((t, f) => { return 0.22*Math.sin(11.0*(t+f))+1.3; }, 10.0, 10.0),
     ];
 
-    // Grids
     this.group = new THREE.Group();
     this.grids.forEach((v, _) => {
       v.rotation.x = Math.PI/2.0;
@@ -81,9 +83,41 @@ export default class WavveyApp {
     });
 
     // Attach'em
+    this.obscurum = this.getObscuredShape();
     this.scene.add(this.group);
-    this.updatePosition(0.0, 0.0);
+    this.scene.add(this.obscurum);
     this.resize(this.width, this.height);
+    this.camera.position.set(90.0, 0.0, 0.0);
+    this.updatePosition(0.0, 0.0);
+  }
+
+  getBetweenPoint(p, q) {
+    let t = 0.5;
+    return [
+      t*(q.x-p.x)+p.x,
+      t*(q.y-p.y)+p.y,
+      t*(q.z-p.z)+p.z,
+    ];
+  }
+
+  getObscuredShape() {
+    let x = new THREE.Group();
+
+    let c1 = new THREE.Mesh(
+      new THREE.SphereGeometry(0.6, 20, 20),
+      new THREE.MeshBasicMaterial({color: 0xFFFFFF}),
+    );
+    c1.position.set(0.0, 0.0, 9.0);
+
+    let c2 = new THREE.Mesh(
+      new THREE.BoxGeometry(3.0, 3.0, 3.0),
+      new THREE.MeshBasicMaterial({color: 0x00FFFF}),
+    );
+    c2.position.set(0.5, 0.0, -8.0);
+
+    x.add(c1);
+    x.add(c2);
+    return x;
   }
 
   // Return object containing all the necessary event handlers
@@ -104,8 +138,8 @@ export default class WavveyApp {
         // let u = 1*ev.clientX/window.innerWidth-1.0;
         // let v = 1*ev.clientX/window.innerWidth-1.0;
         // this.rgbPass.uniforms['amount'].value = Math.sqrt(u*u+v*v)/298.+0.002;
-        let y = -1*(2*mouse.y/window.innerHeight - 1.0);
-        let z = -1*(2*mouse.x/window.innerWidth - 1.0);
+        let y = 0.5*(2*mouse.y/window.innerHeight - 1.0);
+        let z = 0.5*(2*mouse.x/window.innerWidth - 1.0);
         this.updatePosition(y, z);
       }),
     }
@@ -118,10 +152,10 @@ export default class WavveyApp {
   }
 
   update(params) {
-    if (!this.meta.lastPosition.equals(this.camera.position)) {
-      this.meta.lastPosition.copy(this.camera.position);
-      this.camera.lookAt(0.0, 0.0, 0.0);
-    }
+    let [x, y, z] = this.getBetweenPoint(this.camera.position, this.group.position);
+    let [r, t, f] = _spherical(x, y, z);
+    this.camera.lookAt(this.group.position);
+    this.obscurum.lookAt(this.camera.position);
     this.group.rotation.y = + new Date() / 1000.0;
   }
 
@@ -135,6 +169,7 @@ export default class WavveyApp {
   }
 
   resize(width, height) {
+    /*
     this.width = width;
     this.height = height;
     this.app.aspect = this.width/this.height;
@@ -142,6 +177,7 @@ export default class WavveyApp {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.width, this.height);
     // this.composer.setSize(this.width, this.height);
+    // */
   }
 
   draw() {
