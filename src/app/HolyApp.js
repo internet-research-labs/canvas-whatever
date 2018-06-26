@@ -79,17 +79,41 @@ export default class HolyApp {
     this.group = new THREE.Group();
     this.grids.forEach((v, _) => {
       v.rotation.x = Math.PI/2.0;
-      this.group.add(v);
-    });
+      this.group.add(v); });
 
     // Attach'em
     this.obscurum = this.getObscuredShape();
-    this.scene.add(this.group);
+
+    this.group.position.set(0.0, 3.0, 0.0);
+    this.obscurum.position.set(0.0, 3.0, 0.0);
+    // this.scene.add(this.group);
     this.scene.add(this.obscurum);
     this.resize(this.width, this.height);
     this.camera.position.set(90.0, 0.0, 0.0);
     this.updatePosition(0.0, 0.0);
+    this.loadLucy();
+    this.setupLights();
   }
+
+  loadLucy() {
+    let loader =  new THREE.PLYLoader();
+    loader.load('obj/Lucy100k.ply', (geo) => {
+      geo.scale(5.8/1000.0, 5.8/1000., 5.8/1000.);
+      geo.computeVertexNormals();
+      let m = new THREE.Mesh(
+        geo, 
+        new THREE.MeshPhongMaterial({
+          color: 0xB76E79,
+          emissive: 0x000000,
+          specular: 0x8E8E00,
+          shininess: 20,
+        }),
+      );
+      m.rotation.set(0, -Math.PI/2., 0);
+      this.scene.add(m);
+    });
+  }
+
 
   getBetweenPoint(p, q) {
     let t = 0.5;
@@ -111,9 +135,10 @@ export default class HolyApp {
 
     let c2 = new THREE.Mesh(
       new THREE.BoxGeometry(3.0, 3.0, 3.0),
-      new THREE.MeshBasicMaterial({color: 0x00FFFF}),
+      new THREE.MeshBasicMaterial({color: 0xFFD700}),
     );
     c2.position.set(0.5, 0.0, -8.0);
+    c2.rotation.set(1.0, -2.0, -0.3);
 
     x.add(c1);
     x.add(c2);
@@ -155,10 +180,39 @@ export default class HolyApp {
     let [x, y, z] = this.getBetweenPoint(this.camera.position, this.group.position);
     let [r, t, f] = _spherical(x, y, z);
     this.camera.lookAt(this.group.position);
+    this.camera.lookAt(0.0, 0.0, 0.0);
     this.obscurum.lookAt(this.camera.position);
     this.group.rotation.y = + new Date() / 1000.0;
   }
 
+  setupLights() {
+    let lights = [];
+    lights[ 0 ] = new THREE.PointLight(0xffffff, 1, 100, 2);
+    lights[ 1 ] = new THREE.PointLight(0xffffff, 1, 100, 2);
+    lights[ 2 ] = new THREE.PointLight(0xffffff, 1, 100, 2);
+    lights[ 3 ] = new THREE.AmbientLight(0x444444);
+    lights[ 4 ] = new THREE.DirectionalLight(0x555555, 0.5);
+
+    lights[ 0 ].position.set(0, 0, 10);
+    lights[ 1 ].position.set(10, 0, 0);
+    lights[ 2 ].position.set( - 1, - 2, - 1 );
+    lights[ 3 ].position.set( - 1, - 2, - 1 );
+    lights[ 4 ].position.set(10, 0, 10);
+    lights[ 4 ].position.normalize();
+
+    lights.forEach((v) => {
+      v.add(new THREE.Mesh(
+        new THREE.SphereGeometry(1.0, 20, 20),
+        new THREE.MeshBasicMaterial({wireframe: true, color: 0x000000}),
+      ));
+    });
+
+    this.scene.add( lights[ 0 ] );
+    this.scene.add( lights[ 1 ] );
+    this.scene.add( lights[ 2 ] );
+    this.scene.add( lights[ 3 ] );
+    this.scene.add( lights[ 4 ] );
+  }
   setupCamera() {
     this.camera = new THREE.PerspectiveCamera(
       this.app.view_angle,
