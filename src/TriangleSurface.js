@@ -53,3 +53,9 @@ export default class TriangleSurface {
     return geo;
   }
 }
+
+
+export class BetterTriangleSurface {
+  constructor() {
+  }
+}

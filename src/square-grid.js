@@ -142,8 +142,9 @@ export class SphereSurface {
     this.detail = detail;
   }
 
-  build() {
+  build(face) {
     let geo = new THREE.Geometry();
+    face = face ? true : false;
 
     function __v3([x, y, z]) {
       return new THREE.Vector3(x, y, z);
@@ -171,6 +172,8 @@ export class SphereSurface {
     for (let i=0; i < TOTAL; i++) {
       for (let j=0; j < TOTAL; j++) {
 
+        let z = 4*(TOTAL*i + j);
+
         // Reduces size of mesh, even though it'll look the same
         if ((i+j)%2) {
           continue;
@@ -187,9 +190,112 @@ export class SphereSurface {
         let d = __cart(t0, f1);
 
         __add_brick(a, b);
-        __add_brick(c, d);
         __add_brick(b, c);
+        __add_brick(c, d);
         __add_brick(d, a);
+
+        if (face) {
+          let f1 = new THREE.Face3(z+0, z+1, z+2);
+          let f2 = new THREE.Face3(z+2, z+3, z+0);
+          geo.faces.push(f1, f2);
+        }
+      }
+    }
+
+    return geo;
+  }
+}
+
+export class SphereSurface2 {
+  constructor(f, detail) {
+    this.f = f;
+    this.detail = detail;
+  }
+
+  construct() {
+    return [
+      new THREE.Vector3(0, 0, 0),
+    ];
+  }
+
+  geo() {
+
+    let TOTAL = this.detail;
+
+    let g = new THREE.BufferGeometry();
+    let v = [];
+    let F = this.f;
+
+    for (let i=0; i < TOTAL; i++) {
+      for (let j=0; j < TOTAL; j++) {
+        let t = (i+0.0)/TOTAL*Math.PI;
+        let f = (j+0.0)/TOTAL*2*Math.PI;
+        let [a, b, c] = cartesian([F(t, f), t, f]);
+        v.push(a, b, c);
+      }
+    }
+
+    g.addAttribute('position', new THREE.BufferAttribute(new Float32Array(v), 3));
+    return g;
+  }
+
+  build(face) {
+    let geo = new THREE.Geometry();
+    face = face ? true : false;
+
+    function __v3([x, y, z]) {
+      return new THREE.Vector3(x, y, z);
+    }
+
+    function __add_brick(p, q) {
+      geo.vertices.push(
+        __v3(p),
+        __v3(q),
+      );
+    }
+
+    let dt = Math.PI/TOTAL;
+    let df = 2*Math.PI/TOTAL;
+
+    let F = this.f;
+
+    function __cart(t, f) {
+      return cartesian([F(t, f), t, f]);
+    }
+
+
+    let TOTAL = this.detail;
+
+    for (let i=0; i < TOTAL; i++) {
+      for (let j=0; j < TOTAL; j++) {
+
+        let z = 4*(TOTAL*i + j);
+
+        // Reduces size of mesh, even though it'll look the same
+        if ((i+j)%2) {
+          continue;
+        }
+
+        let t0 = (i+0.0)/TOTAL*Math.PI;
+        let t1 = (i+1.0)/TOTAL*Math.PI;
+        let f0 = (j+0.0)/TOTAL*2*Math.PI;
+        let f1 = (j+1.0)/TOTAL*2*Math.PI;
+
+        let a = __cart(t0, f0);
+        let b = __cart(t1, f0);
+        let c = __cart(t1, f1);
+        let d = __cart(t0, f1);
+
+        __add_brick(a, b);
+        __add_brick(b, c);
+        __add_brick(c, d);
+        __add_brick(d, a);
+
+        if (face) {
+          let f1 = new THREE.Face3(z+0, z+1, z+2);
+          let f2 = new THREE.Face3(z+2, z+3, z+0);
+          geo.faces.push(f1, f2);
+        }
       }
     }
 

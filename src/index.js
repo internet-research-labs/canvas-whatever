@@ -13,6 +13,7 @@ import GraveyardApp from './app/GraveyardApp.js';
 import HolyApp from './app/HolyApp.js';
 import InstancedHillApp from './app/InstancedHillApp.js';
 import KanyeApp from './app/KanyeApp.js';
+import NreezuApp from './app/NreezuApp.js';
 import OverlapApp from './app/OverlapApp.js';
 import QuentinApp from './app/QuentinApp.js';
 import RibbonApp from './app/RibbonApp.js';
@@ -25,6 +26,7 @@ import TriOverlapApp from './app/TriOverlapApp.js';
 import TriangleClipGridApp from './app/TriangleClipGridApp.js';
 import WaveApp from './app/WaveApp.js';
 import WavveyApp from './app/WavveyApp.js';
+import PlanetApp from './app/PlanetApp.js';
 import WillApp from './app/WillApp.js';
 import {FlatApp, GoldGridApp} from './app/GoldGridApp.js';
 
@@ -51,16 +53,18 @@ export {
   DontYouThinkApp,
   DripApp,
   FaceApp,
-  FlowApp,
   FlatApp,
+  FlowApp,
   GeodeApp,
   GoldGridApp,
   GrassApp,
   GraveyardApp,
   HolyApp,
-  KanyeApp,
   InstancedHillApp,
+  KanyeApp,
+  NreezuApp,
   OverlapApp,
+  PlanetApp,
   QuentinApp,
   RibbonApp,
   ShadyHillApp,
@@ -69,8 +73,8 @@ export {
   StarfieldApp,
   TriOverlapApp,
   TriangleClipGridApp,
-  WavveyApp,
   WaveApp,
+  WavveyApp,
   WillApp,
 
   // Objects
