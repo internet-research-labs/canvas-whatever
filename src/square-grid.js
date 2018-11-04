@@ -270,6 +270,14 @@ export class SphereSurface2 {
     let F = this.f;
     let [index2rad, rad2index] = getMapping(TOTAL);
 
+    /**
+     *
+     */
+    function d() {
+      return [
+      ];
+    }
+
     for (let i=0; i < TOTAL; i++) {
       for (let j=0; j < TOTAL; j++) {
 
@@ -278,7 +286,7 @@ export class SphereSurface2 {
         let [a, b, c] = cartesian([F(t, f), t, f]);
 
         v.push(a, b, c);
-        n.push(1, 2, 3);
+        n.push(a, b, c);
       }
     }
 
@@ -290,7 +298,15 @@ export class SphereSurface2 {
       return (u*TOTAL+v);
     }
 
+    function derivative(u, v) {
+      let t = 0.0;
+      let f = 0.0;
+    }
+
     for (let i=0; i < TOTAL; i++) {
+      if (i%2){
+        continue;
+      }
       for (let j=0; j < TOTAL-1; j++) {
         let a = coord2index(i+0, j+0);
         let b = coord2index(i+1, j+0);
@@ -300,9 +316,6 @@ export class SphereSurface2 {
         indices.push(a, d, c);
       }
     }
-
-    console.log(v.length, n.length, colors.length, indices.length);
-    console.log(TOTAL*TOTAL);
 
     g.setIndex(indices);
     g.addAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(v), 3));

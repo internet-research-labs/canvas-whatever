@@ -7,17 +7,27 @@ import {debounce} from '../function-utils.js';
 // Return a blah
 function grid(f, width, height) {
   let points = new SphereSurface2(f, 20).construct();
+  let geo = new SphereSurface2(f, 60).geo();
   let g = new THREE.Group();
   let x = new THREE.Points(new SphereSurface2(f, 20).geo());
   let y = new THREE.Mesh(
-    new SphereSurface2(f, 20).geo(),
-    new THREE.MeshBasicMaterial({
-      color: 0xFF00FF,
+    geo,
+    new THREE.MeshNormalMaterial({
       //side: THREE.DoubleSide,
     }),
   );
-  g.add(x);
+
+  var lineMaterial = new THREE.LineBasicMaterial({
+    // color: 0x000000,
+    color: 0xFFFFFF,
+    transparent: true,
+    opacity: 0.5,
+  });
+
+  let z = new THREE.LineSegments( geo, lineMaterial );
+  // g.add(x);
   g.add(y);
+  g.add(z);
   return g;
 }
 
@@ -79,7 +89,7 @@ export default class PlanetApp {
 
     // Meshes
     this.grids = [
-      // grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      //grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
       grid((t, f) => { return 4.0; }),
     ];
 
@@ -91,6 +101,10 @@ export default class PlanetApp {
     });
 
     // Attach'em
+    //let directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 );
+    //let directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 );
+    //this.scene.add(directionalLight);
+
     this.scene.add(this.group);
     this.updatePosition(0.0, 0.0);
     this.resize(this.width, this.height);
