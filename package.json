@@ -6,7 +6,7 @@
   "scripts": {
     "ayy": "node ./node_modules/webpack/bin/webpack.js -p",
     "lmao": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base=app/ --inline --hot",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",
@@ -22,10 +22,14 @@
   },
   "homepage": "https://github.com/internet-research-labs/svv.im",
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.18.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
     "copy-webpack-plugin": "^4.0.1",
+    "mocha": "^5.2.0",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.15.1",
     "webpack-glsl-loader": "^1.0.1"

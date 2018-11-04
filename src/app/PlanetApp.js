@@ -9,7 +9,15 @@ function grid(f, width, height) {
   let points = new SphereSurface2(f, 20).construct();
   let g = new THREE.Group();
   let x = new THREE.Points(new SphereSurface2(f, 20).geo());
+  let y = new THREE.Mesh(
+    new SphereSurface2(f, 20).geo(),
+    new THREE.MeshBasicMaterial({
+      color: 0xFF00FF,
+      //side: THREE.DoubleSide,
+    }),
+  );
   g.add(x);
+  g.add(y);
   return g;
 }
 
@@ -71,7 +79,8 @@ export default class PlanetApp {
 
     // Meshes
     this.grids = [
-      grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      // grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      grid((t, f) => { return 4.0; }),
     ];
 
     // Grids
@@ -123,7 +132,7 @@ export default class PlanetApp {
       this.meta.lastPosition.copy(this.camera.position);
       this.camera.lookAt(0.0, 0.0, 0.0);
     }
-    this.group.rotation.y = + new Date() / 1000.0;
+    // this.group.rotation.y = + new Date() / 1000.0;
   }
 
   setupCamera() {

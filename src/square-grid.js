@@ -206,6 +206,45 @@ export class SphereSurface {
   }
 }
 
+
+/**
+ * Return [rad2index, index2rad] functions
+ */
+export function getMapping(size) {
+  let TOTAL = size;
+
+  let index2rad = (c) => {
+    let i = Math.floor(c / TOTAL);
+    let j = c % TOTAL;
+    let t = i/TOTAL*Math.PI;
+    let f = j/TOTAL*2*Math.PI;
+    return [t, f];
+  };
+
+  let rad2index = (t, f) => {
+    let i = Math.floor(t / Math.PI * TOTAL)
+    let j = Math.floor(f / 2 / Math.PI *TOTAL);
+    let c = i*TOTAL + j; 
+    return c;
+  };
+
+  return [index2rad, rad2index];
+}
+
+class PlanetShape{
+  constructor(detail) {
+    this.detail = detail;
+  }
+
+  rad(t, f) {
+    return 0;
+  }
+
+  index() {
+    return 0;
+  }
+}
+
 export class SphereSurface2 {
   constructor(f, detail) {
     this.f = f;
@@ -224,18 +263,51 @@ export class SphereSurface2 {
 
     let g = new THREE.BufferGeometry();
     let v = [];
+    let n = [];
+    let colors = [];
+    let indices = [];
+
     let F = this.f;
+    let [index2rad, rad2index] = getMapping(TOTAL);
 
     for (let i=0; i < TOTAL; i++) {
       for (let j=0; j < TOTAL; j++) {
-        let t = (i+0.0)/TOTAL*Math.PI;
-        let f = (j+0.0)/TOTAL*2*Math.PI;
+
+        let t = (j+0.0)/TOTAL*Math.PI;
+        let f = (i+0.0)/TOTAL*2*Math.PI;
         let [a, b, c] = cartesian([F(t, f), t, f]);
+
         v.push(a, b, c);
+        n.push(1, 2, 3);
       }
     }
 
-    g.addAttribute('position', new THREE.BufferAttribute(new Float32Array(v), 3));
+    const TT = TOTAL*TOTAL;
+
+    function coord2index(u, v) {
+      u %= TOTAL;
+      v %= TOTAL;
+      return (u*TOTAL+v);
+    }
+
+    for (let i=0; i < TOTAL; i++) {
+      for (let j=0; j < TOTAL-1; j++) {
+        let a = coord2index(i+0, j+0);
+        let b = coord2index(i+1, j+0);
+        let c = coord2index(i+1, j+1);
+        let d = coord2index(i+0, j+1);
+        indices.push(c, b, a);
+        indices.push(a, d, c);
+      }
+    }
+
+    console.log(v.length, n.length, colors.length, indices.length);
+    console.log(TOTAL*TOTAL);
+
+    g.setIndex(indices);
+    g.addAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(v), 3));
+    g.addAttribute('normal', new THREE.Float32BufferAttribute(new Float32Array(n), 3));
+    g.addAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(colors), 3));
     return g;
   }
 
