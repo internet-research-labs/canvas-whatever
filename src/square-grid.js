@@ -1,4 +1,5 @@
 import {random, cartesian, longlat} from './utils.js';
+import {sub, cross, normalize, scale} from './math3.js';
 
 /**
  *
@@ -278,15 +279,17 @@ export class SphereSurface2 {
       ];
     }
 
+
+    let fn = normalFunc(F);
+
     for (let i=0; i < TOTAL; i++) {
       for (let j=0; j < TOTAL; j++) {
 
         let t = (j+0.0)/TOTAL*Math.PI;
         let f = (i+0.0)/TOTAL*2*Math.PI;
-        let [a, b, c] = cartesian([F(t, f), t, f]);
-
-        v.push(a, b, c);
-        n.push(a, b, c);
+        v.push(...cartesian([F(t, f), t, f]));
+        // n.push(...cartesian([F(t, f), t, f]));
+        n.push(...fn(t, f));
       }
     }
 
@@ -298,15 +301,29 @@ export class SphereSurface2 {
       return (u*TOTAL+v);
     }
 
-    function derivative(u, v) {
-      let t = 0.0;
-      let f = 0.0;
+    function __cart(t, f) {
+      return cartesian([F(t, f), t, f]);
+    }
+
+    function normalFunc(F) {
+      let h = 0.1;
+
+      return (t, f) => {
+
+        let a = __cart(t-h, f);
+        let b = __cart(t+h, f);
+
+        let c = __cart(t, f-h);
+        let d = __cart(t, f+h);
+
+        let u = sub(a, b);
+        let v = sub(c, d);
+
+        return normalize(cross(u, v));
+      };
     }
 
     for (let i=0; i < TOTAL; i++) {
-      if (i%2){
-        continue;
-      }
       for (let j=0; j < TOTAL-1; j++) {
         let a = coord2index(i+0, j+0);
         let b = coord2index(i+1, j+0);

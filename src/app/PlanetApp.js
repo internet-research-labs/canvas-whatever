@@ -2,6 +2,7 @@ import * as THREE from 'THREE';
 
 import {SphereSurface2, SquareSurface} from '../square-grid.js';
 import {debounce} from '../function-utils.js';
+import {random} from '../utils.js';
 
 
 // Return a blah
@@ -89,8 +90,10 @@ export default class PlanetApp {
 
     // Meshes
     this.grids = [
-      //grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
-      grid((t, f) => { return 4.0; }),
+      // grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      grid((t, f) => { return random(0.0, 0.1)+0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      //grid((t, f) => { return 4.0+random(0.0, 0.2); }),
+      // grid((t, f) => { return 4.0; }),
     ];
 
     // Grids
@@ -146,7 +149,7 @@ export default class PlanetApp {
       this.meta.lastPosition.copy(this.camera.position);
       this.camera.lookAt(0.0, 0.0, 0.0);
     }
-    // this.group.rotation.y = + new Date() / 1000.0;
+    this.group.rotation.y = + new Date() / 1000.0;
   }
 
   setupCamera() {

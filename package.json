@@ -30,6 +30,7 @@
     "babel-register": "^6.26.0",
     "copy-webpack-plugin": "^4.0.1",
     "mocha": "^5.2.0",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.15.1",
     "webpack-glsl-loader": "^1.0.1"
