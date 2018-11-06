@@ -271,14 +271,6 @@ export class SphereSurface2 {
     let F = this.f;
     let [index2rad, rad2index] = getMapping(TOTAL);
 
-    /**
-     *
-     */
-    function d() {
-      return [
-      ];
-    }
-
 
     let fn = normalFunc(F);
 
@@ -288,7 +280,6 @@ export class SphereSurface2 {
         let t = (j+0.0)/TOTAL*Math.PI;
         let f = (i+0.0)/TOTAL*2*Math.PI;
         v.push(...cartesian([F(t, f), t, f]));
-        // n.push(...cartesian([F(t, f), t, f]));
         n.push(...fn(t, f));
       }
     }
@@ -333,6 +324,15 @@ export class SphereSurface2 {
         indices.push(c, b, a);
         indices.push(a, d, c);
       }
+    }
+
+    for (let i=0; i < TOTAL; i++) {
+        let a = coord2index(i+0, TOTAL-1);
+        let b = coord2index(i+1, TOTAL-1);
+        let c = v.length/3-1;
+        let d = v.length/3-1;
+        indices.push(c, b, a);
+        indices.push(a, d, c);
     }
 
     g.setIndex(indices);

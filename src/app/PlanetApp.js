@@ -9,7 +9,7 @@ import {RepeatSimplexNoise2} from '../noise.js';
 // Return a blah
 function grid(f, width, height) {
   let points = new SphereSurface2(f, 20).construct();
-  let geo = new SphereSurface2(f, 110).geo();
+  let geo = new SphereSurface2(f, 90).geo();
   let g = new THREE.Group();
   geo.computeFaceNormals();
   geo.computeFaceNormals();
@@ -106,8 +106,8 @@ export default class PlanetApp {
 
     // Meshes
     this.grids = [
-      grid((t, f) => { return 11.0+2*noise.at(2*t, 2*f); }),
-      //grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      grid((t, f) => { return 1*noise.at(2*t, 2*f)+6.0; }),
+      // grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
       // grid((t, f) => { return random(0.0, 0.1)+0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
       // grid((t, f) => { return 4.0+random(0.0, 0.5); }),
       // grid((t, f) => { return 4.0; }),
