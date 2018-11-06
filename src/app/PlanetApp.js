@@ -3,20 +3,34 @@ import * as THREE from 'THREE';
 import {SphereSurface2, SquareSurface} from '../square-grid.js';
 import {debounce} from '../function-utils.js';
 import {random} from '../utils.js';
+import {RepeatSimplexNoise2} from '../noise.js';
 
 
 // Return a blah
 function grid(f, width, height) {
   let points = new SphereSurface2(f, 20).construct();
-  let geo = new SphereSurface2(f, 60).geo();
+  let geo = new SphereSurface2(f, 110).geo();
   let g = new THREE.Group();
-  let x = new THREE.Points(new SphereSurface2(f, 20).geo());
+  geo.computeFaceNormals();
+  geo.computeFaceNormals();
   let y = new THREE.Mesh(
     geo,
-    new THREE.MeshNormalMaterial({
+    //new THREE.MeshNormalMaterial({
+    new THREE.MeshPhongMaterial({
+      // color: 0xB76E79,
+      color: 0xCCCCCC,
+      emissive: 0x111111,
+      specular: 0x444444,
+      shininess: 90.0,
       //side: THREE.DoubleSide,
     }),
   );
+
+  geo.receiveShadow = true;
+  geo.castShadow = true;
+  y.receiveShadow = true;
+  y.castShadow = true;
+  //*/
 
   var lineMaterial = new THREE.LineBasicMaterial({
     // color: 0x000000,
@@ -28,7 +42,7 @@ function grid(f, width, height) {
   let z = new THREE.LineSegments( geo, lineMaterial );
   // g.add(x);
   g.add(y);
-  g.add(z);
+  //g.add(z);
   return g;
 }
 
@@ -88,11 +102,14 @@ export default class PlanetApp {
     this.composer.addPass(this.rgbPass);
     */
 
+    let noise = new RepeatSimplexNoise2();
+
     // Meshes
     this.grids = [
-      // grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
-      grid((t, f) => { return random(0.0, 0.1)+0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
-      //grid((t, f) => { return 4.0+random(0.0, 0.2); }),
+      grid((t, f) => { return 11.0+2*noise.at(2*t, 2*f); }),
+      //grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      // grid((t, f) => { return random(0.0, 0.1)+0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
+      // grid((t, f) => { return 4.0+random(0.0, 0.5); }),
       // grid((t, f) => { return 4.0; }),
     ];
 
@@ -107,6 +124,17 @@ export default class PlanetApp {
     //let directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 );
     //let directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 );
     //this.scene.add(directionalLight);
+    let light0 = new THREE.AmbientLight(0x777777);
+    let light1 = new THREE.DirectionalLight( 0xcccccc, 0.4 );
+    let light2 = new THREE.PointLight( 0xff0000, 0.5 );
+    let light3 = new THREE.PointLight( 0x00ffff, 0.5 );
+    light2.position.set(-2.8, 0.0, -15.0);
+    light3.position.set(-4.0, 0.0, -15.0);
+
+    this.scene.add(light0);
+    this.scene.add(light1);
+    this.scene.add(light2);
+    this.scene.add(light3);
 
     this.scene.add(this.group);
     this.updatePosition(0.0, 0.0);

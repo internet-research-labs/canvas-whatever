@@ -306,15 +306,16 @@ export class SphereSurface2 {
     }
 
     function normalFunc(F) {
-      let h = 0.1;
+      let dt = 1*Math.PI/TOTAL*1+0.4;
+      let df = 2*Math.PI/TOTAL*1+0.4;
 
       return (t, f) => {
 
-        let a = __cart(t-h, f);
-        let b = __cart(t+h, f);
+        let a = __cart(t-dt, f);
+        let b = __cart(t+dt, f);
 
-        let c = __cart(t, f-h);
-        let d = __cart(t, f+h);
+        let c = __cart(t, f-df);
+        let d = __cart(t, f+df);
 
         let u = sub(a, b);
         let v = sub(c, d);
