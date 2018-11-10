@@ -339,6 +339,7 @@ export class SphereSurface2 {
     g.addAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(v), 3));
     g.addAttribute('normal', new THREE.Float32BufferAttribute(new Float32Array(n), 3));
     g.addAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(colors), 3));
+
     return g;
   }
 

@@ -58,10 +58,10 @@ export default class PlanetApp {
 
   setup() {
     this.app = {
-      view_angle: 15,
+      view_angle: 50,
       aspect: this.width/this.height,
       near: 0.1,
-      far: 2000,
+      far: 200,
     };
 
     this.meta = {
@@ -89,17 +89,21 @@ export default class PlanetApp {
 
     // Meshes
     this.grids = [
-      // grid((t, f) => { return 0.11*noise.at(3*2*t, 3*2*f)+2.0; }),
-      grid((t, f) => { return 0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
-      // grid((t, f) => { return random(0.0, 0.1)+0.22*Math.sin(5*(t+f))+4.0; }, 10.0, 10.0),
-      // grid((t, f) => { return 4.0+random(0.0, 0.5); }),
+      // grid((t, f) => { return 0.11*noise.at(3*t, 2*f)+1.0; }),
+      //grid((t, f) => { return 1.0; }),
+      //grid((t, f) => { return 2.0 + 0.2*noise.at(1.8*t, f);}),
+      //grid((t, f) => { return 0.1*Math.sin(5*(t+f))+1.0; }, 10.0, 10.0),
+      //grid((t, f) => { return 0.04*Math.sin(10*(t+f))+2.0; }),
+      grid((t, f) => { return 0.1*noise.at(t, 2*f) + 0.04*Math.sin(10*(t+f))+2.0; }),
+      //grid((t, f) => { return 2.0+random(0.0, 0.1); }),
       // grid((t, f) => { return 4.0; }),
     ];
 
     // Grids
     this.group = new THREE.Group();
     this.grids.forEach((v, _) => {
-      // v.rotation.x = Math.PI/2.0;
+      v.rotation.x = Math.PI/4.0;
+      // v.rotation.y = -Math.PI/4.0;
       this.group.add(v);
     });
 
@@ -124,8 +128,10 @@ export default class PlanetApp {
 
     this.scene.add(this.group);
     this.updatePosition(0.0, 0.0);
-    this.camera.position.set(13.0, 8.0, 0.0);
-    this.camera.lookAt(0.0, 4.0, 0.0);
+
+    let [x, y, z] = [8.0, 0.0, 0.0];
+    this.camera.position.set(x, y, z);
+    this.camera.lookAt(0.0, 0.0, 0.0);
     this.resize(this.width, this.height);
   }
 
@@ -166,9 +172,10 @@ export default class PlanetApp {
       this.camera.lookAt(0.0, 0.0, 0.0);
     }
     // this.group.rotation.y = + new Date() / 1000.0;
-    let n = new THREE.Vector3(0.0, 1.0, 0.0);
+    let n = new THREE.Vector3(0.0, 1.0, -1.0);
     n.normalize();
-    this.group.setRotationFromAxisAngle(n, new Date()/10000.);
+    this.group.setRotationFromAxisAngle(n, new Date()/1000.);
+    //,:wthis.group.rotateOnAxis(n, new Date()/1000.);
   }
 
   setupCamera() {
