@@ -60,7 +60,7 @@ export default class PlanetApp {
     this.app = {
       view_angle: 50,
       aspect: this.width/this.height,
-      near: 0.1,
+      near: 0.01,
       far: 200,
     };
 
@@ -129,9 +129,10 @@ export default class PlanetApp {
     this.scene.add(this.group);
     this.updatePosition(0.0, 0.0);
 
-    let [x, y, z] = [8.0, 0.0, 0.0];
+    let a = 1.5;
+    let [x, y, z] = [a-0.5, a, -a];
     this.camera.position.set(x, y, z);
-    this.camera.lookAt(0.0, 0.0, 0.0);
+    this.camera.lookAt(x, y, -z);
     this.resize(this.width, this.height);
   }
 
@@ -167,14 +168,9 @@ export default class PlanetApp {
   }
 
   update(params) {
-    if (!this.meta.lastPosition.equals(this.camera.position)) {
-      this.meta.lastPosition.copy(this.camera.position);
-      this.camera.lookAt(0.0, 0.0, 0.0);
-    }
-    // this.group.rotation.y = + new Date() / 1000.0;
     let n = new THREE.Vector3(0.0, 1.0, -1.0);
     n.normalize();
-    this.group.setRotationFromAxisAngle(n, new Date()/1000.);
+    this.group.setRotationFromAxisAngle(n, new Date()/10000.);
     //,:wthis.group.rotateOnAxis(n, new Date()/1000.);
   }
 
