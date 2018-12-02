@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   context: __dirname + "/src",
@@ -11,27 +10,27 @@ module.exports = {
     libraryTarget: 'var',
     library: 'svv',
   },
-  // devtool: 'source-map',
-  plugins: new webpack.optimize.UglifyJsPlugin(),
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(frag|vert)?$/,
         exclude: /node_modules/,
-        loader: 'webpack-glsl',
+        loader: 'webpack-glsl-loader',
       },
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['es2015', 'react'],
-        },
-      },
+        use: ['babel-loader'],
+      }
     ],
+  },
+  resolve: {
+    extensions: ['*', '.js'],
   },
   externals: {
     "THREE": "THREE",
     "react": "React",
+    "react-dom": "ReactDOM",
   },
+  mode: "development",
 };

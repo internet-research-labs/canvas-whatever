@@ -16,6 +16,7 @@ import OverlapApp from './app/OverlapApp.js';
 import QuentinApp from './app/QuentinApp.js';
 import RibbonApp from './app/RibbonApp.js';
 import ShadyHillApp from './app/ShadyHillApp.js';
+import ShowmanApp from './app/ShowmanApp.js';
 import SmileApp from './app/SmileApp.js';
 import SplotchApp from './app/SplotchApp.js';
 import StarfieldApp from './app/StarfieldApp.js';
@@ -62,6 +63,7 @@ export {
   QuentinApp,
   RibbonApp,
   ShadyHillApp,
+  ShowmanApp,
   SmileApp,
   SplotchApp,
   StarfieldApp,
