@@ -28,15 +28,18 @@ import WavveyApp from './app/WavveyApp.js';
 import WillApp from './app/WillApp.js';
 import {FlatApp, GoldGridApp} from './app/GoldGridApp.js';
 
+// External apps
+import {SwarmApp} from 'skv';
+
 // ...
 import TriangleClipGrid from './TriangleClipGrid.js';
 import TriangleMesh from './TriangleMesh.js';
 import {SubtitleScript, Subtitle} from './subtitles/Subtitles.js';
 
-
 // Layout stuff
 
 import {ChatBoxComponent} from './chat-box.js';
+
 
 
 // Exports

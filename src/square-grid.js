@@ -143,6 +143,8 @@ export class SphereSurface {
   }
 
   build() {
+    const TOTAL = this.detail;
+
     let geo = new THREE.Geometry();
 
     function __v3([x, y, z]) {
@@ -165,8 +167,6 @@ export class SphereSurface {
       return cartesian([F(t, f), t, f]);
     }
 
-
-    let TOTAL = this.detail;
 
     for (let i=0; i < TOTAL; i++) {
       for (let j=0; j < TOTAL; j++) {
