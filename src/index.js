@@ -29,7 +29,7 @@ import WillApp from './app/WillApp.js';
 import {FlatApp, GoldGridApp} from './app/GoldGridApp.js';
 
 // External apps
-import {SwarmApp} from 'skv';
+import {SwarmApp} from '@whatever420/skv';
 
 // ...
 import TriangleClipGrid from './TriangleClipGrid.js';

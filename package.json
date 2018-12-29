@@ -31,6 +31,6 @@
   "dependencies": {
     "npm": "^6.4.0",
     "simplex-noise": "^2.4.0",
-    "skv": "0.0.420"
+    "@whatever420/skv": "0.0.420"
   }
 }
