@@ -1,4 +1,4 @@
-import {add, normalize, scale, sub} from './math3.js';
+import {add, normalize, scale, sub} from '@pool-water/math';
 
 export default class RibbonPath {
   constructor(center, direction) {

@@ -1,5 +1,5 @@
 {
-  "name": "whatever420/svv.im",
+  "name": "@internet-research-labs/svv.im",
   "version": "4.2.0",
   "description": "and those that rushes my clutches get put on crutches - get smoked like dutches.",
   "main": "src/index.js",
@@ -29,8 +29,9 @@
     "webpack-glsl-loader": "^1.0.1"
   },
   "dependencies": {
+    "@pool-water/math": "0.0.1",
+    "@whatever420/skv": "0.0.420",
     "npm": "^6.4.0",
-    "simplex-noise": "^2.4.0",
-    "@whatever420/skv": "0.0.420"
+    "simplex-noise": "^2.4.0"
   }
 }

@@ -1,5 +1,5 @@
 import Grass from '../obj/Grass.js';
-import {add, cross, sub, normalize, scale} from '../math3.js';
+import {add, cross, sub, normalize, scale} from '@pool-water/math';
 import {getElapsedTime} from '../utils.js';
 
 function magnitude(vec, s) {

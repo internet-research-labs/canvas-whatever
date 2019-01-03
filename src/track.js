@@ -1,4 +1,4 @@
-import {add, sub, scale, normalize} from './math3.js';
+import {add, sub, scale, normalize} from '@pool-water/math';
 
 
 /**

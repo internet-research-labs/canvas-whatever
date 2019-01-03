@@ -1,7 +1,7 @@
 import App from './App.js';
 import Rib from '../Ribbon.js';
 import * as THREE from 'THREE';
-import {normalize, scale, sub, add, cross} from '../math3.js';
+import {normalize, scale, sub, add, cross} from '@pool-water/math';
 
 
 function toGeometry(vertices, faces) {

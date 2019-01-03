@@ -1,5 +1,5 @@
 import * as THREE from 'THREE';
-import {cross, normalize, add, scale, sub} from './math3.js';
+import {cross, normalize, add, scale, sub} from '@pool-water/math';
 
 export default class Rib {
 

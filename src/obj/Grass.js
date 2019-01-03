@@ -1,4 +1,4 @@
-import {add, cross, sub, normalize, scale} from '../math3.js';
+import {add, cross, sub, normalize, scale} from '@pool-water/math';
 
 let DEBUG = true;
 

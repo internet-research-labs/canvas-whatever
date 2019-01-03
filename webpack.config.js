@@ -14,7 +14,6 @@ module.exports = {
     rules: [
       {
         test: /\.(frag|vert)?$/,
-        exclude: /node_modules/,
         loader: 'webpack-glsl-loader',
       },
       {

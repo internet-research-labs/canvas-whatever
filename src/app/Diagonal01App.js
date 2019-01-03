@@ -1,6 +1,6 @@
 import App from './App.js';
 import QuentinLike from '../app-utils/Quentin.js';
-import {add, scale} from '../math3.js';
+import {add, scale} from '@pool-water/math';
 import {CameraSequence, LinearCameraTrack} from '../track.js';
 import * as THREE from 'THREE';
 

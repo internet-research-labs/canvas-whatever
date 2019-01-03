@@ -1,6 +1,6 @@
 import App from '../app/App.js';
 import {line} from '../math.js';
-import {add, sub, scale} from '../math3.js';
+import {add, sub, scale} from '@pool-water/math';
 
 export default class QuentinLike extends App {
   /**

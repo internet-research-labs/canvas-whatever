@@ -1,5 +1,5 @@
 import TriangleMesh from './TriangleMesh.js';
-import {sub, cross, normalize} from './math3.js';
+import {sub, cross, normalize} from '@pool-water/math';
 
 /**
  * Construct a surface with a triangular mesh

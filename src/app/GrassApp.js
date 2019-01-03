@@ -1,6 +1,6 @@
 import App from './App.js';
 import QuentinLike from '../app-utils/Quentin.js';
-import {add, cross, sub, normalize, scale} from '../math3.js';
+import {add, cross, sub, normalize, scale} from '@pool-water/math';
 import * as THREE from 'THREE';
 
 import RibbonPath from '../RibbonPath.js';
