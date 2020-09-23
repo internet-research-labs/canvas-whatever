@@ -1,3 +1,4 @@
+import BangerApp from './app/BangerApp.js';
 import CircleApp from './app/CircleApp.js';
 import CircleGridApp from './app/CircleGridApp.js';
 import CouchApp from './app/CouchApp.js';
@@ -46,6 +47,7 @@ import {ChatBoxComponent} from './chat-box.js';
 
 export {
   // Apps
+  BangerApp,
   CircleApp,
   CircleGridApp,
   CouchApp,
